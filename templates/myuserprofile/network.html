@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+
+{% block content %}
+
+	<h2>Enterprises</h2>
+    {% if enterprises %}
+        <ul>
+        {% for enterprise in enterprises %}
+            <li><a href="{{ post.get_absolute_url }}">{{ enterprise}}</a></li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>There are no posts.</p>
+    {% endif %}
+		
+    <h2>People in the network</h2>
+    {% if myusers %}
+        <ul>
+        {% for myuser in myusers %}
+			
+            <li><a href="{{ post.get_absolute_url }}">{{ myuser }}</a></li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>There are no posts.</p>
+    {% endif %}
+
+    
+
+{% endblock %}

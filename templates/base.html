@@ -1,0 +1,53 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link href={% static 'css/styler.css' %} media="all" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src={% static 'js/jquery-2.1.1.js' %}></script>
+    {% block css %}{% endblock %}
+    <title>{% block title %}Welcome to i-Log{% endblock %}</title>
+</head>
+
+<body>
+	
+
+    <div class="container">
+        <header class='header_top'>
+            {% block header %}
+            Here comes heading...
+			
+			
+            {% endblock %}
+        </header>
+		
+		
+        <hr />
+
+        <section class='content'>
+            {% block content %}
+            There goes content...
+            {% endblock %}
+        </section>
+
+        <hr class='hr_line' />
+
+        <footer class='footer_bottom'>
+            {% block footer %}
+            ...and the footer follows!
+            {% endblock %}
+        </footer>
+    </div>
+
+    <script type="text/javascript">
+        $(function () {
+            var window_width = $(window).width();
+            var window_height = $(window).height();
+            var footer_height = $('.footer_bottom').height();
+            var header_height = $('.header_top').height();
+            $('.container').css({'min-height':window_height});
+        });
+    </script>
+</body>
+</html>

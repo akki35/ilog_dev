@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block header %}
+	<h1><span class='ilog'>i-Log</span></h1>
+    <nav class='nav_top'>
+        <ul class="ul_top">
+            <a href="/accounts/signup"><li class="link">Sign Up</li></a>
+        </ul>
+    </nav>
+{% endblock %}
+
+{% block content %}
+	<section id='content_home'>
+		<article>
+			You are ready to enter...?
+		</article>
+		<li>
+            <a href="{% url 'profile' myuser.first_name %}">{{ myuser.myuserprofile.get_full_name }}</a>
+        </li>
+		<section>
+			We are not!
+		</section>
+	</section>
+{% endblock %}
