@@ -139,9 +139,9 @@ class Relationship(models.Model):
     active = ActiveRelationshipManager()
 
     class Meta:
-        ordering = 'created'
-        verbose_name = 'relationship'
-        verbose_name_plural = 'relationships'
+        ordering = ('created',)
+        verbose_name = ('relationship')
+        verbose_name_plural = ('relationships')
 
     def __str__(self):
         return 'relationship from %s to %s' % (self.from_user.myuser.first_name, self.to_user.myuser.first_name)

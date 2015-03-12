@@ -17,7 +17,7 @@ def home(request):
     else:
         return render(request, 'core/cover.html')
 
-FEEDS_NUM_PAGES=10
+FEEDS_NUM_PAGES=8
 @login_required
 def network(request):
     myusers = MyUser.objects.all()
@@ -25,19 +25,19 @@ def network(request):
     return render(request, 'myuserprofile/network.html', {'myusers': myusers, 'enterprises':enterprises})
 
 @login_required
-def profile(request):
-    first_name = request.user.first_name
-    page_user = get_object_or_404(MyUser, first_name=first_name)
-    all_feeds = Node.get_feeds().filter(user=page_user)
+def profile(request, slug):
+    # slug = request.user.slug
+    page_user = get_object_or_404(MyUser, slug=slug)
+    all_feeds = Node.get_feeds().filter(myuser=page_user)
     paginator = Paginator(all_feeds, FEEDS_NUM_PAGES)
     feeds = paginator.page(1)
     from_feed = -1
     if feeds:
         from_feed = feeds[0].id
-    return render(request, 'core/profile.html', {
+    return render(request, 'myuserprofile/profile.html', {
         'page_user': page_user,
         'feeds': feeds,
-        # 'from_feed': from_feed,
+        'from_feed': from_feed,
         'page': 1
         })
 

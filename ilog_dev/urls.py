@@ -17,4 +17,5 @@ urlpatterns = patterns('',
                        url(r'^profile_edit/$', 'myuserprofile.views.profile_edit', name='profile_edit'),
                        url(r'^enterprise_profile_edit/$', 'enterprise_profile.views.enterprise_profile_edit',
                            name='enterprise_profile_edit'),
+                       url(r'^(?P<slug>[^/]+)/$', 'myuserprofile.views.profile', name='profile'),
 )

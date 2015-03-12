@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+<ExtendsNode: extends "base.html">
 {% load i18n %}
 
 {% block title %}{{ page_user.profile.get_screen_name }}{% endblock %}
@@ -10,48 +10,85 @@
   <script src="{{ STATIC_URL }}js/feeds.js"></script>
 {% endblock head %}
 
+{% extends "base.html" %}
+
+
+
+{% block meta_title %}{{ profile_user.username }}{% endblock %}
+
+{% block body_id %}account{% endblock %}
+{% block body_class %}profile{% endblock %}
+
 {% block main %}
-  <div class="page-header">
-    <h1>{{ page_user.profile.get_screen_name }} {% if page_user.get_full_name %}<small>({{ page_user.username }})</small>{% endif %}</h1>
-  </div>
-  <div class="profile">
-    <div class="row">
-      <div class="col-md-3 user-profile">
-        <img src="{{ page_user.profile.get_picture }}" class="picture">
-        <ul>
-          {% if page_user.profile.job_title %}
-          <li><span class="glyphicon glyphicon-briefcase"></span> {{ page_user.profile.job_title }}</li>
-          {% endif %}
-          {% if page_user.profile.location %}
-          <li><span class="glyphicon glyphicon-map-marker"></span> {{ page_user.profile.location }}</li>
-          {% endif %}
-          {% if page_user.email %}
-          <li><span class="glyphicon glyphicon-envelope"></span> {{ page_user.email }}</li>
-          {% endif %}
-          {% if page_user.profile.url %}
-          <li><span class="glyphicon glyphicon-globe"></span> <a href="{{ page_user.profile.get_url }}" target="_blank">{{ page_user.profile.get_url }}</a></li>
-          {% endif %}
-        </ul>
-      </div>
-      <div class="col-md-9">
-        <h4>{% trans 'Last Feeds by' %} {{ page_user.profile.get_screen_name }}</h4>
-        <div class="stream-update">
-          <a href="#"><span class="new-posts"></span> new posts</a>
+<div class="row">
+    <div class="user-profile span12">
+        <div class="top"></div>
+        <h2>{{ profile_user.get_full_name }}
+            <span>{{ profile_user.username }}</span>
+        </h2>
+        {% with profile_user.get_profile as profile %}
+        <div class="avatar span3">
+            
+            <ul>
+                {% if request.user.is_authenticated %}
+                    <li>{% include 'includes/relationship-status.html' %}</li>
+                {% endif %}
+                {% if profile.website or profile.twitter_id %}
+                <li>
+                    <a class="twitter" href="http://twitter.com/{{ profile_user.get_profile.twitter_id }}">
+                        @{{ profile_user.get_profile.twitter_id }}
+                    </a>
+                </li>
+                <li>
+                    <a class="url" href="{{ profile_user.get_profile.website }}">
+                        {{ profile_user.get_profile.website }}
+                    </a>
+                </li>
+                {% endif %}
+            </ul>
+
         </div>
-        <ul class="stream">
-          {% for feed in feeds %}
-            {% include 'feeds/partial_feed.html' with feed=feed %}
-          {% endfor %}
-        </ul>
-        <div class="load">
-          <img src="{{ STATIC_URL }}img/loading.gif">
+        {% if profile.bio %}
+            <div class="bio span5">
+                <h3>About</h3>
+                <p>{{ profile.bio }}</p>
+            </div>
+        {% endif %}
+        {% comment %}
+        <a href="{% url 'profile-actions' profile_user.username %}">Activity Stream</a>
+        {% endcomment %}
+        <div class="stats span3">
+            <h3>Stats</h3>
+            <ul class="nav nav-tabs nav-stacked">
+                <li class="projects">Public projects: {{ profile_user.projects.published.count }}</li>
+                
+            </ul>
         </div>
-        <form method="get" action="{% url 'load' %}" id="load_feed" autocomplete="off">
-          <input type="hidden" name="feed_source" id="feed_source" value="{{ page_user.pk }}">
-          <input type="hidden" name="from_feed" value="{{ from_feed }}">
-          <input type="hidden" name="page" value="{{ page }}">
-        </form>
-      </div>
+        {% endwith %}
     </div>
-  </div>
-{% endblock main %}
+</div>
+
+<div class="row">
+    {% if request.user == profile_user %}
+        {% with profile_user.projects.all as projects %}
+            {% include 'includes/project-gallery.html' %}
+        {% endwith %}
+    {% else %}
+        {% with profile_user.projects.published as projects %}
+            {% include 'includes/project-gallery.html' %}
+        {% endwith %}
+    {% endif %}
+</div>
+{% endblock %}
+
+
+{% if projects %}
+{% block extra_js %}
+	<script src="{{ STATIC_URL }}js/update_relationship.min.js"></script>
+    <script src="{{ STATIC_URL }}js/libs/swipe.js"></script>
+    <script>
+    $('#slider').Swipe();
+    window.mySwipe = $('#slider').data('Swipe');
+    </script>
+{% endblock %}
+{% endif %}
