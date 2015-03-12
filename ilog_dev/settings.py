@@ -111,3 +111,6 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(ROOT_DIR, 'templates/static')
 ]
+
+MEDIA_ROOT = (os.path.join(ROOT_DIR, 'images'))
+MEDIA_URL = '/images/'

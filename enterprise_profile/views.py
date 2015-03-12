@@ -1,7 +1,9 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from enterprise_profile.forms import EnterpriseProfileForm
 from enterprise_profile.models import EnterpriseProfile
+from enterprise.models import Enterprise
+from accounts.models import MyUser
 
 
 @login_required
@@ -42,6 +44,17 @@ def enterprise_profile_edit(request):
     return render(request, 'enterprise_profile/enterprise_profile_edit.html', {'form':form})
 
 
+def enterprise_profile(request, slug):
+    # slug = request.user.slug
+    myuser = request.user
+    page_enterprise = get_object_or_404(Enterprise, slug=slug)
+    members = MyUser.objects.filter(enterprise=page_enterprise)
+
+    return render(request, 'enterprise_profile/enterprise_profile.html', {
+        'page_enterprise': page_enterprise,
+        'members': members
+
+        })
 
 
 # Create your views here.

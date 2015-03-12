@@ -1,29 +1,35 @@
-{% extends 'base.html' %}
-{% load i18n %}
+{% extends "base.html" %}
 
+{% block header %}
+	<h1><span class='ilog'>i-Log</span></h1>
+    <nav class='nav_top'>
+        <ul class="ul_top">
+            <a href="/accounts/signup"><li class="link">Sign Up</li></a>
+        </ul>
+    </nav>
+{% endblock %}
 
 {% block content %}
-    <h2>Feeds(Whats going on!!)</h2>
-    {% if nodes %}
-        <ul>
-        {% for node in nodes %}
-			
-            <li><a href="{{ post.get_absolute_url }}">{{ node }}</a></li>
-        {% endfor %}
+	<section id='content_home'>
+		<article>
+			You are ready to enter...?
+		</article>
+		  <li> Name of the company: <h1>{{page_enterprise}}</h1></li>
+          <li> About: {{page_enterprise.enterpriseprofile.about}}</li>
+		  <li> Contact: {{page_enterprise.enterpriseprofile.contact}}</li>
+		  <li> Address: {{page_enterprise.enterpriseprofile.address}}</li>
+		  <li> Website: {{page_enterprise.enterpriseprofile.website}}</li>
+		  <li> {{page_enterprise.enterpriseprofile.image}}</li>
+		  <img src="{{ page_enterprise.enterpriseprofile.image }}" class="picture">
+        
+		<ul class="stream">
+		<h1>People working in {{page_enterprise}}</h1>
+		
+          {% for member in members %}
+		    
+            {{member}}: {{member.myuserprofile.summary|linebreaks}}
+          {% endfor %}
         </ul>
-    {% else %}
-        <p>There are no posts.</p>
-    {% endif %}
-
-    <h2>Articles</h2>
-    {% if posts %}
-        <ul>
-        {% for post in posts %}
-            <li><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></li>
-        {% endfor %}
-        </ul>
-    {% else %}
-        <p>There are no posts.</p>
-    {% endif %}
-
+		
+	</section>
 {% endblock %}

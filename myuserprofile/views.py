@@ -8,6 +8,7 @@ from django.core.paginator import Paginator
 from myuserprofile.forms import ProfileForm
 from myuserprofile.models import MyUserProfile, Relationship
 from django.core.urlresolvers import reverse
+from PIL import Image
 
 
 def home(request):
