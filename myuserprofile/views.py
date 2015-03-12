@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404, HttpResponseRedirect
 from enterprise.models import Enterprise
 from accounts.models import MyUser
 from django.contrib.auth.decorators import login_required
@@ -6,7 +6,8 @@ from nodes.views import nodes
 from nodes.models import Node
 from django.core.paginator import Paginator
 from myuserprofile.forms import ProfileForm
-from myuserprofile.models import MyUserProfile
+from myuserprofile.models import MyUserProfile, Relationship
+from django.core.urlresolvers import reverse
 
 
 def home(request):
@@ -24,8 +25,9 @@ def network(request):
     return render(request, 'myuserprofile/network.html', {'myusers': myusers, 'enterprises':enterprises})
 
 @login_required
-def profile(request, username):
-    page_user = get_object_or_404(MyUser, username=username)
+def profile(request):
+    first_name = request.user.first_name
+    page_user = get_object_or_404(MyUser, first_name=first_name)
     all_feeds = Node.get_feeds().filter(user=page_user)
     paginator = Paginator(all_feeds, FEEDS_NUM_PAGES)
     feeds = paginator.page(1)
@@ -35,7 +37,7 @@ def profile(request, username):
     return render(request, 'core/profile.html', {
         'page_user': page_user,
         'feeds': feeds,
-        'from_feed': from_feed,
+        # 'from_feed': from_feed,
         'page': 1
         })
 
@@ -84,9 +86,85 @@ def profile_edit(request):
             'gender': myuser.myuserprofile.gender,
             'experience': myuser.myuserprofile.experience,
             'image': myuser.myuserprofile.image,
+
             })
-    return render(request, 'myuserprofile/profile_edit.html', {'form':form})
+    return render(request, 'myuserprofile/profile_edit.html', {'form': form})
 
+@login_required
+def follow(request):
+    myuser = request.user
+    if request.method == 'POST':
+        to_user = MyUser.objects.get(id=request.POST['to_user'])
+        rel, created = Relationship.objects.get_or_create(
+            from_user=myuser.myuserprofile,
+            to_user=to_user,
+            defaults={'status': 'following'}
+        )
 
+        if not created:
+            rel.status = 'following'
+            rel.save()
+
+        # if request.is_ajax():
+		# 	return HttpResponse(status=200)
+		# else:
+		# 	return HttpResponseRedirect(reverse('said_user:profile', kwargs={'username': to_user.username}))
+    else:
+        return HttpResponseRedirect(reverse('main:home'))
+
+@login_required()
+def block(request):
+    if request.method == 'POST':
+        to_user = MyUser.objects.get(id=request.POST['to_user'])
+        rel, created = Relationship.objects.get_or_create(
+            from_user=request.user,
+            to_user=to_user,
+            defaults={'status': 'blocked'}
+        )
+
+        if not created:
+            rel.status = 'blocked'
+            rel.save()
+        # if request.is_ajax():
+		# 	return HttpResponse(status=200)
+		# else:
+		# 	return HttpResponseRedirect(reverse('said_user:profile', kwargs={'username': to_user.username}))
+    else:
+        return HttpResponseRedirect(reverse('main:home'))
+
+@login_required()
+def unfollow(request):
+    if request.method == 'POST':
+        to_user = MyUser.objects.get(id=request.POST['to_user'])
+
+        rel = Relationship.objects.filter(
+            from_user=request.user,
+            to_user=to_user).update(status='none')
+
+        # if request.is_ajax():
+		# 	return HttpResponse(status=200)
+		# else:
+		# 	return HttpResponseRedirect(reverse('said_user:profile', kwargs={'username': to_user.username}))
+
+    else:
+        return HttpResponseRedirect(reverse('main:home'))
+
+@login_required()
+def unblock(request):
+
+    if request.method == 'POST':
+        to_user = MyUser.objects.get(id=request.POST['to_user'])
+
+        rel = Relationship.objects.filter(
+            from_user=request.user,
+            to_user=to_user).update(status='none')
+
+        # if request.is_ajax():
+		# 	return HttpResponse(status=200)
+		# else:
+		# 	return HttpResponseRedirect(reverse('said_user:profile', kwargs={'username': to_user.username}))
+
+    else:
+        return HttpResponseRedirect(reverse('main:home'))
 
 # Create your views here.

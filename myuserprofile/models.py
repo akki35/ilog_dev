@@ -133,9 +133,19 @@ class Relationship(models.Model):
     from_user = models.ForeignKey(MyUserProfile, related_name='from_person')
     to_user = models.ForeignKey(MyUserProfile, related_name='to_person')
     status = models.CharField(max_length=1, choices=RELATIONSHIP_STATUSES)
+    created = models.DateTimeField(auto_now_add=True)
 
     objects = models.Manager()
     active = ActiveRelationshipManager()
+
+    class Meta:
+        ordering = 'created'
+        verbose_name = 'relationship'
+        verbose_name_plural = 'relationships'
+
+    def __str__(self):
+        return 'relationship from %s to %s' % (self.from_user.myuser.first_name, self.to_user.myuser.first_name)
+
 
 
 
