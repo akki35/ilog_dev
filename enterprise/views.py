@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from enterprise.forms import EnterpriseRegistrationForm, ProductForm
 from enterprise.models import Enterprise, EnterpriseProduct, Product
 from nodes.models import Node
@@ -16,16 +16,15 @@ def register(request):
             enterprise = form.cleaned_data.get('enterprise')
             types = form.cleaned_data.get('types')
             assets = form.cleaned_data.get('assets')
-            products = form.cleaned_data.get('products')
+
             operations = form.cleaned_data.get('operations')
             materials = form.cleaned_data.get('materials')
-            er = Enterprise.objects.create(enterprise=enterprise,) # types=types, assets=assets,
-                                                # operations=operations, products=products, materials=materials)
+            er = Enterprise.objects.create(enterprise=enterprise,)
             er.types = types
             er.assets = assets
             er.operations = operations
             er.materials = materials
-            # er.products.add(products)
+
             welcome = u'{0} is now in the network, have a look at its profile.'.format(enterprise)
             node = Node(myuser=MyUser.objects.get(pk=1), post=welcome)
             node.save()
@@ -51,12 +50,22 @@ def add_product(request):
 
             p, created = Product.objects.get_or_create(name=product)
 
-            ep = EnterpriseProduct.objects.create(product=p, enterprise=enterprise, description=description, caption=caption, product_image=image)
+            ep = EnterpriseProduct.objects.create(product=p, enterprise=enterprise, description=description,
+                                                  caption=caption, product_image=image)
 
-            return redirect('/products/add_product/')
+            return redirect('/products/add_product')
     else:
         return render(request, 'products/add_product.html', {'form': ProductForm()})
 
+def product(request, slug):
+    page_enterprise = get_object_or_404(Enterprise, slug=slug)
+    products = EnterpriseProduct.objects.filter(enterprise=page_enterprise)
+
+    return render(request, 'products/products.html', {
+        'page_enterprise': page_enterprise,
+        'products': products
+
+        })
 
 
 

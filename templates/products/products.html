@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+
+{% block content %}
+
+	
+    <h2>{{page_enterprise}}: Products</h2>
+	
+    {% if products %}
+        <ul>
+        {% for product in products %}
+			
+            <li><strong>{{ product }}</strong> : {{ product.description }}</a></li>
+			.
+			
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>There are no products.</p>
+    {% endif %}
+
+    
+
+{% endblock %}
