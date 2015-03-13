@@ -22,6 +22,7 @@ urlpatterns = patterns('',
                        # url(r'^(?P<slug>[^/]+)/$', 'myuserprofile.views.profile', name='profile'),
                        url(r'^user/', include('myuserprofile.urls'),),
                        # url(r'^(?P<slug>[^/]+)/$', 'enterprise_profile.views.enterprise_profile', name='enterprise_profile'),
+                       url(r'^search/$', 'search.views.search', name='search'),
                        url(r'^', include('enterprise.urls'),),
                        url(r'^relationships/', include('myuserprofile.urls', namespace='myuserprofile')),
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
