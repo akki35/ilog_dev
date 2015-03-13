@@ -95,30 +95,27 @@ def profile_edit(request):
 def follow(request):
     myuser = request.user
     if request.method == 'POST':
-        to_user = MyUser.objects.get(id=request.POST['to_user'])
+        to_user = MyUser.objects.get(id=request.POST['to_user']).myuserprofile
         rel, created = Relationship.objects.get_or_create(
             from_user=myuser.myuserprofile,
             to_user=to_user,
-            defaults={'status': 'following'}
+            defaults={'status': 'F'}
         )
 
         if not created:
-            rel.status = 'following'
+            rel.status = 'F'
             rel.save()
-
-        # if request.is_ajax():
-		# 	return HttpResponse(status=200)
-		# else:
-		# 	return HttpResponseRedirect(reverse('said_user:profile', kwargs={'username': to_user.username}))
+            print('wtf')
+        return HttpResponseRedirect('/')
     else:
-        return HttpResponseRedirect(reverse('main:home'))
+        return HttpResponseRedirect(reverse('/'))
 
 @login_required()
 def block(request):
     if request.method == 'POST':
         to_user = MyUser.objects.get(id=request.POST['to_user'])
         rel, created = Relationship.objects.get_or_create(
-            from_user=request.user,
+            from_user=request.user.id,
             to_user=to_user,
             defaults={'status': 'blocked'}
         )
