@@ -30,6 +30,11 @@ class Product(models.Model):
     def __str__(self):
         return self.name
 
+    def save(self, *args, **kwargs):
+        if not self.id:                  # Newly created object, so set slug
+            self.slug = slugify(self.name).__str__()
+            super(Product, self).save(*args, **kwargs)
+
 
 class Asset(models.Model):
     name = models.CharField(max_length=50)
@@ -106,9 +111,10 @@ class EnterpriseProduct(models.Model):
     enterprise = models.ForeignKey(Enterprise)
     product_image = models.ImageField(upload_to='images/products/main')
     # product_thumbnail = models.ImageField(upload_to='images/products/thumbnails')
-    caption = models.CharField(max_length=200)
+    caption = models.CharField(max_length=200, default='product')
     description = models.TextField(max_length=500)
     status = models.BooleanField(default=True)
+    # slug = models.SlugField(unique=True)
 
     def __str__(self):
         return self.product.name
