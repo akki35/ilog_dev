@@ -18,7 +18,7 @@ class ArticleManager(models.Manager):
 
 class Node(models.Model):
     myuser = models.ForeignKey(MyUser)
-    node_type = (('F', 'Feed'), ('A', 'Article'))
+    node_type = (('F', 'Feed'), ('A', 'Article'), ('C', 'Comment'))
     category = models.CharField(max_length=1, choices=node_type, default='F')
     title = models.TextField(max_length=255, null=True, blank=True, db_index=True)
     post = models.TextField()
@@ -65,11 +65,12 @@ class Node(models.Model):
         return Node.article.all()
 
     def save(self, *args, **kwargs):
-        if not self.id:                  # Newly created object, so set slug
-            if self.category is 'A':
-                self.slug = slugify(self.title).__str__()
-            elif self.category is 'F':
-                self.slug = slugify(self.post[:250]).__str__()
+        if not self.id:             # Newly created object, so set slug
+            if not self.parent:
+                if self.category is 'A':
+                    self.slug = slugify(self.title).__str__()
+                elif self.category is 'F':
+                    self.slug = slugify(self.post[:250]).__str__()
 
         super(Node, self).save(*args, **kwargs)
 
@@ -96,7 +97,8 @@ class Node(models.Model):
         return Tag.objects.filter(article=self)
 
     def get_comments(self):
-        return self.object.filter(parent=self).order_by('-date',)
+        pieces = Node.objects.filter(parent=self).order_by('-date',)
+        return pieces
 
     def calculate_likes(self):
         likes = Activity.objects.filter(activity_type=Activity.LIKE, node=self.pk).count()
@@ -121,7 +123,7 @@ class Node(models.Model):
         return comments
 
     def comment(self, myuser, post):
-        feed_comment = Node(user=myuser, post=post, parent=self)
+        feed_comment = Node(myuser=myuser, post=post, parent=self)
         feed_comment.save()
         self.comments = Node.objects.filter(parent=self).count()
         self.save()
