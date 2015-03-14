@@ -3,12 +3,79 @@
 
 
 {% block content %}
+
+  <div class="compose">
+    <h2>{% trans "Compose a new post" %}</h2>
+    <form role="form" id="compose-form">
+      {% csrf_token %}
+      <input type="hidden" name="last_feed">
+      <div class="form-group">
+        <textarea class="form-control" rows="3" name="post"></textarea>
+      </div>
+      <div class="form-group">
+	  <form action="{% url 'nodes:post' %}" method="POST">
+        <button type="button" class="btn btn-primary btn-post">
+          <span class="glyphicon glyphicon-send"></span> {% trans 'Post' %}
+        </button>
+        <button type="button" class="btn btn-default btn-cancel-compose">{% trans 'Cancel' %}</button>
+        <span class="help-block help-count pull-right">255</span>
+      </div>
+    </form>
+  </div>
     <h2>Feeds(Whats going on!!)</h2>
     {% if nodes %}
         <ul>
         {% for node in nodes %}
 			
-            <li><a href="{{ post.get_absolute_url }}">{{ node }}</a></li>
+            <a href="{% url 'myuserprofile:profile' node.myuser.slug %}"><<h4>{{node.myuser}}: </h4></a>
+			<li>{{ node }}</li>
+			
+			<div class="comments">
+			  <div class="input-group" style="width:300px">
+			    <form role="form" method="POST" action="{% url 'nodes:comment' %}" >
+				  {% csrf_token %}
+				  <input type="hidden" name="node" value="{{ node.pk }}">
+				  <input type="text" class="form-control input-sm" placeholder="Write a comment..." name="post" maxlength="255">
+			    </form>
+			    <ol class="clearfix">
+				  {% comment %} Place holder to load feed comments {% endcomment %}
+			    </ol>
+			  </div>
+			  {% if user in feed.get_likers %}
+				<a href="#" class="like unlike">
+				  <span class="glyphicon glyphicon-thumbs-up"></span>
+				  <span class="text">{% trans 'Unlike' %}</span>
+				  (<span class="like-count">{{ node.likes }}</span>)
+				</a>
+			  {% else %}
+				<a href="#" class="like">
+				  <span class="glyphicon glyphicon-thumbs-up"></span>
+				  <span class="text">{% trans 'Like' %}</span>
+				(<span class="like-count">{{ node.likes }}</span>)
+				</a>
+			  {% endif %}
+			  {% for comment in node.get_comments %}
+			    
+				<li feed-id="{{ comment.pk }}" csrf="{{ csrf_token }}">
+					{% if comment.myuser == user %}
+						<span class="glyphicon glyphicon-remove remove-feed" title="{% trans 'Click to remove this comment' %}"></span>
+					{% endif %}
+				<a href="{% url 'myuserprofile:profile' node.myuser.slug %}">
+					<img src="{{ comment.user.profile.get_picture }}" class="user-comment">
+				</a>
+				<a>
+				  <a href="{% url 'myuserprofile:profile' node.myuser.slug %}">{{ comment.myuser.first_name }}<a>: {{ comment }}</a>
+				  </a>
+				
+				  <small>({{ comment.date}}) </small>
+				</a>
+				
+				</li>
+				{% empty %}
+				<li class="empty">{% trans 'Be the first one to comment' %}</li>
+			  {% endfor %}
+			</div>
+			
         {% endfor %}
         </ul>
     {% else %}

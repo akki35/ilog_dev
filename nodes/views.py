@@ -3,15 +3,17 @@ from nodes.models import Node
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.decorators import login_required
 from ilog_dev.decorators import ajax_required
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.template.loader import render_to_string
 from django.core.context_processors import csrf
+from activities.models import Activity
+
 
 NODES_NUM_PAGES = 10
 
 @login_required
 def nodes(request):
-    all_nodes = Node.get_nodes()
+    all_nodes = Node.get_feeds()
     paginator = Paginator(all_nodes, NODES_NUM_PAGES)
     nodes = paginator.page(1)
     from_node = -1
@@ -39,17 +41,56 @@ def _html_feeds(last_feed, user, csrf_token, feed_source='all'):
     return html
 
 @login_required
-@ajax_required
+# @ajax_required
 def post(request):
     last_feed = request.POST.get('last_feed')
-    user = request.user
-    csrf_token = unicode(csrf(request)['csrf_token'])
-    feed = Node()
-    feed.user = user
+    myuser = request.user
+    csrf_token = str(csrf(request)['csrf_token'])
+    node = Node()
+    node.myuser = myuser
     post = request.POST['post']
     post = post.strip()
     if len(post) > 0:
-        feed.post = post[:255]
-        feed.save()
-    html = _html_feeds(last_feed, user, csrf_token)
+        node.post = post[:255]
+        node.save()
+    html = _html_feeds(last_feed, myuser, csrf_token)
     return HttpResponse(html)
+
+@login_required
+# @ajax_required
+def comment(request):
+
+    if request.method == 'POST':
+
+        node_id = request.POST['node']
+        node = Node.objects.get(pk=node_id)
+        post = request.POST['post']
+        post = post.strip()
+        if len(post) > 0:
+            post = post[:255]
+            myuser = request.user
+            node.comment(myuser=myuser, post=post)
+            myuser.myuserprofile.notify_commented(node)
+            myuser.myuserprofile.notify_also_commented(node)
+
+        return HttpResponseRedirect('/nodes/')
+    else:
+        node_id = request.GET.get('node')
+        node = Node.objects.get(pk=node_id)
+        return render(request, 'feeds/partial_feed_comments.html', {'node': node})
+
+@login_required
+# @ajax_required
+def like(request):
+    node_id = request.POST['node']
+    node = Node.objects.get(pk=node_id)
+    myuser = request.user
+    like = Activity.objects.filter(activity_type=Activity.LIKE, node=node_id, myuser=myuser)
+    if like:
+        myuser.profile.unotify_liked(node)
+        like.delete()
+    else:
+        like = Activity(activity_type=Activity.LIKE, feed=node_id, myuser=myuser)
+        like.save()
+        myuser.profile.notify_liked(node)
+    return HttpResponse(node.calculate_likes())
