@@ -16,7 +16,7 @@ class MyUserProfile(models.Model):
     summary = models.TextField(blank=True, null=True)
     follows = models.ManyToManyField('self', through='Relationship', related_name='related_to', symmetrical=False)
     score = models.FloatField(default=0)
-    image = models.ImageField(upload_to='images/user/main')
+    image = models.ImageField(upload_to='user/main')
     # thumbnail = models.ImageField(upload_to='images/user/thumbnail')
 
     def __str__(self):

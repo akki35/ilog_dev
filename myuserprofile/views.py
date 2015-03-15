@@ -47,20 +47,20 @@ def profile_edit(request):
     myuser = request.user
     if request.method == 'POST':
 
-        form = ProfileForm(request.POST)
+        form = ProfileForm(request.POST, request.FILES)
         print(form.errors)
         if form.is_valid():
             print('fucku')
             # myuserprofile = ProfileForm.save(commit=False)
             # # myuserprofile.myuser = myuser
             # myuserprofile.image = form.cleaned_data['image']
-            # myuserprofile.job_position = form.cleaned_data.get('job_position')
+            # myuserprofile.job_position = form.cleaned_data.get('job_position')S
             # myuserprofile.gender = form.cleaned_data.get('gender')
             # myuserprofile.experience = form.cleaned_data.get('experience')
             # myuserprofile.summary = form.cleaned_data.get('summary')
             # myuserprofile.save()
 
-            image = form.cleaned_data['image']
+            image = form.cleaned_data.get('image')
             gender = form.cleaned_data.get('gender')
             experience = form.cleaned_data.get('experience')
             summary = form.cleaned_data.get('summary')

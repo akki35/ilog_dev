@@ -12,7 +12,7 @@ class EnterpriseProfile(models.Model):
     contact = models.CharField(max_length=30, blank=True, null=True)
     website = models.URLField(max_length=255, null=True, blank=True)
     about = models.TextField(null=True, blank=True)
-    image = models.ImageField(upload_to='images/enterprise/main')
+    image = models.ImageField(upload_to='enterprise/main')
 
     def __str__(self):
         return self.enterprise

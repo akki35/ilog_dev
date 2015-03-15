@@ -4,6 +4,7 @@ from enterprise_profile.forms import EnterpriseProfileForm
 from enterprise_profile.models import EnterpriseProfile
 from enterprise.models import Enterprise
 from accounts.models import MyUser
+# from somewhere import handle_uploaded_file
 
 
 @login_required
@@ -11,10 +12,10 @@ def enterprise_profile_edit(request):
     enterprise = request.user.enterprise
     if request.method == 'POST':
 
-        form = EnterpriseProfileForm(request.POST)
+        form = EnterpriseProfileForm(request.POST, request.FILES)
         print(form.errors)
         if form.is_valid():
-            image = form.cleaned_data['image']
+            image = form.cleaned_data.get('image')
             about = form.cleaned_data.get('about')
             contact = form.cleaned_data.get('contact')
             website = form.cleaned_data.get('website')

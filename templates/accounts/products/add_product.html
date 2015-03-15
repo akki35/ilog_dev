@@ -15,11 +15,11 @@
 {% endblock %}
 
 {% block content %}
-	<section id="content_profile_edit">
+	<section id="content_enterprise_product">
 		<header class="header_form">
 			<h2>You.., fill me up...</h2>
 		</header>
-		<form enctype="multipart/form-data" action="" method="POST" role="form" >
+		<form id="form_enterprise_product" action="" method="POST" role="form" >
 			<ul>
 				{{ form.as_ul }}
 				{% csrf_token %}

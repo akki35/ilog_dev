@@ -101,17 +101,16 @@ AUTH_USER_MODEL = 'accounts.MyUser'
 
 ROOT_DIR = os.path.abspath("")
 
+MEDIA_ROOT = os.path.join(BASE_DIR, 'images/')
+MEDIA_URL = '/'
+
 TEMPLATE_DIRS = (
-    os.path.join(ROOT_DIR, 'templates'),
+    os.path.join(BASE_DIR, 'templates'),
     )
 
 STATIC_ROOT = os.path.join(ROOT_DIR, 'templates')
 
-STATIC_URL = '/static/'
+# STATIC_URL = '/static/'
 
-STATICFILES_DIRS = [
-    os.path.join(ROOT_DIR, 'templates/static')
-]
+STATICFILES_DIRS = [os.path.join(ROOT_DIR, 'templates/static')]
 
-MEDIA_ROOT = (os.path.join(ROOT_DIR, 'images'))
-MEDIA_URL = '/images/'

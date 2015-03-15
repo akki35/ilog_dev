@@ -31,13 +31,13 @@ class EnterpriseRegistrationForm(forms.ModelForm):
 class ProductForm(forms.ModelForm):
     prod = forms.CharField()
     description = forms.CharField(widget=forms.Textarea, max_length=500, required=False)
-    image = forms.ImageField(required=False)
+    product_image = forms.ImageField(required=False)
     caption = forms.CharField(max_length=255, required=False)
 
     class Meta:
         model = EnterpriseProduct
         exclude = ['enterprise', 'status']
-        fields = ['prod', 'image', 'description', 'caption']
+        fields = ['prod', 'product_image', 'description', 'caption']
 
 
     

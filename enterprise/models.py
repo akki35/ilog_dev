@@ -1,6 +1,7 @@
 from django.db import models
 from django.template.defaultfilters import slugify
 from django.db.models import signals
+from ilog_dev.unique_slug import unique_slugify
 
 
 class Type(models.Model):
@@ -96,7 +97,9 @@ class Enterprise(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.id:                  # Newly created object, so set slug
-            self.slug = slugify(self.enterprise).__str__()
+            slug_str = self.enterprise
+            unique_slugify(self, slug_str)
+            # self.slug = slugify(self.enterprise).__str__()
             super(Enterprise, self).save(*args, **kwargs)
 
 
@@ -109,7 +112,7 @@ class Enterprise(models.Model):
 class EnterpriseProduct(models.Model):
     product = models.ForeignKey(Product)
     enterprise = models.ForeignKey(Enterprise)
-    product_image = models.ImageField(upload_to='images/products/main')
+    product_image = models.ImageField(upload_to='products/main')
     # product_thumbnail = models.ImageField(upload_to='images/products/thumbnails')
     caption = models.CharField(max_length=200, default='product')
     description = models.TextField(max_length=500)
@@ -120,7 +123,7 @@ class EnterpriseProduct(models.Model):
         return self.product.name
 
     def get_product_image(self):
-        default_image = 'images/products/main/default.png'
+        default_image = 'images/products/main/product.png'
         if self.product_image:
             return self.product_image
         else:

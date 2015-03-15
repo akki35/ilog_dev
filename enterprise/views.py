@@ -29,31 +29,32 @@ def register(request):
             node = Node(myuser=MyUser.objects.get(pk=1), post=welcome)
             node.save()
 
-            return redirect('/accounts/register')
+            return redirect('/accounts/signup')
     else:
         return render(request, 'enterprise/register.html', {'form': EnterpriseRegistrationForm()})
 
 @login_required
 def add_product(request):
+    enterprise = request.user.enterprise
     if request.method == 'POST':
-        form = ProductForm(request.POST)
-        enterprise = request.user.enterprise
+        form = ProductForm(request.POST, request.FILES)
+
         if not form.is_valid():
-            print('yups')
+
             render(request, 'products/add_product.html', {'form': form})
         else:
-            print('kya hai bhai')
+
             product = form.cleaned_data.get('prod')
             description = form.cleaned_data.get('description')
-            image = form.cleaned_data.get('image')
+            product_image = form.cleaned_data.get('product_image')
             caption = form.cleaned_data.get('caption')
 
             p, created = Product.objects.get_or_create(name=product)
 
             ep = EnterpriseProduct.objects.create(product=p, enterprise=enterprise, description=description,
-                                                  caption=caption, product_image=image)
+                                                  caption=caption, product_image=product_image)
 
-            return redirect('/products/add_product')
+            return redirect('/enterprise/products/add_product')
     else:
         return render(request, 'products/add_product.html', {'form': ProductForm()})
 
@@ -63,7 +64,9 @@ def product(request, slug):
 
     return render(request, 'products/products.html', {
         'page_enterprise': page_enterprise,
-        'products': products
+        'products': products,
+        # 'image': product_image,
+
 
         })
 

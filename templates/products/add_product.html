@@ -19,7 +19,7 @@
 		<header class="header_form">
 			<h2>You.., fill me up...</h2>
 		</header>
-		<form id="form_enterprise_product" action="" method="POST" role="form" >
+		<form enctype="multipart/form-data" action="" method="POST" role="form" >
 			<ul>
 				{{ form.as_ul }}
 				{% csrf_token %}

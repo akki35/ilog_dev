@@ -11,16 +11,21 @@
 
 {% block content %}
 	<section id='content_home'>
-		<article>
-			You are ready to enter...?
-		</article>
+	  <div class="span3">
+		<h2>{{ page_user }}</h2>
+		<form action="{% if relationship_status == 'F' %}{% url 'myuserprofile:unfollow' %}{% else %}{% url 'relationships:follow'  %}{% endif %}" method="POST">
+			{% csrf_token %}
+			<input type="hidden" value="{{ page_user.id }}" name="to_user">
+			<input type="submit" class="{% if relationship_status == 'F' %}btn{% else %}btn-primary{% endif %}" value="{% if relationship_status == 'F' %}Unfollow{% else %}Follow{% endif %}">
+		</form>
+	  </div>
 		  <li> Full name: {{page_user}}</li
           <li> works in: {{page_user.enterprise}}</li>
 		  <li> Gender: {{page_user.myuserprofile.gender}}</li>
 		  <li> Experience: {{page_user.myuserprofile.experience}}</li>
 		  <li> Summary: {{page_user.myuserprofile.summary}}</li>
 		  <li> {{page_user.myuserprofile.image}}</li>
-		  <img src="{{ page_user.myuserprofile.image }}" class="picture">
+		  <img src="/{{ page_user.myuserprofile.get_image }}" class="picture">
         
 		<ul class="stream">
 		<h1>Recent feeds by {{page_user}}</h1>

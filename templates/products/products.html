@@ -12,6 +12,9 @@
         {% for product in products %}
 			
             <li><strong>{{ product }}</strong> : {{ product.description }}</a></li>
+			
+			<img src="/{{ product.get_product_image }}" class="picture">
+			
 			.
 			
         {% endfor %}
