@@ -123,7 +123,7 @@ class EnterpriseProduct(models.Model):
         return self.product.name
 
     def get_product_image(self):
-        default_image = 'images/products/main/product.png'
+        default_image = 'products/main/product.png'
         if self.product_image:
             return self.product_image
         else:

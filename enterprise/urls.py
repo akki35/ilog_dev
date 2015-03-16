@@ -2,6 +2,7 @@ from django.conf.urls import patterns, url
 # from django.core.urlresolvers import reverse
 from enterprise import views
 
+
 urlpatterns = patterns('',
                        url(r'^register/$', views.register,),
 

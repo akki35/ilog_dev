@@ -26,7 +26,7 @@ class MyUserProfile(models.Model):
         return self.myuser.get_full_name
 
     def get_image(self):
-        default_image = 'images/user/main/user.png'
+        default_image = 'user/main/user.jpg'
         if self.image:
             return self.image
         else:

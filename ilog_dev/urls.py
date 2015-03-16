@@ -3,6 +3,7 @@ from django.contrib import admin
 from django.conf import settings
 
 from django.conf.urls.static import static
+from django.conf import settings
 
 urlpatterns = patterns('',
 
@@ -23,9 +24,10 @@ urlpatterns = patterns('',
 
                        url(r'^#/$', 'nodes.views.like', name='like'),
                        url(r'^search/$', 'search.views.search', name='search'),
+                       # url(r'^images/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),
 
 
-)+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+)  + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 # urlpatterns += patterns('',
 #                         (r'^media/(?P<path>.*)$', 'django.views.static.serve', {
