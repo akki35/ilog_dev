@@ -4,6 +4,8 @@ from enterprise.models import Enterprise
 from accounts.models import MyUser
 from django.db.models.signals import post_save
 from django.db.models import signals
+from imagekit.models import ProcessedImageField, ImageSpecField
+from imagekit.processors import ResizeToFill
 
 
 class EnterpriseProfile(models.Model):
@@ -13,6 +15,10 @@ class EnterpriseProfile(models.Model):
     website = models.URLField(max_length=255, null=True, blank=True)
     about = models.TextField(null=True, blank=True)
     image = models.ImageField(upload_to='enterprise/main')
+    image_thumbnail = ImageSpecField(source='enterprise/main',
+                                     processors=[ResizeToFill(100, 50)],
+                                     format='JPEG',
+                                     options={'quality': 60})
 
     def __str__(self):
         return self.enterprise
