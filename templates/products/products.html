@@ -11,9 +11,9 @@
         <ul>
         {% for product in products %}
 			
-            <li><strong>{{ product }}</strong> : {{ product.description }}</a></li>
+            <li><img src="{{ MEDIA_URL }}{{ product.get_product_image_thumbnail }}" class="picture"><strong>{{ product }}</strong> : {{ product.description }}</a></li>
 			
-			<img src="/{{ product.get_product_image }}" class="picture">
+			<img src="{{ MEDIA_URL }}{{ product.get_product_image }}" class="picture">
 			
 			.
 			

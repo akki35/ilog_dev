@@ -4,6 +4,8 @@ from enterprise.models import Operation
 from activities.models import Notification
 # from nodes.models import Node
 from django.db.models.signals import post_save
+from imagekit.models import ProcessedImageField
+from imagekit.processors import ResizeToFill
 
 
 class MyUserProfile(models.Model):
@@ -16,8 +18,16 @@ class MyUserProfile(models.Model):
     summary = models.TextField(blank=True, null=True)
     follows = models.ManyToManyField('self', through='Relationship', related_name='related_to', symmetrical=False)
     score = models.FloatField(default=0)
-    image = models.ImageField(upload_to='user/main')
-    # thumbnail = models.ImageField(upload_to='images/user/thumbnail')
+    image = ProcessedImageField(upload_to='user/main',
+                                          processors=[ResizeToFill(1000, 1000)],
+                                          format='JPEG',
+                                          options={'quality': 60})
+    image_thumbnail = ProcessedImageField(upload_to='user/thumbnails',
+                                          processors=[ResizeToFill(100, 100)],
+                                          format='JPEG',
+                                          options={'quality': 60})
+
+
 
     def __str__(self):
         return self.myuser.get_full_name()
@@ -32,12 +42,12 @@ class MyUserProfile(models.Model):
         else:
             return default_image
 
-    # def get_thumbnail(self):
-    #     default = 'images/user/thumbnail/user.png'
-    #     if self.thumbnail:
-    #         return self.thumbnail
-    #     else:
-    #         return default
+    def get_image_thumbnail(self):
+        default = 'user/thumbnails/user.jpg'
+        if self.image_thumbnail:
+            return self.image_thumbnail
+        else:
+            return default
 
     def notify_liked(self, node):
         if self.myuser != node.myuser:

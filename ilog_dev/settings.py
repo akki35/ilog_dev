@@ -103,7 +103,7 @@ AUTH_USER_MODEL = 'accounts.MyUser'
 ROOT_DIR = os.path.abspath("")
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'images/')
-MEDIA_URL = '/'
+MEDIA_URL = '/images/'
 
 TEMPLATE_DIRS = (
     os.path.join(BASE_DIR, 'templates'),

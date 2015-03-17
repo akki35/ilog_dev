@@ -14,13 +14,15 @@
 		<article>
 			You are ready to enter...?
 		</article>
+		<div>
+		  <img src="{{ MEDIA_URL }}{{ page_enterprise.enterpriseprofile.get_image_thumbnail }}" class="picture">
 		  <li> Name of the company: <h1>{{page_enterprise}}</h1></li>
           <li> About: {{page_enterprise.enterpriseprofile.about}}</li>
 		  <li> Contact: {{page_enterprise.enterpriseprofile.contact}}</li>
 		  <li> Address: {{page_enterprise.enterpriseprofile.address}}</li>
 		  <li> Website: {{page_enterprise.enterpriseprofile.website}}</li>
 		  <li> {{page_enterprise.enterpriseprofile.image}}</li>
-		  <img src="{{ page_enterprise.enterpriseprofile.image }}" class="picture">
+		  <img src="{{ MEDIA_URL }}{{ page_enterprise.enterpriseprofile.get_image }}" class="picture">
         
 		<ul class="stream">
 		<h1>People working in {{page_enterprise}}</h1>
@@ -30,6 +32,6 @@
             {{member}}: {{member.myuserprofile.summary|linebreaks}}
           {% endfor %}
         </ul>
-		
+		</div>
 	</section>
 {% endblock %}

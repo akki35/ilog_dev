@@ -52,7 +52,8 @@ def add_product(request):
             p, created = Product.objects.get_or_create(name=product)
 
             ep = EnterpriseProduct.objects.create(product=p, enterprise=enterprise, description=description,
-                                                  caption=caption, product_image=product_image)
+                                                  caption=caption, product_image=product_image,
+                                                  product_image_thumbnail=product_image)
 
             return redirect('/enterprise/products/add_product')
     else:

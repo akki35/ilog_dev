@@ -2,6 +2,8 @@ from django.db import models
 from django.template.defaultfilters import slugify
 from django.db.models import signals
 from ilog_dev.unique_slug import unique_slugify
+from imagekit.models import ProcessedImageField
+from imagekit.processors import ResizeToFill
 
 
 class Type(models.Model):
@@ -14,10 +16,6 @@ class Type(models.Model):
 
     def __str__(self):
         return self.name
-
-    # @models.permalink
-    # def get_absolute_url(self):
-    #   return ()
 
 
 class Product(models.Model):
@@ -112,8 +110,14 @@ class Enterprise(models.Model):
 class EnterpriseProduct(models.Model):
     product = models.ForeignKey(Product)
     enterprise = models.ForeignKey(Enterprise)
-    product_image = models.ImageField(upload_to='products/main')
-    # product_thumbnail = models.ImageField(upload_to='images/products/thumbnails')
+    product_image = ProcessedImageField(upload_to='products/main',
+                                        processors=[ResizeToFill(1000, 1000)],
+                                        format='JPEG',
+                                        options={'quality': 60})
+    product_image_thumbnail = ProcessedImageField(upload_to='products/thumbnails',
+                                                  processors=[ResizeToFill(100, 100)],
+                                                  format='JPEG',
+                                                  options={'quality': 60})
     caption = models.CharField(max_length=200, default='product')
     description = models.TextField(max_length=500)
     status = models.BooleanField(default=True)
@@ -129,19 +133,12 @@ class EnterpriseProduct(models.Model):
         else:
             return default_image
 
-
-
-    # def get_product_thumbnail(self):
-    #     default = 'images/products/thumbnail/default.png'
-    #     if self.product_thumbnail:
-    #         return self.product_thumbnail
-    #     else:
-    #         return default
-
-
-
-
-
+    def get_product_image_thumbnail(self):
+        default = 'products/thumbnails/default.png'
+        if self.product_image_thumbnail:
+            return self.product_image_thumbnail
+        else:
+            return default
 
 
 # Create your models here.

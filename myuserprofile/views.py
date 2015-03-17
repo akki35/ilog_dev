@@ -25,7 +25,7 @@ def network(request):
     enterprises = Enterprise.objects.all()
     return render(request, 'myuserprofile/network.html', {'myusers': myusers, 'enterprises':enterprises})
 
-@login_required
+# @login_required
 def profile(request, slug):
     # slug = request.user.slug
     page_user = get_object_or_404(MyUser, slug=slug)
@@ -48,28 +48,18 @@ def profile_edit(request):
     if request.method == 'POST':
 
         form = ProfileForm(request.POST, request.FILES)
-        print(form.errors)
+        # print(form.errors)
         if form.is_valid():
-            print('fucku')
-            # myuserprofile = ProfileForm.save(commit=False)
-            # # myuserprofile.myuser = myuser
-            # myuserprofile.image = form.cleaned_data['image']
-            # myuserprofile.job_position = form.cleaned_data.get('job_position')S
-            # myuserprofile.gender = form.cleaned_data.get('gender')
-            # myuserprofile.experience = form.cleaned_data.get('experience')
-            # myuserprofile.summary = form.cleaned_data.get('summary')
-            # myuserprofile.save()
 
             image = form.cleaned_data.get('image')
             gender = form.cleaned_data.get('gender')
             experience = form.cleaned_data.get('experience')
             summary = form.cleaned_data.get('summary')
             job_position = form.cleaned_data.get('job_position')
-            # location = form.cleaned_data.get('location')
-            # mup = MyUserProfile.objects.create(myuser=myuser, image=image, gender=gender, experience=experience,
-            #                                    summary=summary, job_position=job_position)
+
             mup = MyUserProfile.objects.get(myuser=myuser)
             mup.image = image
+            mup.image_thumbnail = image
             mup.gender = gender
             mup.summary = summary
             mup.experience = experience

@@ -14,11 +14,14 @@ class EnterpriseProfile(models.Model):
     contact = models.CharField(max_length=30, blank=True, null=True)
     website = models.URLField(max_length=255, null=True, blank=True)
     about = models.TextField(null=True, blank=True)
-    image = models.ImageField(upload_to='enterprise/main')
-    image_thumbnail = ImageSpecField(source='enterprise/main',
-                                     processors=[ResizeToFill(100, 50)],
-                                     format='JPEG',
-                                     options={'quality': 60})
+    image = ProcessedImageField(upload_to='enterprise/main',
+                                processors=[ResizeToFill(1000, 1000)],
+                                format='JPEG',
+                                options={'quality': 60})
+    image_thumbnail = ProcessedImageField(upload_to='enterprise/thumbnails',
+                                          processors=[ResizeToFill(100, 100)],
+                                          format='JPEG',
+                                          options={'quality': 60})
 
     def __str__(self):
         return self.enterprise
@@ -42,11 +45,27 @@ class EnterpriseProfile(models.Model):
     #     return c
 
     def get_image(self):
-        default = 'images/enterprise/main/enterprise.png'
+        default = 'enterprise/main/enterprise.jpg'
         if self.image:
             return self.image
         else:
             return default
+
+    def get_image_thumbnail(self):
+        default = 'enterprise/thumbnails/enterprise.jpg'
+        if self.image_thumbnail:
+            return self.image_thumbnail
+        else:
+            return default
+
+
+# from imagekit import ImageSpec, register
+# class Thumbnail(ImageSpec):
+#     processors = [ResizeToFill(100, 50)]
+#     format = 'JPEG'
+#     options = {'quality': 60}
+#
+# register.generator('myapp:thumbnail', Thumbnail)
 
 
 # def save(self, *args, **kwargs):

@@ -24,6 +24,7 @@ def enterprise_profile_edit(request):
             ep = EnterpriseProfile.objects.get(enterprise=enterprise)
 
             ep.image = image
+            ep.image_thumbnail = image
             ep.address = address
             ep.contact = contact
             ep.about = about

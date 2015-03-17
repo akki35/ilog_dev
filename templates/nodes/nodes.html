@@ -27,7 +27,7 @@
         <ul>
         {% for node in nodes %}
 			
-            <a href="{% url 'myuserprofile:profile' node.myuser.slug %}"><<h4>{{node.myuser}}: </h4></a>
+            <li><img src="{{ MEDIA_URL }}{{ node.myuser.myuserprofile.get_image_thumbnail }}" class="picture"><a href="{% url 'myuserprofile:profile' node.myuser.slug %}"><<h4>{{node.myuser}}: </h4></a></li>
 			<li>{{ node }}</li>
 			
 			<div class="comments">

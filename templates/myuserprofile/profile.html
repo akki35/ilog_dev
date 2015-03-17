@@ -1,4 +1,8 @@
 {% extends "base.html" %}
+{% load imagekit %}
+
+
+
 
 {% block header %}
 	<h1><span class='ilog'>i-Log</span></h1>
@@ -19,13 +23,17 @@
 			<input type="submit" class="{% if relationship_status == 'F' %}btn{% else %}btn-primary{% endif %}" value="{% if relationship_status == 'F' %}Unfollow{% else %}Follow{% endif %}">
 		</form>
 	  </div>
-		  <li> Full name: {{page_user}}</li
+	      
+		  <img src="{{ MEDIA_URL }}{{ page_user.myuserprofile.get_image_thumbnail }}" class="picture">
+		  
+		  
+		  <li> Full name: {{page_user}}</li>
           <li> works in: {{page_user.enterprise}}</li>
 		  <li> Gender: {{page_user.myuserprofile.gender}}</li>
 		  <li> Experience: {{page_user.myuserprofile.experience}}</li>
 		  <li> Summary: {{page_user.myuserprofile.summary}}</li>
 		  <li> {{page_user.myuserprofile.image}}</li>
-		  <img src="/{{ page_user.myuserprofile.get_image }}" class="picture">
+		  <img src="{{ MEDIA_URL }}{{ page_user.myuserprofile.get_image }}" class="picture">
         
 		<ul class="stream">
 		<h1>Recent feeds by {{page_user}}</h1>
