@@ -45,6 +45,8 @@ INSTALLED_APPS = (
     'activities',
     'search',
     'imagekit',
+    # 'whoosh',
+    # 'haystack'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -76,6 +78,12 @@ DATABASES = {
         'autocommit': True,
     }
 }
+
+# HAYSTACK_CONNECTIONS = {'default': {
+#     'ENGINE': 'haystack.backends.whoosh_backend.WhooshEngine',
+#     'PATH': os.path.join(os.path.dirname(__file__), 'whoosh_index'),
+#     },
+#                         }
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.7/topics/i18n/
