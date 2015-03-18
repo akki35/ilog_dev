@@ -9,7 +9,7 @@ urlpatterns = patterns('',
                        # url(r'^unblock/$', views.unblock, name='unblock'),
                        url(r'^edit/$', 'myuserprofile.views.profile_edit', name='profile_edit'),
                        url(r'^network/$', 'myuserprofile.views.network', name='network'),
-                       url(r'^relationships', include('relationships.urls', namespace='relationships')),
+                       url(r'^relationships/', include('relationships.urls', namespace='relationships')),
                        url(r'^(?P<slug>[^/]+)/$', 'myuserprofile.views.profile', name='profile'),
 
 

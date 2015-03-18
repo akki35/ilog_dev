@@ -135,6 +135,7 @@ class ActiveRelationshipManager(models.Manager):
 
 RELATIONSHIP_FOLLOWING = 'F'
 RELATIONSHIP_BLOCKED = 'B'
+RELATIONSHIP_NONE = 'N'
 
 
 class Relationship(models.Model):

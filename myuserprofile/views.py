@@ -1,5 +1,5 @@
-from django.shortcuts import render, redirect, get_object_or_404, HttpResponseRedirect
-from enterprise.models import Enterprise
+from django.shortcuts import render, redirect, get_object_or_404, HttpResponseRedirect, render_to_response
+from enterprise.models import Enterprise, Operation
 from accounts.models import MyUser
 from django.contrib.auth.decorators import login_required
 from nodes.views import nodes
@@ -8,7 +8,8 @@ from django.core.paginator import Paginator
 from myuserprofile.forms import ProfileForm
 from myuserprofile.models import MyUserProfile, Relationship
 from django.core.urlresolvers import reverse
-from PIL import Image
+from django.template import RequestContext
+
 
 
 def home(request):
@@ -27,28 +28,41 @@ def network(request):
 
 # @login_required
 def profile(request, slug):
-    # slug = request.user.slug
+    context = RequestContext(request)
+    data = {}
     page_user = get_object_or_404(MyUser, slug=slug)
     all_feeds = Node.get_feeds().filter(myuser=page_user)
-    paginator = Paginator(all_feeds, FEEDS_NUM_PAGES)
-    feeds = paginator.page(1)
-    from_feed = -1
-    if feeds:
-        from_feed = feeds[0].id
-    return render(request, 'myuserprofile/profile.html', {
-        'page_user': page_user,
-        'feeds': feeds,
-        'from_feed': from_feed,
-        'page': 1
-        })
+    # paginator = Paginator(all_feeds, FEEDS_NUM_PAGES)
+    # feeds = paginator.page(1)
+    # from_feed = -1
+    # if feeds:
+    #     from_feed = feeds[0].id
+
+    # skillset = MyUserProfile.skillset_set.filter(myuserprofile_id=page_user.myuserprofile.id)
+
+    try:
+        relationship_status = Relationship.objects.get(to_user_id=page_user.myuserprofile.id,
+                                                       from_user_id=request.user.myuserprofile.id).status
+    except:
+        relationship_status = 'none'
+    # relationship_status = Relationship.objects.get(to_user_id=page_user.myuserprofile.id,
+    #                                                from_user_id=request.user.myuserprofile.id).status
+
+    data['relationship_status'] = relationship_status
+    data['feeds'] = all_feeds
+    data['page_user'] = page_user
+    # data['skillset'] = skillset
+    return render_to_response('myuserprofile/profile.html', data, context_instance=context)
 
 @login_required
 def profile_edit(request):
     myuser = request.user
+    mup = MyUserProfile.objects.get(myuser=myuser)
     if request.method == 'POST':
 
         form = ProfileForm(request.POST, request.FILES)
         # print(form.errors)
+
         if form.is_valid():
 
             image = form.cleaned_data.get('image')
@@ -56,19 +70,18 @@ def profile_edit(request):
             experience = form.cleaned_data.get('experience')
             summary = form.cleaned_data.get('summary')
             job_position = form.cleaned_data.get('job_position')
+            skillset = form.cleaned_data.get('skillset')
 
-            mup = MyUserProfile.objects.get(myuser=myuser)
+
             mup.image = image
             mup.image_thumbnail = image
             mup.gender = gender
             mup.summary = summary
             mup.experience = experience
             mup.job_position = job_position
+            mup.skillset = skillset
             mup.save()
             return redirect('/')
-
-        else:
-            print('wtf')
 
     else:
         form = ProfileForm(instance=myuser, initial={
@@ -77,6 +90,7 @@ def profile_edit(request):
             'gender': myuser.myuserprofile.gender,
             'experience': myuser.myuserprofile.experience,
             'image': myuser.myuserprofile.image,
+            'skillset': MyUserProfile.skillset.objects.filter(myuserprofile_id=mup.id)
 
             })
     return render(request, 'myuserprofile/profile_edit.html', {'form': form})
@@ -123,19 +137,22 @@ def block(request):
 @login_required()
 def unfollow(request):
     if request.method == 'POST':
-        to_user = MyUser.objects.get(id=request.POST['to_user'])
+        to_user = MyUser.objects.get(id=request.POST['to_user']).myuserprofile
 
-        rel = Relationship.objects.filter(
-            from_user=request.user,
-            to_user=to_user).update(status='none')
+        Relationship.objects.filter(
+            from_user=request.user.myuserprofile,
+            to_user=to_user).update(status='N')
 
         # if request.is_ajax():
 		# 	return HttpResponse(status=200)
 		# else:
 		# 	return HttpResponseRedirect(reverse('said_user:profile', kwargs={'username': to_user.username}))
+        print('why')
+        return HttpResponseRedirect('/')
 
     else:
-        return HttpResponseRedirect(reverse('main:home'))
+
+        return HttpResponseRedirect('/')
 
 @login_required()
 def unblock(request):
