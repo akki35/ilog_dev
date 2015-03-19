@@ -134,7 +134,7 @@ class EnterpriseProduct(models.Model):
             return default_image
 
     def get_product_image_thumbnail(self):
-        default = 'products/thumbnails/default.png'
+        default = 'products/thumbnails/enterprise.jpg'
         if self.product_image_thumbnail:
             return self.product_image_thumbnail
         else:

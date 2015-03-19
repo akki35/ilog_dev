@@ -7,6 +7,16 @@
             <a href="/accounts/signup"><li class="link">Sign Up</li></a>
         </ul>
     </nav>
+	<form method="get", action={% url 'enterprise:product' slug=slug %}>
+	<input type="submit" value="Products" class="btn btn-success"/>
+	</form>
+	<form method="get", action={% url 'enterprise:people' slug=slug %}>
+	<input type="submit" value="People" class="btn btn-success"/>
+	</form>
+	<form method="get", action={% url 'enterprise:about' slug=slug %}>
+	<input type="submit" value="About" class="btn btn-success"/>
+	</form>
+	
 {% endblock %}
 
 {% block content %}

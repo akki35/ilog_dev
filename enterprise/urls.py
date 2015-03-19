@@ -13,6 +13,8 @@ urlpatterns = patterns('',
                            name='enterprise_profile'),
 
                        url(r'^(?P<slug>[^/]+)/products/$', 'enterprise.views.product', name='product'),
+                       url(r'^(?P<slug>[^/]+)/people/$', 'enterprise.views.people', name='people'),
+                       url(r'^(?P<slug>[^/]+)/about/$', 'enterprise.views.about', name='about'),
 
 )
 

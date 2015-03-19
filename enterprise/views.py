@@ -67,10 +67,31 @@ def product(request, slug):
         'page_enterprise': page_enterprise,
         'products': products,
         # 'image': product_image,
-
-
         })
 
+
+def people(request, slug):
+    page_enterprise = get_object_or_404(Enterprise, slug=slug)
+    members = MyUser.objects.filter(enterprise=page_enterprise)
+
+    return render(request, 'products/people.html', {
+        'page_enterprise': page_enterprise,
+        'members': members,
+        # 'image': product_image,
+        })
+
+def about(request, slug):
+    page_enterprise = get_object_or_404(Enterprise, slug=slug)
+    types = page_enterprise.types.all()
+    about = page_enterprise.enterpriseprofile.about
+    website = page_enterprise.enterpriseprofile.website
+
+    return render(request, 'products/about.html', {
+        'types': types,
+        'about': about,
+        'page_enterprise': page_enterprise,
+        'website': website,
+        })
 
 
 # Create your views here.

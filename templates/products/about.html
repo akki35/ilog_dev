@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+
+{% block content %}
+
+	
+    <h2>{{page_enterprise}}: About</h2>
+	
+    
+        <ul>
+        {% for type in types %}
+			
+            <li>{{type}}</li>
+			
+						
+        {% endfor %}
+        </ul>
+    {{about}}
+	{{website}}
+	<img src="{{ MEDIA_URL }}{{ page_enterprise.enterpriseprofile.get_image }}" class="picture">
+
+    
+
+{% endblock %}
