@@ -22,7 +22,7 @@ urlpatterns = patterns('',
 
 
 
-                       url(r'^#/$', 'nodes.views.like', name='like'),
+                       url(r'^like/$', 'nodes.views.like', name='like'),
                        url(r'^search/$', 'search.views.search', name='search'),
                        url(r'^images/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),
 

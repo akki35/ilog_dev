@@ -42,17 +42,17 @@
 			    </ol>
 			  </div>
 			  {% if user in feed.get_likers %}
-				<a href="#" class="like unlike">
+				<a href="Like" class="like unlike">
 				  <span class="glyphicon glyphicon-thumbs-up"></span>
 				  <span class="text">{% trans 'Unlike' %}</span>
 				  (<span class="like-count">{{ node.likes }}</span>)
 				</a>
 			  {% else %}
-				<a href="#" class="like">
-				  <span class="glyphicon glyphicon-thumbs-up"></span>
-				  <span class="text">{% trans 'Like' %}</span>
-				(<span class="like-count">{{ node.likes }}</span>)
-				</a>
+				<form role="form" method="POST" action="{% url 'like' %}" >
+				  {% csrf_token %}
+				  <input type="hidden" name="node" value="{{ node.pk }}">
+				  <button>+</button>{{ likes }}
+			    </form>
 			  {% endif %}
 			  {% for comment in node.get_comments %}
 			    

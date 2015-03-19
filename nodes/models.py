@@ -101,7 +101,7 @@ class Node(models.Model):
         return pieces
 
     def calculate_likes(self):
-        likes = Activity.objects.filter(activity_type=Activity.LIKE, node=self.pk).count()
+        likes = Activity.objects.filter(activity='L', node=self.pk).count()
         self.likes = likes
         self.save()
         return likes

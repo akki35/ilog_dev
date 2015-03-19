@@ -109,7 +109,7 @@ def follow(request):
         if not created:
             rel.status = 'F'
             rel.save()
-            print('wtf')
+
         return HttpResponseRedirect('/')
     else:
         return HttpResponseRedirect(reverse('/'))

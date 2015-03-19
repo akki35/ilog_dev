@@ -82,15 +82,21 @@ def comment(request):
 @login_required
 # @ajax_required
 def like(request):
-    node_id = request.POST['node']
-    node = Node.objects.get(pk=node_id)
-    myuser = request.user
-    like = Activity.objects.filter(activity_type=Activity.LIKE, node=node_id, myuser=myuser)
-    if like:
-        myuser.profile.unotify_liked(node)
-        like.delete()
+    if request.method == 'POST':
+
+        node_id = request.POST['node']
+        node = Node.objects.get(pk=node_id)
+        myuser = request.user
+
+        try:
+            like = Activity.objects.get(activity='L', node=node_id, myuser=myuser)
+            myuser.myuserprofile.unotify_liked(node)
+            like.delete()
+        except Exception:
+            Activity.objects.create(activity='L', node=node_id, myuser=myuser)
+
+            likes = myuser.myuserprofile.notify_liked(node)
+
+        return HttpResponseRedirect('/')
     else:
-        like = Activity(activity_type=Activity.LIKE, feed=node_id, myuser=myuser)
-        like.save()
-        myuser.profile.notify_liked(node)
-    return HttpResponse(node.calculate_likes())
+        return HttpResponseRedirect('/')
