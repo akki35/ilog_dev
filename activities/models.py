@@ -32,9 +32,9 @@ class Notification(models.Model):
         (COMMENTED, 'Commented'),
         (ALSO_COMMENTED, 'Also commented')
     )
-    _LIKED_TEMPLATE = u'<a href="/{0}/">{1}</a> liked your post: <a href="/feeds/{2}/">{3}</a>'
-    _COMMENTED_TEMPLATE = u'<a href="/{0}/">{1}</a> commented on your post: <a href="/feeds/{2}/">{3}</a>'
-    _ALSO_COMMENTED_TEMPLATE = u'<a href="/{0}/">{1}</a> also commented on the post: <a href="/feeds/{2}/">{3}</a>'
+    _LIKED_TEMPLATE = u'<a href="/user/{0}/">{1}</a> liked your post: <a href="/feeds/{2}/">{3}</a>'
+    _COMMENTED_TEMPLATE = u'<a href="/user/{0}/">{1}</a> commented on your post: <a href="/feeds/{2}/">{3}</a>'
+    _ALSO_COMMENTED_TEMPLATE = u'<a href="/user/{0}/">{1}</a> also commented on the post: <a href="/feeds/{2}/">{3}</a>'
     from_user = models.ForeignKey(MyUser, related_name='+')
     to_user = models.ForeignKey(MyUser, related_name='+')
     date = models.DateTimeField(auto_now_add=True)
@@ -50,14 +50,14 @@ class Notification(models.Model):
     def __str__(self):
         if self.notification_type == self.LIKED:
             return self._LIKED_TEMPLATE.format(
-                escape(self.from_user.first_name),
+                escape(self.from_user.slug),
                 escape(self.from_user.get_full_name()),
                 self.node.pk,
                 escape(self.get_summary(self.node.post))
                 )
         elif self.notification_type == self.COMMENTED:
             return self._COMMENTED_TEMPLATE.format(
-                escape(self.from_user.first_name),
+                escape(self.from_user.slug),
                 escape(self.from_user.get_full_name()),
                 self.node.pk,
                 escape(self.get_summary(self.node.post))
@@ -65,7 +65,7 @@ class Notification(models.Model):
 
         elif self.notification_type == self.AlSO_COMMENTED:
             return self._ALSO_COMMENTED_TEMPLATE.format(
-                escape(self.from_user.first_name),
+                escape(self.from_user.slug),
                 escape(self.from_user.get_full_name()),
                 self.node.pk,
                 escape(self.get_summary(self.node.post))

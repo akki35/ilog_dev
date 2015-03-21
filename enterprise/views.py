@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from enterprise.forms import EnterpriseRegistrationForm, ProductForm
-from enterprise.models import Enterprise, EnterpriseProduct, Product
+from enterprise.models import *
 from nodes.models import Node
 from accounts.models import MyUser
 from django.contrib.auth.decorators import login_required
@@ -19,6 +19,9 @@ def register(request):
 
             operations = form.cleaned_data.get('operations')
             materials = form.cleaned_data.get('materials')
+
+            # t, created= Type.objects.get_or_create(name=types)
+            # a, creted = Asset.objects.get_or_create(name=assets)
             er = Enterprise.objects.create(enterprise=enterprise,)
             er.types = types
             er.assets = assets
@@ -55,7 +58,7 @@ def add_product(request):
                                                   caption=caption, product_image=product_image,
                                                   product_image_thumbnail=product_image)
 
-            return redirect('/enterprise/products/add_product')
+            return redirect('/enterprise/add_product')
     else:
         return render(request, 'products/add_product.html', {'form': ProductForm()})
 
@@ -91,6 +94,18 @@ def about(request, slug):
         'about': about,
         'page_enterprise': page_enterprise,
         'website': website,
+        })
+
+def capability(request, slug):
+    page_enterprise = get_object_or_404(Enterprise, slug=slug)
+    assets = page_enterprise.assets.all()
+    operations = page_enterprise.operations.all()
+
+    return render(request, 'products/capability.html', {
+        'assets': assets,
+        'operations': operations,
+        'page_enterprise': page_enterprise,
+
         })
 
 

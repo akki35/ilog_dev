@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+
+{% block content %}
+
+  {% if notifications %}
+  
+	
+	{% for notification in notifications %}
+      <li class="clearfix">
+        <a href="{% url 'myuserprofile:profile' notification.from_user.slug %}"><img src="{{ MEDIA_URL }}{{ notification.from_user.myuserprofile.get_image_thumbnail }}" class="user-picture"></a>
+        <div>
+          <small>{{ notification.date}}</small>
+          <p>{{ notification|safe }}</p>
+        </div>
+      </li>
+    {% empty %}
+      <li>{% trans 'You have no notification' %}</li>
+    {% endfor %}
+	
+  {% endif %}
+
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+
+{% block content %}
+
+	
+    <h2>{{page_enterprise}}: Capability</h2>
+	<li><h3>Operations we can perform:<h3></li>
+    {% if operations %}
+        <ul>
+        {% for o in operations %}
+			
+		
+          <li>{{o}}</li> 
+			
+						
+        {% endfor %}
+	{% else %}
+		<p>There are no operations yet.</p>
+	{% endif %}	
+	<li><h3>Assets we have:<h3></li>
+	{% if assets %}
+		{% for a in assets %}
+			
+		
+          <li>{{a}}</li> 
+			
+						
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>There are no assets yet.</p>
+    {% endif %}
+
+    
+
+{% endblock %}

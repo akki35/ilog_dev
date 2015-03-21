@@ -10,7 +10,7 @@ class ProfileForm(forms.ModelForm):
     job_position = forms.CharField(max_length=255, required=False)
     experience = forms.CharField(widget=forms.Textarea, max_length=5000)
     summary = forms.CharField(widget=forms.Textarea, max_length=5000)
-    skillset = forms.ModelChoiceField(queryset=Operation.objects.all(), required=False)
+    skillset = forms.ModelMultipleChoiceField(queryset=Operation.objects.all(), required=False)
 
     class Meta:
         model = MyUserProfile

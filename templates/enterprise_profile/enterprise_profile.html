@@ -16,6 +16,9 @@
 	<form method="get", action={% url 'enterprise:about' slug=slug %}>
 	<input type="submit" value="About" class="btn btn-success"/>
 	</form>
+	<form method="get", action={% url 'enterprise:capability' slug=slug %}>
+	<input type="submit" value="Capabilities" class="btn btn-success"/>
+	</form>
 	
 {% endblock %}
 
@@ -42,6 +45,7 @@
             {{member}}: {{member.myuserprofile.summary|linebreaks}}
           {% endfor %}
         </ul>
+		<
 		</div>
 	</section>
 {% endblock %}

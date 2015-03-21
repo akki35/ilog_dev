@@ -24,14 +24,14 @@ class Message(models.Model):
         message = message[:5000]
         current_user_message = Message(from_user=from_user,
                                        message=message,
-                                       user=from_user,
+                                       myuser=from_user,
                                        conversation=to_user,
                                        is_read=True)
         current_user_message.save()
         Message(from_user=from_user,
                 conversation=from_user,
                 message=message,
-                user=to_user).save()
+                myuser=to_user).save()
         return current_user_message
 
     @staticmethod
@@ -41,7 +41,7 @@ class Message(models.Model):
         users = []
         for conversation in conversations:
             users.append({
-                'user': MyUser.objects.get(pk=conversation['conversation']),
+                'myuser': MyUser.objects.get(pk=conversation['conversation']),
                 'last': conversation['last'],
                 'unread': Message.objects.filter(myuser=myuser, conversation__pk=conversation['conversation'],
                                                  is_read=False).count(),

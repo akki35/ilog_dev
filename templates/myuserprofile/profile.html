@@ -21,7 +21,6 @@
 			{% csrf_token %}
 			<input type="hidden" value="{{ page_user.id }}" name="to_user">
 			
-			{{relationship_status}}
 			<input type="submit" class="{% if relationship_status == 'F' %}btn{% else %}btn-primary{% endif %}" value="{% if relationship_status == 'F' %}Unfollow{% else %}Follow{% endif %}">
 		</form>
 	  </div>
@@ -46,6 +45,13 @@
             {{feed|linebreaks}}
           {% endfor %}
         </ul>
+		<ul class="stream">
+		<h1>skills of {{page_user}}</h1>
 		
+          {% for skills in skillset %}
+		    
+            {{skills}}
+          {% endfor %}
+        </ul>
 	</section>
 {% endblock %}

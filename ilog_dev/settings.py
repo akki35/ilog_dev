@@ -40,6 +40,7 @@ INSTALLED_APPS = (
     'enterprise',
     'accounts',
     'nodes',
+    'message',
     'myuserprofile',
     'enterprise_profile',
     'activities',

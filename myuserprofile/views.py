@@ -31,6 +31,7 @@ def profile(request, slug):
     context = RequestContext(request)
     data = {}
     page_user = get_object_or_404(MyUser, slug=slug)
+    page_user_profile = page_user.myuserprofile
     all_feeds = Node.get_feeds().filter(myuser=page_user)
     # paginator = Paginator(all_feeds, FEEDS_NUM_PAGES)
     # feeds = paginator.page(1)
@@ -38,7 +39,7 @@ def profile(request, slug):
     # if feeds:
     #     from_feed = feeds[0].id
 
-    # skillset = MyUserProfile.skillset_set.filter(myuserprofile_id=page_user.myuserprofile.id)
+    skillset = page_user_profile.skillset.all()
 
     try:
         relationship_status = Relationship.objects.get(to_user_id=page_user.myuserprofile.id,
@@ -47,7 +48,7 @@ def profile(request, slug):
         relationship_status = 'none'
     # relationship_status = Relationship.objects.get(to_user_id=page_user.myuserprofile.id,
     #                                                from_user_id=request.user.myuserprofile.id).status
-
+    data['skillset'] = skillset
     data['relationship_status'] = relationship_status
     data['feeds'] = all_feeds
     data['page_user'] = page_user
@@ -90,7 +91,7 @@ def profile_edit(request):
             'gender': myuser.myuserprofile.gender,
             'experience': myuser.myuserprofile.experience,
             'image': myuser.myuserprofile.image,
-            'skillset': MyUserProfile.skillset.objects.filter(myuserprofile_id=mup.id)
+            'skillset': mup.skillset.all()
 
             })
     return render(request, 'myuserprofile/profile_edit.html', {'form': form})
