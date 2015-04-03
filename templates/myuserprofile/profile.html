@@ -1,57 +1,96 @@
 {% extends "base.html" %}
 {% load imagekit %}
+{% load staticfiles %}
+{% load i18n %}
 
+{% block css %}
+	<link rel="stylesheet" type="text/css" href={% static 'css/home_styler.css' %}>
+	<link rel="stylesheet" type="text/css" href={% static 'css/feed_styler.css' %}>
+	<link rel="stylesheet" type="text/css" href={% static 'css/profile_styler.css' %}>
+{% endblock %}
 
-
-
-{% block header %}
-	<h1><span class='ilog'>i-Log</span></h1>
-    <nav class='nav_top'>
-        <ul class="ul_top">
-            <a href="/accounts/signup"><li class="link">Sign Up</li></a>
-        </ul>
-    </nav>
+{% block menu_links %}
+    <li class="link"><a class="a_menu" href="{% url 'home' %}">Home</a></li>
+    <li class="link"><a class="a_menu" href="{% url 'myuserprofile:profile' user.slug %}">Profile</a></li>
+    <li class="link"><a class="a_menu" href="{% url 'enterprise:enterprise_profile' user.enterprise.slug %}">Workplace</a></li>
+    <li class="link"><a class="a_menu" href="">Messages</a></li>
+    <li class="link right"><a class="a_menu" href="">People</a></li>
+    <li class="link right"><a class="a_menu" href="">Enterprises</a></li>
 {% endblock %}
 
 {% block content %}
-	<section id='content_home'>
-	  <div class="span3">
-		<h2>{{ page_user }}</h2>
-		<form action="{% if relationship_status == 'F' %}{% url 'myuserprofile:relationships:unfollow' %}{% else %}{% url 'myuserprofile:relationships:follow'  %}{% endif %}" method="POST">
-			{% csrf_token %}
-			<input type="hidden" value="{{ page_user.id }}" name="to_user">
-			
-			<input type="submit" class="{% if relationship_status == 'F' %}btn{% else %}btn-primary{% endif %}" value="{% if relationship_status == 'F' %}Unfollow{% else %}Follow{% endif %}">
-		</form>
-	  </div>
+	<section id="left_content">
+		<ul id="left_menu">
+			<li class="left_menu_button show" da>Details</li>
+			<li class="left_menu_button">Activity</li>
+			<li class="left_menu_button">Follows</li>
+			<li class="left_menu_button">Followers</li>
+		</ul>
+		<div id="people_list">
+			<p class="list_head">People you may know...</p>
 
-	      
-		  <img src="{{ MEDIA_URL }}{{ page_user.myuserprofile.get_image_thumbnail }}" class="picture">
-		  
-		  
-		  <li> Full name: {{page_user}}</li>
-          <li> works in: {{page_user.enterprise}}</li>
-		  <li> Gender: {{page_user.myuserprofile.gender}}</li>
-		  <li> Experience: {{page_user.myuserprofile.experience}}</li>
-		  <li> Summary: {{page_user.myuserprofile.summary}}</li>
-		  <li> {{page_user.myuserprofile.image}}</li>
-		  <img src="{{ MEDIA_URL }}{{ page_user.myuserprofile.get_image }}" class="picture">
-        
-		<ul class="stream">
-		<h1>Recent feeds by {{page_user}}</h1>
-		
-          {% for feed in feeds %}
-		    
-            {{feed|linebreaks}}
-          {% endfor %}
-        </ul>
-		<ul class="stream">
-		<h1>skills of {{page_user}}</h1>
-		
-          {% for skills in skillset %}
-		    
-            {{skills}}
-          {% endfor %}
-        </ul>
+		</div>
 	</section>
+
+	<section id="mid_content">
+		{% ifequal page_user user %}
+		<div class="edit">edit</div>
+		{% endifequal %}
+		<img class="user_thumb" src="/images/{{ page_user_profile.get_image }}" alt="{{ user.get_full_name }}">
+		<dl class="profile_box">
+			<dt class="info_name">Full Name :</dt>
+			<dd class="info_data">{{ page_user_profile.get_screen_name }}</dd>
+			<dt class="info_name">Works At :</dt>
+			<dd class="info_data ilog">{{ page_user.enterprise }}</dd>
+			<dt class="info_name">Position :</dt>
+			<dd class="info_data">{{ page_user_profile.job_position }}</dd>
+			<dt class="info_name">Gender :</dt>
+			<dd class="info_data">{% ifequal page_user_profile.gender 'M' %}Male{% else %}Female{% endifequal %}</dd>
+			<dt class="info_name">Date of Birth :</dt>
+			<dd class="info_data">{{ page_user_profile.job_position }}</dd>
+			<dt class="info_name">Experienced in :</dt>
+			<dd class="info_data wide">{{ page_user_profile.experience }}</dd>
+			<dt class="info_name">Skillset :</dt>
+			<dd class="info_data">{{ page_user_profile.skillset }}</dd>
+		</dl>
+	</section>
+
+	<section id="right_content">
+		<div id="enterprise_list">
+			<p class="list_head">Enterprises you may find interesting...</p>
+
+		</div>
+		<div id="product_list">
+			<p class="list_head">Products you may be looking for...</p>
+
+		</div>
+	</section>
+	
+{% endblock %}
+
+{% block footer %}
+	<ul>
+    	<li><a href="{% url 'logout' %}">Log Out</a></li>
+	</ul>
+{% endblock %}
+
+{% block scripts %}
+	<script type="text/javascript">
+		$('.left_menu_button').click(function(){
+			var $this = $(this);
+			$('.current').removeClass('current');
+			$this.addClass('current');
+			var url = $(this).data('link');
+			$('.content_home').load(url,hido);
+			
+			function hido(){
+				var hide = $('.content_home').find('.hidden');
+				var hide_this = hide.data('hide');
+				console.log(hide_this);
+				$('.'+hide_this).text('');
+			}
+
+		});
+
+	</script>
 {% endblock %}

@@ -1,0 +1,106 @@
+.hide{
+	display: none;
+}
+
+#left_content{
+	position: relative;
+	display: inline-block;
+	vertical-align: top;
+	width:15%;
+	text-align: right;
+	margin-right: 2%;
+}
+	#user_box{
+		margin: 0px 20px 20px 0px;
+	}
+		#user_thumb{
+			display: block;
+			height: 80px;
+			margin-bottom: 5px;
+		}
+			.img_user_thumb{
+				float: right;
+				width: 76px;
+				height: 76px;
+				border: 2px solid #9aa;
+			}
+		.name{
+			margin-bottom: 5px;
+			font-size: 1em;
+		}
+
+	#left_menu{
+		margin: 20px 20px 50px 0px;
+		line-height: 25px;
+		position: relative;
+	}
+		.left_menu_button{
+			position: relative;
+			left: 45%;
+			padding: 2px;
+			margin-bottom: 10px;
+			width: 50%;
+			text-align: center;
+			border: 1px solid #9aa;
+			background-color: rgba(226,246,246,0.5);
+			cursor: pointer;
+		}
+		.left_menu_button:hover{
+			background-color: rgba(226,246,246,0)
+		}
+		.show{
+			background-color: rgba(226,246,246,0);
+		}
+
+	#people_list{
+		border-top: 2px solid #9aa;
+		padding-top: 10px;
+	}
+		.list_head{
+			text-align: center;
+		}
+
+#mid_content{
+	display: inline-block;
+	vertical-align: top;
+	width:58%;
+}
+	#form_feed{
+		position: relative;
+		margin-bottom: 20px;
+	}
+		.input_feed{
+			z-index: 10;
+			right: 0px;
+			height: 30px;
+			padding: 5px;
+			text-align: justify;
+			resize: none;
+			width: 85%;
+  			box-shadow: 1px 1px 3px #9aa;
+		}
+		.submit_feed{
+			width: 9%;
+			height: 40px;
+			float: right;
+			background-color: rgba(0,0,0,0);
+  			box-shadow: 1px 1px 3px #9aa;
+		}
+
+
+#right_content{
+	float: right;
+	vertical-align: top;
+	width:17%;
+	margin-left: 50px;
+}
+	#enterprise_list{
+		margin-top: 60px;
+		border-top: 2px solid #9aa;
+		padding-top: 10px;
+	}
+	#product_list{
+		margin-top: 60px;
+		border-top: 2px solid #9aa;
+		padding-top: 10px;
+	}

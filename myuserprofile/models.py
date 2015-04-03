@@ -33,11 +33,11 @@ class MyUserProfile(models.Model):
         return self.myuser.get_full_name()
 
     def get_screen_name(self):
-        return self.myuser.get_full_name
+        return self.myuser.get_full_name()
 
     def get_image(self):
         default_image = 'user/main/user.jpg'
-        if self.image:
+        if self.image.url:
             return self.image
         else:
             return default_image
@@ -135,7 +135,6 @@ class ActiveRelationshipManager(models.Manager):
 
 RELATIONSHIP_FOLLOWING = 'F'
 RELATIONSHIP_BLOCKED = 'B'
-RELATIONSHIP_NONE = 'N'
 
 
 class Relationship(models.Model):

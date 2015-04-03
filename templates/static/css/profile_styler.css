@@ -1,0 +1,38 @@
+.edit{
+	text-align: right;
+	right: 0px;
+	font-size: 1.2em;
+	color: #157;
+	cursor: pointer;
+	margin-bottom: 10px;
+}
+.profile_box{
+	width: 60%;
+}
+	.user_thumb{
+		float: right;
+		width: 150px;
+		height: 150px;
+		box-shadow: 0px 0px 5px 2px #157;
+	}
+	.info_name{
+		display: inline-block;
+		text-align: right;
+		color: #666;
+		width: 30%;
+		font-size: 1.2em;
+		margin-bottom: 10px;
+	}
+	.info_data{
+		display: inline-block;
+		width: 60%;
+		margin-left: 20px;
+		font-size: 1.3em;
+		text-align: right;
+		vertical-align: top;
+		max-height: 100px;
+		overflow: auto;
+		margin-bottom: 10px;
+	}
+	.wide{
+	}
