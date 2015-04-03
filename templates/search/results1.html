@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+
+{% block content %}
+    <h2>Enterprises</h2>
+    {% if resultse %}
+        <ul>
+        {% for result in resultse %}
+			
+            <li><a href="{{ post.get_absolute_url }}">{{ result }}</a></li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>There are no Enterprises.</p>
+    {% endif %}
+	
+	<h2>People</h2>
+    {% if resultsp %}
+        <ul>
+        {% for result in resultsp %}
+			
+            <li><a href="{{ post.get_absolute_url }}">{{ result }}</a></li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>There are no people.</p>
+    {% endif %}
+	
+	<h2>Products</h2>
+    {% if resultspr %}
+        <ul>
+        {% for result in resultspr %}
+			
+            <li><a href="{{ post.get_absolute_url }}">{{ result }}</a></li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>There are no products.</p>
+    {% endif %}
+	
+	<h2>Feeds & Articles</h2>
+    {% if resultsn %}
+        <ul>
+        {% for result in resultsn %}
+			
+            <li><a href="{{ post.get_absolute_url }}">{{ result }}</a></li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>There are no posts.</p>
+    {% endif %}
+
+    
+{% endblock %}

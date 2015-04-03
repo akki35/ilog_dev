@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+	
+ 
+
+
+{% block content %}
+    <h2>Enterprises</h2>
+    {% if qquery %}
+        <ul>
+        {% for result in c %}
+			
+            <li><a href="{{ post.get_absolute_url }}">{{ result.enterprise }}</a></li>
+        {% endfor %}
+        </ul>
+		
+	{% else %}
+	fuck c
+    {% endif %}
+	{% if d %}
+        <ul>
+        {% for result in d %}
+			
+            <li><a href="{{ post.get_absolute_url }}">{{ result.enterprise }}</a></li>
+        {% endfor %}
+        </ul>
+	{% else %}
+	fuck d
+    {% endif %}
+	{% if e %}
+        <ul>
+        {% for result in e %}
+			
+            <li><a href="{{ post.get_absolute_url }}">{{ result.enterprise }}</a></li>
+        {% endfor %}
+        </ul>
+	{% else %}
+	fuck e
+    {% endif %}
+	{% if f %}
+	{{ fc }}
+        <ul>
+        {% for result in f %}
+			
+            <li><a href="{{ post.get_absolute_url }}">{{ result.enterprise }}</a></li>
+        {% endfor %}
+        </ul>
+	{% else %}
+	fuck f
+    {% endif %}
+	{% if g %}
+	
+        <ul>
+        {% for result in g %}
+			
+            <li><a href="{{ post.get_absolute_url }}">{{ result.enterprise }}</a></li>
+        {% endfor %}
+        </ul>
+	{% else %}
+	fuck g
+    {% endif %}
+	{% if h %}
+	
+        <ul>
+        {% for result in h %}
+			
+            <li><a href="{{ post.get_absolute_url }}">{{ result }}</a></li>
+        {% endfor %}
+        </ul>
+	{% else %}
+	fuck h
+    {% endif %}
+	
+	
+
+    
+{% endblock %}

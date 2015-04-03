@@ -1,55 +1,45 @@
 {% extends 'base.html' %}
 {% load i18n %}
 
+	
+ 
+
 
 {% block content %}
     <h2>Enterprises</h2>
-    {% if resultse %}
+    {% if qquery %}
         <ul>
-        {% for result in resultse %}
+        {% for result in qquery %}
 			
-            <li><a href="{{ post.get_absolute_url }}">{{ result }}</a></li>
+            <li><a href="{{ post.get_absolute_url }}">{{ result.first_name }}</a></li>
         {% endfor %}
         </ul>
-    {% else %}
-        <p>There are no Enterprises.</p>
+		
+	{% else %}
+	fuck q
+    {% endif %}
+	{% if pquery %}
+        <ul>
+        {% for result in pquery %}
+			
+            <li><a href="{{ post.get_absolute_url }}">{{ result.enterprise }}</a></li>
+        {% endfor %}
+        </ul>
+	{% else %}
+	fuck p
+    {% endif %}
+	{% if rquery %}
+        <ul>
+        {% for result in rquery %}
+			
+            <li><a href="{{ post.get_absolute_url }}">{{ result.name }}</a></li>
+        {% endfor %}
+        </ul>
+	{% else %}
+	fuck r
     {% endif %}
 	
-	<h2>People</h2>
-    {% if resultsp %}
-        <ul>
-        {% for result in resultsp %}
-			
-            <li><a href="{{ post.get_absolute_url }}">{{ result }}</a></li>
-        {% endfor %}
-        </ul>
-    {% else %}
-        <p>There are no people.</p>
-    {% endif %}
 	
-	<h2>Products</h2>
-    {% if resultspr %}
-        <ul>
-        {% for result in resultspr %}
-			
-            <li><a href="{{ post.get_absolute_url }}">{{ result }}</a></li>
-        {% endfor %}
-        </ul>
-    {% else %}
-        <p>There are no products.</p>
-    {% endif %}
-	
-	<h2>Feeds & Articles</h2>
-    {% if resultsn %}
-        <ul>
-        {% for result in resultsn %}
-			
-            <li><a href="{{ post.get_absolute_url }}">{{ result }}</a></li>
-        {% endfor %}
-        </ul>
-    {% else %}
-        <p>There are no posts.</p>
-    {% endif %}
 
     
 {% endblock %}
