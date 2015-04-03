@@ -1,0 +1,29 @@
+{% for node in feed_nodes %}
+<article class="feed_box" >
+	<div class="feed_date">{{ node.date }}</div>
+	<div class="feed_data">
+		<div class="feed_body">{{ node.post }}</div>
+		<div class="feed_response_front">
+			<div class="response_support">
+				<div class="div_button">Support</div>
+				<div class="number">+ {{ node.likes }}</div>
+			</div>
+			<div class="response_replies">
+				<div class="div_button">Replies</div>
+				<div class="number">&laquo; {{ node.comments }}</div>
+				{% if node.comments %}
+				{% endif %}
+			</div>
+			<!--
+			<div class="response_write">
+				<form action="">
+					<input type="text" class="form-text" name="" placeholder="Give a reply">
+				</form>
+				<div class="div_button">Reply</div>
+				<div class="number">&laquo; {{ node.comments }}</div>
+			</div>
+			-->
+		</div>
+	</div>
+</article>
+{% endfor %}

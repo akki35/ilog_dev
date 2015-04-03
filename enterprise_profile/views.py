@@ -54,9 +54,9 @@ def enterprise_profile(request, slug):
 
     return render(request, 'enterprise_profile/enterprise_profile.html', {
         'page_enterprise': page_enterprise,
+        'profile':EnterpriseProfile.objects.get(enterprise=page_enterprise),
         'members': members,
         'slug': slug
-
         })
     # return HttpResponseRedirect(reverse('enterprise:enterprise_profile'),  {
     #     'page_enterprise': page_enterprise,

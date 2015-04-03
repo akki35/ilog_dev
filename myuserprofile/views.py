@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404, HttpResponseRedirect, render_to_response
-from enterprise.models import Enterprise, Operation
+from enterprise.models import Enterprise
 from accounts.models import MyUser
 from django.contrib.auth.decorators import login_required
 from nodes.views import nodes
@@ -8,16 +8,20 @@ from django.core.paginator import Paginator
 from myuserprofile.forms import ProfileForm
 from myuserprofile.models import MyUserProfile, Relationship
 from django.core.urlresolvers import reverse
+from PIL import Image
 from django.template import RequestContext
-
 
 
 def home(request):
     if request.user.is_authenticated():
-        # nodes = Node.objects.all().order_by('-date')
-        return nodes(request)
+        feed_nodes = Node.objects.filter(category='F')
+        comment_nodes = Node.objects.filter(myuser=request.user, category='C')
+        c = {'user':request.user,
+            'profile':MyUserProfile.objects.get(myuser=request.user),
+            'feed_nodes':feed_nodes}
+        return render_to_response ('user_home.html', c)
     else:
-        return render(request, 'core/cover.html')
+        return render(request, 'home.html')
 
 FEEDS_NUM_PAGES=8
 @login_required
@@ -29,8 +33,8 @@ def network(request):
 # @login_required
 def profile(request, slug):
     context = RequestContext(request)
-    data = {}
     page_user = get_object_or_404(MyUser, slug=slug)
+    user = request.user
     page_user_profile = page_user.myuserprofile
     all_feeds = Node.get_feeds().filter(myuser=page_user)
     # paginator = Paginator(all_feeds, FEEDS_NUM_PAGES)
@@ -38,7 +42,7 @@ def profile(request, slug):
     # from_feed = -1
     # if feeds:
     #     from_feed = feeds[0].id
-
+    feed_nodes = Node.objects.filter(myuser=request.user, category='F')
     skillset = page_user_profile.skillset.all()
 
     try:
@@ -48,12 +52,23 @@ def profile(request, slug):
         relationship_status = 'none'
     # relationship_status = Relationship.objects.get(to_user_id=page_user.myuserprofile.id,
     #                                                from_user_id=request.user.myuserprofile.id).status
-    data['skillset'] = skillset
-    data['relationship_status'] = relationship_status
-    data['feeds'] = all_feeds
-    data['page_user'] = page_user
-    # data['skillset'] = skillset
+    data={'skillset':skillset,
+        'relationship_status':relationship_status,
+        'feeds':all_feeds,
+        'user':user,
+        'page_user':page_user,
+        'page_user_profile':page_user_profile,
+        'nodes':feed_nodes
+    }
     return render_to_response('myuserprofile/profile.html', data, context_instance=context)
+
+def skillset(request, slug):
+    context = RequestContext(request)
+    page_user = get_object_or_404(MyUser, slug=slug)
+    page_user_profile = page_user.myuserprofile
+    skillset = page_user_profile.skillset.all()
+    data={'skillset':skillset}
+    return render_to_response('myuserprofile/skillset.html', data, context_instance=context)
 
 @login_required
 def profile_edit(request):
@@ -129,9 +144,9 @@ def block(request):
             rel.status = 'blocked'
             rel.save()
         # if request.is_ajax():
-		# 	return HttpResponse(status=200)
-		# else:
-		# 	return HttpResponseRedirect(reverse('said_user:profile', kwargs={'username': to_user.username}))
+        #   return HttpResponse(status=200)
+        # else:
+        #   return HttpResponseRedirect(reverse('said_user:profile', kwargs={'username': to_user.username}))
     else:
         return HttpResponseRedirect(reverse('main:home'))
 
@@ -145,9 +160,9 @@ def unfollow(request):
             to_user=to_user).update(status='N')
 
         # if request.is_ajax():
-		# 	return HttpResponse(status=200)
-		# else:
-		# 	return HttpResponseRedirect(reverse('said_user:profile', kwargs={'username': to_user.username}))
+        #   return HttpResponse(status=200)
+        # else:
+        #   return HttpResponseRedirect(reverse('said_user:profile', kwargs={'username': to_user.username}))
         print('why')
         return HttpResponseRedirect('/')
 
@@ -166,9 +181,9 @@ def unblock(request):
             to_user=to_user).update(status='none')
 
         # if request.is_ajax():
-		# 	return HttpResponse(status=200)
-		# else:
-		# 	return HttpResponseRedirect(reverse('said_user:profile', kwargs={'username': to_user.username}))
+        #   return HttpResponse(status=200)
+        # else:
+        #   return HttpResponseRedirect(reverse('said_user:profile', kwargs={'username': to_user.username}))
 
     else:
         return HttpResponseRedirect(reverse('main:home'))

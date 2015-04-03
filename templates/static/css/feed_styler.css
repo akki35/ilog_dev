@@ -1,0 +1,54 @@
+.feed_box{
+  width: 100%;
+  text-align: left;
+  margin-bottom: 15px;
+}
+  .feed_user{
+    padding: 7px 10px;
+  }
+  .feed_user a{
+    color: #157;
+  }
+  .feed_date{
+    float: right;
+    font: 0.6em 'Tahoma';
+    color: #555;
+    padding: 7px 0px;
+  }
+  .feed_data{
+    background-color: #fafafa;
+    box-shadow: 1px 1px 3px #999;
+  }
+    .feed_body{
+      color: #223;
+      text-align: justify;
+      padding: 5px 10px;
+      margin-bottom: 10px;
+      display: inline-block;
+      width: 80%;
+    }
+  .feed_response{
+    font-size: 0.9em;
+    margin-left: 10%;
+  }
+    .comment_user{
+      color: #157;
+    }
+    .input_comment{
+      resize: none;
+      vertical-align: top;
+      border: 1px solid #99a;
+      width: 75%;
+    }
+     .div_button{
+       display: inline-block;
+       vertical-align: top;
+       float: right;
+       color: #fff;
+       background-color: #4181a1;
+       padding: 2px 10px;
+       cursor: pointer;
+       width: 50px;
+     }
+      .div_button:hover{
+      }

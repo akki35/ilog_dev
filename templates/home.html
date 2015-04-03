@@ -1,24 +1,23 @@
 {% extends "base.html" %}
+{% load staticfiles %}
 
-{% block header %}
-	<h1><span class='ilog'>i-Log</span></h1>
-    <nav class='nav_top'>
-        <ul class="ul_top">
-            <a href="/accounts/signup"><li class="link">Sign Up</li></a>
-        </ul>
-    </nav>
+<!--
+	This is the home page for a guest user.
+-->
+
+{% block css %}
+	<link rel="stylesheet" type="text/css" href={% static 'css/home_styler.css' %}>
+{% endblock %}
+
+{% block menu_links %}
+    <li class="link"><a href="{% url 'logup' %}">Log Up</a></li>
+    <li class="link"><a href="{% url 'login' %}">Log In</a></li>
 {% endblock %}
 
 {% block content %}
 	<section id='content_home'>
-		<article>
-			You are ready to enter...?
-		</article>
-		<li>
-            <a href="{% url 'profile' myuser.first_name %}">{{ myuser.myuserprofile.get_full_name }}</a>
-        </li>
-		<section>
-			We are not!
-		</section>
+		<p>
+			This is something about the company and why you should register...
+		</p>
 	</section>
 {% endblock %}

@@ -1,0 +1,118 @@
+*{
+	margin: 0;
+	padding: 0;
+	border: 0;
+}
+
+div{
+	display: block;
+}
+
+li{
+	list-style: none;
+}
+
+a{
+	text-decoration: none;
+	color: #008;
+}
+
+body{
+	margin: auto;
+	background: #fcfffc;
+	width: 100%;
+}
+
+.container{
+	position: relative;
+	width: 100%;
+	min-width: 900px;
+	font-family: 'Nyala','Lucida Sans Unicode';
+	font-size: 1.1em;
+}
+
+	.header_top{
+		width: 100%;
+		margin-bottom: 5px;
+		height: 50px;
+		background: rgba(226,246,246,1);
+		font-family: 'Exo','Neuropolitical','Lithos Pro';
+		font-size: 1em;
+	}
+		h1{
+			margin-left: 50px;
+			z-index: -1;
+			display: inline-block;
+		}
+			.ilog{
+				color: #157;
+			}
+
+		#search{
+			float: right;
+			width: 49%;
+		}
+			#search-text{
+				margin-top: 4px;
+				height: 40px;
+				width: 80%;
+				padding-left: 25px;
+				border: 1px solid #9aa;
+				border-radius: 15px;
+			}
+			#search-button{
+				margin-top: 4px;
+				height: 40px;
+				border: 1px solid #9aa;
+				border-radius: 5px;
+				width: 10%;
+				color: #157;
+				background: rgba(226,246,246,1);
+			}
+
+		.nav_top{
+			font-family: 'Omicron Zeta';
+			margin-bottom: 20px;
+		}
+			.ul_top{
+				display: block;
+			}
+				.link{
+					padding: 5px 10px;
+					display: inline-block;
+					margin: 0% 1%;
+					box-shadow: -1px 1px 2px #99a;
+				}
+				.right{
+					float: right;
+				}
+				.link:hover{
+					border-bottom: 1px solid #777;
+				}
+
+	.content{
+		width: 95%;
+		margin: auto;
+		padding: 5px;
+		min-height: 450px;
+	}
+		
+	hr{
+		margin: 5px auto;
+	}
+
+	.hr_line{
+		width: 98%;
+		border-style: inset;
+		border: 1px solid;
+	}
+
+	.footer_bottom{
+		padding: 5px;
+		text-align: right;
+		width: 95%;
+		margin: auto;
+	}
+		#brandline{
+			font: status-bar;
+		}

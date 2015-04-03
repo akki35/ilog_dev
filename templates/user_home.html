@@ -20,11 +20,14 @@
 
 {% block content %}
 	<section id="left_content">
+		<div id="user_box">
+			<a id="img_user_thumb" href=""><img class="img_profile_thumb" src="/images/{{ profile.get_image_thumbnail }}" alt="{{ user.get_full_name }}"></a>
+			<div class="name"><a href="">{{ user.get_full_name }}</a></div>
+			<div class="name ent"><a href="">{{ user.enterprise }}</a></div>
+		</div>
 		<ul id="left_menu">
-			<li class="left_menu_button show" da>Details</li>
-			<li class="left_menu_button">Members</li>
-			<li class="left_menu_button">Assets</li>
-			<li class="left_menu_button">Products</li>
+			<li class="left_menu_button show">Feeds</li>
+			<li class="left_menu_button">Articles</li>
 		</ul>
 		<div id="people_list">
 			<p class="list_head">People you may know...</p>
@@ -33,20 +36,36 @@
 	</section>
 
 	<section id="mid_content">
-		<div class="edit">edit</div>
-		<img class="user_thumb" src="/images/{{ profile.get_image }}" alt="{{ page_enterprise }}">
-		<dl class="profile_box">
-			<dt class="info_name">Company Name :</dt>
-			<dd class="info_data">{{ page_enterprise }}</dd>
-			<dt class="info_name">Type :</dt>
-			<dd class="info_data ilog">{{ page_enterprise.types }}</dd>
-			<dt class="info_name">About :</dt>
-			<dd class="info_data wide">{{ profile.about }}</dd>
-			<dt class="info_name">Address :</dt>
-			<dd class="info_data wide">{{ profile.address }}</dd>
-			<dt class="info_name">Contact :</dt>
-			<dd class="info_data">{{ profile.contact }}</dd>
-		</dl>
+		<form id="form_feed" role="form" action="{% url 'nodes:post' %}" method="POST">
+			{% csrf_token %}
+			<textarea class="input_feed" form="form_feed" autofocus="autofocus" name="feed" placeholder="Got something..? Spit it out.."></textarea>
+			<input class="submit_feed" type="submit" value="Feed">
+		</form>
+
+	{% for node in feed_nodes %}
+		<article class="feed_box" >
+			<div class="feed_user">
+				<a href="">{{ node.myuser }}</a> | <a href="">{{ node.myuser.enterprise }}</a>
+				<div class="feed_date">{{ node.date }}</div>
+			</div>
+			<div class="feed_data">
+				<div class="feed_body">{{ node.post }}</div>
+				<div class="feed_response">
+				{% for comments in node.get_comments %}
+					<div class="comments">
+						<div class="comment_user">
+							{{ comments.myuser}} | {{ comments.myuser.enterprise}}
+						</div>
+						{{ comments.post }}
+					</div>
+				{% endfor %}
+					<textarea class="input_comment" name="comment" placeholder="aao to">
+					</textarea>
+					<div class="div_button">Reply</div>
+				</div>
+			</div>
+		</article>
+	{% endfor %}
 	</section>
 
 	<section id="right_content">
@@ -66,25 +85,4 @@
 	<ul>
     	<li><a href="{% url 'logout' %}">Log Out</a></li>
 	</ul>
-{% endblock %}
-
-{% block scripts %}
-	<script type="text/javascript">
-		$('.left_menu_button').click(function(){
-			var $this = $(this);
-			$('.current').removeClass('current');
-			$this.addClass('current');
-			var url = $(this).data('link');
-			$('.content_home').load(url,hido);
-			
-			function hido(){
-				var hide = $('.content_home').find('.hidden');
-				var hide_this = hide.data('hide');
-				console.log(hide_this);
-				$('.'+hide_this).text('');
-			}
-
-		});
-
-	</script>
 {% endblock %}

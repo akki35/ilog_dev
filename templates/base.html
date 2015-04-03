@@ -1,57 +1,48 @@
 {% load staticfiles %}
 {% load humanize %}
 
+<!--
+    This is the 'base' template.
+    
+    # 'home', 'user_home', 'login', 'logup' extend this
+-->
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <link href={% static 'css/styler.css' %} media="all" rel="stylesheet" type="text/css" />
-    <script type="text/javascript" src={% static 'js/jquery-2.1.1.js' %}></script>
+    <link href={% static 'css/base_styler.css' %} media="all" rel="stylesheet" type="text/css" />
     {% block css %}{% endblock %}
-    <title>{% block title %}Welcome to i-Log{% endblock %}</title>
+    <script type="text/javascript" src={% static 'js/jquery-2.1.1.js' %}></script>
+    {% block js %}{% endblock %}
+    <title>{% block title %}Welcome to the Industry Logger{% endblock %}</title>
 </head>
 
 <body>
-	
-
     <div class="container">
+
         <header class='header_top'>
-            {% block header %}
-            Here comes heading...
-			
-			
-            {% endblock %}
-			</ul>
-              {% if not hide_search %}
-                <form class="navbar-form navbar-left" role="search" action="{% url 'search' %}">
-                  <div class="input-group" style="width:300px">
-                    <input type="text" class="form-control" name="q" placeholder="Search">
-                    <span class="input-group-btn">
-                      <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
-                    </span>
-                  </div>
-                </form>
-              {% endif %}
-			  
-			  
-			  
-              <ul class="nav navbar-nav navbar-right">
+        {% block header %}
+            <a href=""><h1 class='ilog'>Industry logger</h1></a>
+        {% endblock %}
+        {% if not hide_search %}
+            <form id="search" action="{% url 'search' %}">
+                <input type="text" id="search-text" name="q" placeholder="Search">
+                <input type="submit" id="search-button" value="Go">
+            </form>
+        {% endif %}
         </header>
-		{% if user.is_authenticated %}
-		  <li><a href="{% url 'myuserprofile:profile' user.slug %}">{{ user }}</a></li>
-            
-        
-		  <li><a href="{% url 'enterprise:enterprise_profile' user.enterprise.slug %}">{{ user.enterprise }}</a></li>
-            
-          <li><a href="{% url 'logout' %}" title="Log Out">Log Out</a></li>
-		  
-        {% else %}
-		  <li><a href="{% url 'signup' %}" title="SignUp">SignUp</a></li>
-		{% endif %}
+
+        <nav class='nav_top'>
+            <ul class="ul_top">
+            {% block menu_links %}
+
+            {% endblock %}
+            </ul>
+        </nav>
 
         <section class='content'>
             {% block content %}
-            There goes content...
             {% endblock %}
         </section>
 
@@ -59,19 +50,28 @@
 
         <footer class='footer_bottom'>
             {% block footer %}
-            ...and the footer follows!
             {% endblock %}
+            <p id="brandline"><i>from a billion dollar industry</i></p>
         </footer>
     </div>
 
     <script type="text/javascript">
-        $(function () {
+        $(setDimensions);
+        $(window).resize(setDimensions);
+        function setDimensions () {
             var window_width = $(window).width();
             var window_height = $(window).height();
-            var footer_height = $('.footer_bottom').height();
-            var header_height = $('.header_top').height();
+            var footer_height = $('.footer_bottom').outerHeight(true);
+            var header_height = $('.header_top').outerHeight(true);
+
+            var side_link_height = ($('.content').height() - $('.header_user').outerHeight(true))/5;
+
             $('.container').css({'min-height':window_height});
-        });
+            $('.side_link').css({'line-height':side_link_height+'px'});
+            
+        }
     </script>
+    {% block scripts %}
+    {% endblock %}
 </body>
 </html>

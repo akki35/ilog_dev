@@ -9,7 +9,7 @@ def unique_email_validator(value):
         raise ValidationError('User with this Email already exists.')
 
 
-class SignupForm(forms.ModelForm):
+class LogupForm(forms.ModelForm):
     email = forms.EmailField(widget=forms.EmailInput(attrs={'class': 'form-control'}))
     enterprise = forms.ModelChoiceField(queryset=Enterprise.objects.all(),
                                         help_text="Choose from existing"
@@ -28,11 +28,11 @@ class SignupForm(forms.ModelForm):
         fields = ['email', 'enterprise', 'first_name', 'last_name', 'password', 'confirm_password']
 
     def __init__(self, *args, **kwargs):
-        super(SignupForm, self).__init__(*args, **kwargs)
+        super(LogupForm, self).__init__(*args, **kwargs)
         self.fields['email'].validators.append(unique_email_validator)
 
     def clean(self):
-        super(SignupForm, self).clean()
+        super(LogupForm, self).clean()
         password = self.cleaned_data.get('password')
         confirm_password = self.cleaned_data.get('confirm_password')
         if password and password != confirm_password:
