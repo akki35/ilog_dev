@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404, render_to_response,RequestContext
 from nodes.models import Node
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.decorators import login_required
@@ -43,18 +43,19 @@ def _html_feeds(last_feed, user, csrf_token, feed_source='all'):
 @login_required
 # @ajax_required
 def post(request):
-    last_feed = request.POST.get('last_feed')
-    myuser = request.user
-    csrf_token = str(csrf(request)['csrf_token'])
-    node = Node()
-    node.myuser = myuser
-    post = request.POST['post']
-    post = post.strip()
-    if len(post) > 0:
-        node.post = post[:255]
-        node.save()
-    html = _html_feeds(last_feed, myuser, csrf_token)
-    return HttpResponse(html)
+    if request.method == 'POST':
+
+        myuser = request.user
+        csrf_token = str(csrf(request)['csrf_token'])
+        post = request.POST['post']
+        feed = Node.objects.create(post=post, myuser=myuser)
+        feed.save()
+
+        return render_to_response("user_home.html", context_instance=RequestContext(request))
+    else:
+        return render_to_response("user_home.html", context_instance=RequestContext(request))
+    # html = _html_feeds(post, myuser, csrf_token)
+    # return HttpResponse(html)
 
 @login_required
 # @ajax_required

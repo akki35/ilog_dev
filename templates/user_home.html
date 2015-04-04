@@ -38,9 +38,28 @@
 	<section id="mid_content">
 		<form id="form_feed" role="form" action="{% url 'nodes:post' %}" method="POST">
 			{% csrf_token %}
-			<textarea class="input_feed" form="form_feed" autofocus="autofocus" name="feed" placeholder="Got something..? Spit it out.."></textarea>
+			<textarea class="input_feed" form="form_feed" autofocus="autofocus" name="feed" placeholder="Post a feed.."></textarea>
 			<input class="submit_feed" type="submit" value="Feed">
 		</form>
+	
+ <div class="compose">
+    <h2>{% trans "Compose a new post" %}</h2>
+    <form role="form" id="compose-form">
+      {% csrf_token %}
+      <input type="hidden" name="last_feed">
+      <div class="form-group">
+        <textarea class="form-control" rows="3" name="post"></textarea>
+      </div>
+      <div class="form-group">
+	  <form action="{% url 'nodes:post' %}" method="POST">
+        <button type="button" class="btn btn-primary btn-post">
+          <span class="glyphicon glyphicon-send"></span> {% trans 'Post' %}
+        </button>
+        <button type="button" class="btn btn-default btn-cancel-compose">{% trans 'Cancel' %}</button>
+        <span class="help-block help-count pull-right">255</span>
+      </div>
+    </form>
+  </div>
 
 	{% for node in feed_nodes %}
 		<article class="feed_box" >

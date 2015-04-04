@@ -7,12 +7,12 @@ from activities.models import Activity
 
 
 class FeedManager(models.Manager):
-    def get_query_set(self):
+    def get_queryset(self):
         return super(FeedManager, self).get_queryset().filter(parent=None, category='F')
 
 
 class ArticleManager(models.Manager):
-    def get_query_set(self):
+    def get_queryset(self):
         return super(ArticleManager, self).get_queryset().filter(parent=None, category='A')
 
 
@@ -128,6 +128,11 @@ class Node(models.Model):
         self.comments = Node.objects.filter(parent=self).count()
         self.save()
         return feed_comment
+
+    def create(self, myuser, post):
+        feed = Node.objects.create(post=post, myuser=myuser)
+        feed.save()
+        return feed
 
     def set_rank(self):
         gravity = 1.2

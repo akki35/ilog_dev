@@ -14,7 +14,7 @@ from django.template import RequestContext
 
 def home(request):
     if request.user.is_authenticated():
-        feed_nodes = Node.objects.filter(category='F')
+        feed_nodes = Node.get_feeds()
         comment_nodes = Node.objects.filter(myuser=request.user, category='C')
         c = {'user':request.user,
             'profile':MyUserProfile.objects.get(myuser=request.user),
@@ -52,13 +52,13 @@ def profile(request, slug):
         relationship_status = 'none'
     # relationship_status = Relationship.objects.get(to_user_id=page_user.myuserprofile.id,
     #                                                from_user_id=request.user.myuserprofile.id).status
-    data={'skillset':skillset,
-        'relationship_status':relationship_status,
-        'feeds':all_feeds,
-        'user':user,
-        'page_user':page_user,
-        'page_user_profile':page_user_profile,
-        'nodes':feed_nodes
+    data={'skillset': skillset,
+          'relationship_status': relationship_status,
+          'feeds': all_feeds,
+          'user': user,
+          'page_user': page_user,
+          'page_user_profile': page_user_profile,
+          'nodes': feed_nodes
     }
     return render_to_response('myuserprofile/profile.html', data, context_instance=context)
 

@@ -3,7 +3,7 @@ Django settings for ilog_dev project.
 
 For more information on this file, see
 https://docs.djangoproject.com/en/1.7/topics/settings/
-
+# lets understand git
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.7/ref/settings/
 """
@@ -40,6 +40,7 @@ INSTALLED_APPS = (
     'enterprise',
     'accounts',
     'nodes',
+    'message',
     'myuserprofile',
     'enterprise_profile',
     'activities',
@@ -69,8 +70,13 @@ WSGI_APPLICATION = 'ilog_dev.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'mysql.connector.django',
+        'NAME': 'ilog_dev_db',
+        'USER': 'root',
+        'PASSWORD': '',
+        'HOST': 'localhost',
+        'PORT': '3306',
+        'autocommit': True,
     }
 }
 
@@ -98,7 +104,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 
 LOGIN_REDIRECT_URL = '/'
-LOGIN_URL = '/login/'
 
 STATIC_URL = '/static/'
 
@@ -113,6 +118,9 @@ TEMPLATE_DIRS = (
     os.path.join(BASE_DIR, 'templates'),
     )
 
-#STATIC_ROOT = os.path.join(ROOT_DIR, 'templates')
+STATIC_ROOT = os.path.join(ROOT_DIR, 'templates')
 
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'templates/static')]
+# STATIC_URL = '/static/'
+
+STATICFILES_DIRS = [os.path.join(ROOT_DIR, 'templates/static')]
+

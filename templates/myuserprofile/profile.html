@@ -51,7 +51,9 @@
 			<dt class="info_name">Experienced in :</dt>
 			<dd class="info_data wide">{{ page_user_profile.experience }}</dd>
 			<dt class="info_name">Skillset :</dt>
-			<dd class="info_data">{{ page_user_profile.skillset }}</dd>
+			<dd class="info_data">{% for skills in skillset %}		    
+									{{skills}}
+								  {% endfor %}</dd>
 		</dl>
 	</section>
 
