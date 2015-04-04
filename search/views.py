@@ -4,6 +4,7 @@ from enterprise.models import *
 from accounts.models import MyUser
 from nodes.models import Node
 from myuserprofile.models import MyUserProfile
+from enterprise_profile.models import EnterpriseProfile
 
 
 def search(request):     # dynamic search on each page requested through ajax
@@ -51,70 +52,105 @@ def search(request):     # dynamic search on each page requested through ajax
         return render(request, 'search/search.html')
 
 
-# def search(request):
-#     if 'q' in request.GET:
-#         querystring = request.GET.get('q')
-#         terms = querystring.split()
-#         if not terms:
-#             return redirect('/search/')
-#
-#         c=d=e=f=g=h=None
-#         cc=dc=ec=fc=gc=hc=0
-#         for term in terms:
-#             type = Type.objects.filter(name__icontains=term)
-#             asset = Asset.objects.filter(name__icontains=term)
-#             product = Product.objects.filter(name__icontains=term)
-#             operation = Operation.objects.filter(name__icontains=term)
-#             material = Material.objects.filter(name__icontains=term)
-#
-#             if type:
-#                 for t in type:
-#                     co = Enterprise.objects.filter(types=type)
-#                     cc = co.count()
-#
-#                     if co is None:
-#                         c = co
-#                     else:
-#                         c = c & co
-#
-#             if asset:
-#                 do = Enterprise.objects.filter(assets=asset)
-#                 dc = do.count()
-#
-#             if product:
-#                 e = Enterprise.objects.filter(products=product)
-#                 ec = e.count()
-#
-#             if operation:
-#                 fo = Enterprise.objects.filter(operations=operation)
-#                 ho = MyUserProfile.objects.filter(skillset=operation)
-#                 fc = fo.count()
-#                 hc = ho.count()
-#
-#             if material:
-#                 go = Enterprise.objects.filter(materials=material)
-#                 gc = go.count()
-#
-#
-#
-#             if do is None:
-#                 d = do
-#             else:
-#                 d = d & do
-#
-#         return render(request, 'search/results2.html', {
-#
-#             'querystring': querystring,
-#             'c': c, 'cc': cc,
-#             'd': d, 'dc': dc,
-#             'e': e, 'ec': ec,
-#             'f': f, 'fc': fc,
-#             'g': g, 'gc': gc,
-#             'h': h, 'hc': hc})
-#     else:
-#         return render(request, 'search/search.html')
-#
-#
+def search_adv(request):
+    if 'q' in request.GET:
+        querystring = request.GET.get('q')
+        terms = querystring.split(' ')
+        if not terms:
+            return redirect('/search/')
+
+        type=asset=product=operation=material=feed=myuser=enterprise=None
+        c=d=e=f=g=h=None
+        cc=dc=ec=fc=gc=hc=0
+        for term in terms:
+            typeo = Type.objects.filter(name__icontains=term)
+            asseto = Asset.objects.filter(name__icontains=term)
+            producto = Product.objects.filter(name__icontains=term)
+            operationo = Operation.objects.filter(name__icontains=term)
+            materialo = Material.objects.filter(name__icontains=term)
+
+            feedo = Node.objects.filter(Q(title__icontains=term) | Q(post__icontains=term))
+            myusero = MyUserProfile.objects.filter(Q(summary__icontains=term) | Q(summary__icontains=term))
+            enterpriseo = EnterpriseProfile.objects.filter(Q(about__icontains=term) | Q(contact__icontains=term))
+
+            if feed is None:
+                feed = feedo
+            else:
+                feed = feed & feedo
+
+            if myuser is None:
+                myuser = myusero
+            else:
+                myuser = myuser & myusero
+
+            if enterprise is None:
+                enterprise = enterpriseo
+            else:
+                enterprise = enterprise & enterpriseo
+
+            if type is None:
+                type = typeo
+            else:
+                type = type | typeo
+
+            if asset is None:
+                asset = asseto
+            else:
+                asset = asset | asseto
+
+            if product is None:
+                product = producto
+            else:
+                product = product | producto
+
+            if operation is None:
+                operation = operationo
+            else:
+                operation = operation | operationo
+
+            if material is None:
+                material = materialo
+            else:
+                material = material | materialo
+
+            if type:
+                c = Enterprise.objects.filter(types=type)
+                cc = c.count()
+
+            if asset:
+                d = Enterprise.objects.filter(assets=asset)
+                dc = d.count()
+
+            if product:
+                e = Enterprise.objects.filter(products=product)
+                ec = e.count()
+
+            if operation:
+                f = Enterprise.objects.filter(operations=operation)
+                h = MyUserProfile.objects.filter(skillset=operation)
+                fc = f.count()
+                hc = h.count()
+
+            if material:
+                g = Enterprise.objects.filter(materials=material)
+                gc = g.count()
+
+
+        # return locals()
+
+        return render(request, 'search/results2.html', locals()) # {
+
+            # 'querystring': querystring,
+            # 'c': c, 'cc': cc,
+            # 'd': d, 'dc': dc,
+            # 'e': e, 'ec': ec,
+            # 'f': f, 'fc': fc,
+            # 'g': g, 'gc': gc,
+            # 'h': h, 'hc': hc})
+    else:
+        return render(request, 'search/search.html')
+
+
 
 
 
@@ -123,12 +159,6 @@ def search(request):     # dynamic search on each page requested through ajax
 #         querystring = request.GET.get('q').strip()
 #         if len(querystring) == 0:
 #             return redirect('/search/')
-#         # try:
-#         #     search_type = request.GET.get('type')
-#         #     if search_type not in ['people', 'nodes', 'enterprise', 'products']:
-#         #         search_type = 'enterprise'
-#         # except Exception as e:
-#         #     search_type = 'enterprise'
 #
 #         count = {}
 #         results = {}

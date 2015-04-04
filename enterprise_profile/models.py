@@ -24,7 +24,7 @@ class EnterpriseProfile(models.Model):
                                           options={'quality': 60})
 
     def __str__(self):
-        return self.enterprise
+        return self.enterprise.enterprise
 
     def get_users(self):
         return self.enterprise.myuser_set.all()

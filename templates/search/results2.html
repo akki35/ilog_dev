@@ -6,8 +6,9 @@
 
 
 {% block content %}
-    <h2>Enterprises</h2>
-    {% if qquery %}
+    <h2>Results</h2>
+    {% if c %}
+	{{ cc }} Industries found of matching type
         <ul>
         {% for result in c %}
 			
@@ -15,64 +16,124 @@
         {% endfor %}
         </ul>
 		
-	{% else %}
-	fuck c
+	
     {% endif %}
 	{% if d %}
+	{{ dc }} industries found having matching assets
         <ul>
         {% for result in d %}
 			
             <li><a href="{{ post.get_absolute_url }}">{{ result.enterprise }}</a></li>
         {% endfor %}
         </ul>
-	{% else %}
-	fuck d
+	
     {% endif %}
 	{% if e %}
+	{{ ec }} industries found having matching products
         <ul>
         {% for result in e %}
 			
             <li><a href="{{ post.get_absolute_url }}">{{ result.enterprise }}</a></li>
         {% endfor %}
         </ul>
-	{% else %}
-	fuck e
+	
     {% endif %}
 	{% if f %}
-	{{ fc }}
-        <ul>
+	{{ fc }} industries found performing matching operations
+	    <ul>
         {% for result in f %}
 			
             <li><a href="{{ post.get_absolute_url }}">{{ result.enterprise }}</a></li>
         {% endfor %}
         </ul>
-	{% else %}
-	fuck f
+	
     {% endif %}
 	{% if g %}
-	
+	{{ gc }} industries found using matching material
         <ul>
         {% for result in g %}
 			
             <li><a href="{{ post.get_absolute_url }}">{{ result.enterprise }}</a></li>
         {% endfor %}
         </ul>
-	{% else %}
-	fuck g
+	
     {% endif %}
 	{% if h %}
-	
+	{{ hc }} people found having matching skillset
         <ul>
         {% for result in h %}
 			
             <li><a href="{{ post.get_absolute_url }}">{{ result }}</a></li>
         {% endfor %}
         </ul>
-	{% else %}
-	fuck h
+	
+    {% endif %}
+	
+	{% if type %}
+        <ul>
+        {% for result in type %}
+			
+            <li>{{ result }}</li>
+        {% endfor %}
+        </ul>
+		
+	
+    {% endif %}
+	
+	{% if material %}
+        <ul>
+        {% for result in material %}
+			
+            <li><a href="{{ post.get_absolute_url }}">{{ result }}</a></li>
+        {% endfor %}
+        </ul>
+		
+	
+    {% endif %}
+	{% if asset %}
+        <ul>
+        {% for result in asset %}
+			
+            <li><a href="{{ post.get_absolute_url }}">{{ result }}</a></li>
+        {% endfor %}
+        </ul>
+		
+	
+    {% endif %}
+	{% if operation %}
+        <ul>
+        {% for result in operation %}
+			
+            <li><a href="{{ post.get_absolute_url }}">{{ result }}</a></li>
+        {% endfor %}
+        </ul>
+		
+	
     {% endif %}
 	
 	
-
-    
+	
+	{% if feed %}
+        <ul>
+        {% for result in feed %}
+		    <li><a href="{{ post.get_absolute_url }}">{{ result }}</a></li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+	{% if myuser %}
+        <ul>
+        {% for result in myuser %}
+		    <li><a href="{{ post.get_absolute_url }}">{{ result }}</a></li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+	{% if enterprise %}
+        <ul>
+        {% for result in enterprise %}
+		    <li><a href="{{ post.get_absolute_url }}">{{ result }}</a></li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+	
+	   
 {% endblock %}

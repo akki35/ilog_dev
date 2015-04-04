@@ -43,19 +43,19 @@ def _html_feeds(last_feed, user, csrf_token, feed_source='all'):
 @login_required
 # @ajax_required
 def post(request):
+    # csrf_token = (csrf(request)['csrf_token'])
     if request.method == 'POST':
 
-        myuser = request.user
-        csrf_token = str(csrf(request)['csrf_token'])
         post = request.POST['post']
+        myuser = request.user
         feed = Node.objects.create(post=post, myuser=myuser)
         feed.save()
 
-        return render_to_response("user_home.html", context_instance=RequestContext(request))
+        return HttpResponseRedirect('/')
     else:
-        return render_to_response("user_home.html", context_instance=RequestContext(request))
-    # html = _html_feeds(post, myuser, csrf_token)
-    # return HttpResponse(html)
+        # html = _html_feeds(last_feed, myuser, csrf_token)
+        # return HttpResponse(html)
+        return HttpResponseRedirect('/')
 
 @login_required
 # @ajax_required

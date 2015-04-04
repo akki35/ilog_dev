@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404, HttpResponseRe
 from enterprise.models import Enterprise
 from accounts.models import MyUser
 from django.contrib.auth.decorators import login_required
-from nodes.views import nodes
+# from nodes.views import nodes
 from nodes.models import Node
 from django.core.paginator import Paginator
 from myuserprofile.forms import ProfileForm
@@ -16,10 +16,10 @@ def home(request):
     if request.user.is_authenticated():
         feed_nodes = Node.get_feeds()
         comment_nodes = Node.objects.filter(myuser=request.user, category='C')
-        c = {'user':request.user,
-            'profile':MyUserProfile.objects.get(myuser=request.user),
-            'feed_nodes':feed_nodes}
-        return render_to_response ('user_home.html', c)
+        c = {'user': request.user,
+             'profile': MyUserProfile.objects.get(myuser=request.user),
+             'feed_nodes': feed_nodes}
+        return render_to_response('user_home.html', c)
     else:
         return render(request, 'home.html')
 
