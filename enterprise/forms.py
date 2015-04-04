@@ -11,7 +11,7 @@ def unique_enterprise_validator(value):
 class EnterpriseRegistrationForm(forms.ModelForm):
     enterprise = forms.CharField(max_length=255)
     types = forms.ModelMultipleChoiceField(queryset=Type.objects.all(), required=False)
-    assets = forms.ModelMultipleChoiceField(queryset=Asset.objects.all(), required=False)
+    # assets = forms.ModelMultipleChoiceField(queryset=Asset.objects.all(), required=False)
     # products = forms.ModelMultipleChoiceField(queryset=Product.objects.all(), required=False)
     materials = forms.ModelMultipleChoiceField(queryset=Material.objects.all(), required=False)
     operations = forms.ModelMultipleChoiceField(queryset=Operation.objects.all(), required=False)
@@ -19,13 +19,12 @@ class EnterpriseRegistrationForm(forms.ModelForm):
 
     class Meta:
         model = Enterprise
-        exclude = ['slug', 'products']
-        fields = ['enterprise', 'types', 'assets', 'materials', 'operations', ]
+        exclude = ['slug', 'products', 'assets',]
+        fields = ['enterprise', 'types', 'materials', 'operations', ]
 
     def __init__(self, *args, **kwargs):
         super(EnterpriseRegistrationForm, self).__init__(*args, **kwargs)
         self.fields['enterprise'].validators.append(unique_enterprise_validator)
-
 
 
 class ProductForm(forms.ModelForm):
@@ -38,6 +37,18 @@ class ProductForm(forms.ModelForm):
         model = EnterpriseProduct
         exclude = ['enterprise', 'status']
         fields = ['prod', 'product_image', 'description', 'caption']
+
+
+class AssetForm(forms.ModelForm):
+    asse = forms.CharField()
+    description = forms.CharField(widget=forms.Textarea, max_length=500, required=False)
+    asset_image = forms.ImageField(required=False)
+    caption = forms.CharField(max_length=255, required=False)
+
+    class Meta:
+        model = EnterpriseAsset
+        exclude = ['enterprise', 'status']
+        fields = ['asse', 'asset_image', 'description', 'caption']
 
 
     

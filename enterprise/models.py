@@ -17,6 +17,11 @@ class Type(models.Model):
     def __str__(self):
         return self.name
 
+    def save(self, *args, **kwargs):
+        if not self.id:                  # Newly created object, so set slug
+            self.slug = slugify(self.name).__str__()
+            super(Type, self).save(*args, **kwargs)
+
 
 class Product(models.Model):
     name = models.CharField(max_length=50)
@@ -46,6 +51,11 @@ class Asset(models.Model):
     def __str__(self):
         return self.name
 
+    def save(self, *args, **kwargs):
+        if not self.id:                  # Newly created object, so set slug
+            self.slug = slugify(self.name).__str__()
+            super(Asset, self).save(*args, **kwargs)
+
 
 class Operation(models.Model):
     name = models.CharField(max_length=50)
@@ -58,6 +68,11 @@ class Operation(models.Model):
     def __str__(self):
         return self.name
 
+    def save(self, *args, **kwargs):
+        if not self.id:                  # Newly created object, so set slug
+            self.slug = slugify(self.name).__str__()
+            super(Operation, self).save(*args, **kwargs)
+
 
 class Material(models.Model):
     name = models.CharField(max_length=50)
@@ -69,6 +84,11 @@ class Material(models.Model):
 
     def __str__(self):
         return self.name
+
+    def save(self, *args, **kwargs):
+        if not self.id:                  # Newly created object, so set slug
+            self.slug = slugify(self.name).__str__()
+            super(Material, self).save(*args, **kwargs)
 
 
 class EnterpriseManager(models.Manager):
@@ -84,7 +104,7 @@ class Enterprise(models.Model):
     is_active = models.BooleanField(default=True)
     types = models.ManyToManyField(Type)
     products = models.ManyToManyField(Product, through='EnterpriseProduct')
-    assets = models.ManyToManyField(Asset)
+    assets = models.ManyToManyField(Asset, through='EnterpriseAsset')
     operations = models.ManyToManyField(Operation)
     materials = models.ManyToManyField(Material)
 
@@ -137,6 +157,40 @@ class EnterpriseProduct(models.Model):
         default = 'products/thumbnails/enterprise.jpg'
         if self.product_image_thumbnail:
             return self.product_image_thumbnail
+        else:
+            return default
+
+
+class EnterpriseAsset(models.Model):
+    asset = models.ForeignKey(Asset)
+    enterprise = models.ForeignKey(Enterprise)
+    asset_image = ProcessedImageField(upload_to='assets/main',
+                                        processors=[ResizeToFill(300, 300)],
+                                        format='JPEG',
+                                        options={'quality': 60})
+    asset_image_thumbnail = ProcessedImageField(upload_to='assets/thumbnails',
+                                                  processors=[ResizeToFill(100, 100)],
+                                                  format='JPEG',
+                                                  options={'quality': 60})
+    caption = models.CharField(max_length=200, default='product')
+    description = models.TextField(max_length=500)
+    status = models.BooleanField(default=True)
+    # slug = models.SlugField(unique=True)
+
+    def __str__(self):
+        return self.asset.name
+
+    def get_asset_image(self):
+        default_image = 'assets/main/asset.png'
+        if self.asset_image:
+            return self.asset_image
+        else:
+            return default_image
+
+    def get_asset_image_thumbnail(self):
+        default = 'assets/thumbnails/asset.jpg'
+        if self.asset_image_thumbnail:
+            return self.asset_image_thumbnail
         else:
             return default
 

@@ -1,6 +1,6 @@
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
-from django.conf import settings
+from django.views.generic import TemplateView
 from django.conf.urls.static import static
 from django.conf import settings
 
@@ -26,6 +26,8 @@ urlpatterns = patterns('',
                        url(r'^images/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),
                        url(r'^notifications/$', 'activities.views.notifications', name='notifications'),
 
+                       url(r'^robots.txt/$', TemplateView.as_view(template_name='robots.txt')),
+
 
 )   + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
@@ -33,6 +35,6 @@ urlpatterns = patterns('',
 #                         (r'^media/(?P<path>.*)$', 'django.views.static.serve', {
 #                          'document_root': settings.MEDIA_ROOT}))
 
-
+# urlpatterns = patterns('',
 # urlpatterns += staticfiles_urlpatterns()
 # urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

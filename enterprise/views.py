@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from enterprise.forms import EnterpriseRegistrationForm, ProductForm
+from enterprise.forms import EnterpriseRegistrationForm, ProductForm, AssetForm
 from enterprise.models import *
 from nodes.models import Node
 from accounts.models import MyUser
@@ -15,7 +15,7 @@ def register(request):
         else:
             enterprise = form.cleaned_data.get('enterprise')
             types = form.cleaned_data.get('types')
-            assets = form.cleaned_data.get('assets')
+            # assets = form.cleaned_data.get('assets')
 
             operations = form.cleaned_data.get('operations')
             materials = form.cleaned_data.get('materials')
@@ -24,7 +24,7 @@ def register(request):
             # a, creted = Asset.objects.get_or_create(name=assets)
             er = Enterprise.objects.create(enterprise=enterprise,)
             er.types = types
-            er.assets = assets
+            # er.assets = assets
             er.operations = operations
             er.materials = materials
 
@@ -62,6 +62,33 @@ def add_product(request):
     else:
         return render(request, 'products/add_product.html', {'form': ProductForm()})
 
+@login_required
+def add_asset(request):
+    enterprise = request.user.enterprise
+    if request.method == 'POST':
+        form = AssetForm(request.POST, request.FILES)
+
+        if not form.is_valid():
+
+            render(request, 'asset/add_asset.html', {'form': form})  ##
+        else:
+
+            asset = form.cleaned_data.get('asse')
+            description = form.cleaned_data.get('description')
+            asset_image = form.cleaned_data.get('asset_image')
+            caption = form.cleaned_data.get('caption')
+
+            a, created = Asset.objects.get_or_create(name=asset)
+
+            ep = EnterpriseAsset.objects.create(asset=a, enterprise=enterprise, description=description,
+                                                  caption=caption, asset_image=asset_image,
+                                                  asset_image_thumbnail=asset_image)
+
+            return redirect('/enterprise/add_asset')
+    else:
+        return render(request, 'assets/add_asset.html', {'form': AssetForm()})
+
+
 def product(request, slug):
     page_enterprise = get_object_or_404(Enterprise, slug=slug)
     products = EnterpriseProduct.objects.filter(enterprise=page_enterprise)
@@ -98,7 +125,7 @@ def about(request, slug):
 
 def capability(request, slug):
     page_enterprise = get_object_or_404(Enterprise, slug=slug)
-    assets = page_enterprise.assets.all()
+    assets = EnterpriseAsset.objects.filter(enterprise=page_enterprise)
     operations = page_enterprise.operations.all()
 
     return render(request, 'products/capability.html', {

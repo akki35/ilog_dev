@@ -21,16 +21,19 @@
 	{% endif %}	
 	<li><h3>Assets we have:<h3></li>
 	{% if assets %}
-		{% for a in assets %}
+        <ul>
+        {% for asset in assets %}
 			
-		
-          <li>{{a}}</li> 
+            <li><img src="{{ MEDIA_URL }}{{ asset.get_asset_image_thumbnail }}" class="picture"><strong>{{ asset }}</strong> : {{ asset.description }}</a></li>
 			
-						
+			<img src="{{ MEDIA_URL }}{{ asset.get_asset_image }}" class="picture">
+			
+			.
+			
         {% endfor %}
         </ul>
     {% else %}
-        <p>There are no assets yet.</p>
+        <p>There are no assets.</p>
     {% endif %}
 
     

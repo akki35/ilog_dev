@@ -7,6 +7,7 @@ urlpatterns = patterns('',
                        url(r'^register/$', views.register,),
 
                        url(r'^add_product/$', 'enterprise.views.add_product', name='add_product'),
+                       url(r'^add_asset/$', 'enterprise.views.add_asset', name='add_asset'),
                        url(r'^edit/$', 'enterprise_profile.views.enterprise_profile_edit',
                            name='enterprise_profile_edit'),
                        url(r'^(?P<slug>[^/]+)/$', 'enterprise_profile.views.enterprise_profile',

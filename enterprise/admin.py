@@ -15,7 +15,7 @@ from enterprise.models import *
 class TypeAdmin(admin.ModelAdmin):
     # form = TypeAdminForm
 
-    list_display = ('name', 'slug')
+    list_display = ('name',)
     search_fields = ['name']
     ordering = ['name']
 
@@ -25,7 +25,7 @@ admin.site.register(Type, TypeAdmin)
 class ProductAdmin(admin.ModelAdmin):
     # form = TypeAdminForm
 
-    list_display = ('name', 'slug')
+    list_display = ('name',)
     search_fields = ['name']
     ordering = ['name']
 
@@ -35,7 +35,7 @@ admin.site.register(Product, ProductAdmin)
 class AssetAdmin(admin.ModelAdmin):
     # form = TypeAdminForm
 
-    list_display = ('name', 'slug')
+    list_display = ('name',)
     search_fields = ['name']
     ordering = ['name']
 
@@ -45,7 +45,7 @@ admin.site.register(Asset, AssetAdmin)
 class OperationAdmin(admin.ModelAdmin):
     # form = TypeAdminForm
 
-    list_display = ('name', 'slug')
+    list_display = ('name',)
     search_fields = ['name']
     ordering = ['name']
 
@@ -55,7 +55,7 @@ admin.site.register(Operation, OperationAdmin)
 class MaterialAdmin(admin.ModelAdmin):
     # form = TypeAdminForm
 
-    list_display = ('name', 'slug')
+    list_display = ('name',)
     search_fields = ['name']
     ordering = ['name']
 
@@ -67,7 +67,7 @@ class EnterpriseAdmin(admin.ModelAdmin):
                    # 'materials', 'products']
     fieldsets = (
         (None, {'fields': ('enterprise', 'slug')}),
-        ('Categorization', {'fields': ('types', 'operations', 'assets',
+        ('Categorization', {'fields': ('types', 'operations',  # 'assets',
                                        'materials', )}),    # products
     )
 
@@ -93,6 +93,10 @@ class ProductCreationForm(forms.ModelForm):
         if commit:
             product.save()
         return product
+    # def save(self, *args, **kwargs):
+    #     if not self.id:                  # Newly created object, so set slug
+    #         self.slug = slugify(self.name).__str__()
+    #         super(Material, self).save(*args, **kwargs)
 
 
 class AssetCreationForm(forms.ModelForm):
