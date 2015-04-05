@@ -18,7 +18,7 @@ urlpatterns = patterns('',
                        url(r'^user/', include('myuserprofile.urls', namespace='myuserprofile')), # user domain
                        url(r'^nodes/', include('nodes.urls', namespace='nodes')),
 
-                       url(r'^messages/', include('message.urls', namespace='messages')),
+
                        url(r'^like/$', 'nodes.views.like', name='like'),
                        url(r'^search/$', 'search.views.search', name='search'),
                        # url(r'^search_adv/$', 'search.views.search_adv', name='search_adv'),

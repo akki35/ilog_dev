@@ -19,17 +19,6 @@ def home(request):
         c = {'user': request.user,
              'profile': MyUserProfile.objects.get(myuser=request.user),
              'feed_nodes': feed_nodes}
-        return render_to_response('user_home.html', c, context_instance=RequestContext(request))
-    else:
-        return render(request, 'home.html')
-
-def activity(request):
-    if request.user.is_authenticated():
-        feed_nodes = Node.get_feeds()
-        comment_nodes = Node.objects.filter(myuser=request.user, category='C')
-        c = {'user': request.user,
-             'profile': MyUserProfile.objects.get(myuser=request.user),
-             'feed_nodes': feed_nodes}
         return render_to_response('user_home.html', c)
     else:
         return render(request, 'home.html')
