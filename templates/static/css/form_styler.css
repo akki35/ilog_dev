@@ -1,0 +1,70 @@
+.contents{
+  text-align: center;
+}
+  .header_form{
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 1em;
+    font-variant: small-caps;
+    font-weight: 600;
+    color: #555;
+    border-bottom: 1px solid #9aa;
+  }
+  .uls_home li{
+    line-height: 50px;
+    margin: auto;
+  }
+  .uls_home label{
+    display: inline-block;
+    text-align: right;
+    vertical-align: top;
+    width: 150px;
+    margin-right: 10px;
+    color: #444;
+   }
+   .uls_home input{
+     width: 150px;
+     padding: 5px;
+     text-align: center;
+     font-family: 'Segoe Marker','Lucida Console';
+   }
+  .uls_home textarea{
+     width: 300px;
+     padding: 5px;
+     text-align: center;
+     font-family: 'Segoe Marker','Lucida Console';
+  }
+
+   .submit_main{
+      cursor: pointer;
+   }
+   #submit_login{
+    position: relative;
+      left: 80px;
+      margin: 40px auto;
+   }
+
+  .uls_home .helptext{
+    display: none;
+  }
+
+   .uls_home select{
+     width: 150px;
+     padding: 5px;
+     text-align: center;
+     font-family: 'Segoe Marker','Lucida Console';
+   }
+   #submit_logup{
+    position: relative;
+      left: 110px;
+      margin: 30px auto;
+   }
+
+#ul_logup li{
+  line-height: 40px;
+}
+#ul_logup label{
+  width: 200px;
+}
+#ul_register label{
+}
