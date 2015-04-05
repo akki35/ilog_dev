@@ -1,9 +1,4 @@
-{% extends "base.html" %}
-{% load staticfiles %}
-
-{% block css %}
-	<link rel="stylesheet" type="text/css" href={% static 'css/accounts/logup.css' %}>
-{% endblock %}
+{% extends "home.html" %}
 
 {% block title %}Log up to i-Logger{% endblock %}
 
@@ -13,16 +8,18 @@
 {% endblock %}
 
 {% block content %}
-	<section id="content_logup">
+	<section id="content_logup" class="contents">
 		<header class="header_form">
 			<h2>Fill me up sir...</h2>
 		</header>
-		<form id="form_logup" action="/accounts/logup/" method="POST" role="form" >
-			<ul>
+		<form id="form_logup" class="forms_home" action="{% url 'logup' %}" method="POST" role="form" >
+			<ul id="ul_logup" class="uls_home">
 				{{ form.as_ul }}
 				{% csrf_token %}
-				<li><input type="submit" value="submit" class="button_submit"></li>
+				<li><input class="submit_main" type="submit" value="SIGN UP"></li>
 			</ul>
 		</form>
+		<h3>Didnt Find your enterprise..?</h3>
+		<h4>Koi baat nhi, <a href="{% url 'enterprise:register' %}">register</a> here :D</h4>
 	</section>
 {% endblock %}
