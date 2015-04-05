@@ -40,8 +40,9 @@
 		<section id="mid_content">
 		<form id="form_feed" role="form" action="{% url 'nodes:post' %}" method="POST">
 			{% csrf_token %}
-			<textarea class="input_feed" form="form_feed" autofocus="autofocus" name="feed" placeholder="Got something..? Spit it out.."></textarea>
-			<input class="submit_feed" type="submit" value="Feed">
+			<input type="hidden" name="myuser" value="{{ myuser.pk }}">
+			<textarea class="input_feed" form="form_feed" autofocus="autofocus" name="post" placeholder="Got something..? Spit it out.."></textarea>
+			<input class="submit_feed" type="submit" value="Post">
 		</form>
 
 	{% for node in feed_nodes %}

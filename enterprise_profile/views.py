@@ -4,6 +4,7 @@ from enterprise_profile.forms import EnterpriseProfileForm
 from enterprise_profile.models import EnterpriseProfile
 from enterprise.models import Enterprise
 from accounts.models import MyUser
+from nodes.models import Node
 from django.core.urlresolvers import reverse
 
 
@@ -30,6 +31,13 @@ def enterprise_profile_edit(request):
             ep.about = about
             ep.website = website
             ep.save()
+
+            myuser = request.user
+            edit_post = u'{0} from {1} has edited the enterprise profile.'.format(myuser.first_name, myuser.enterprise)
+            node = Node(myuser=myuser, post=edit_post)
+            node.save()
+
+            myuser.myuserprofile.notify_edited(enterprise=enterprise, node=node)
 
             return redirect('/')
         else:

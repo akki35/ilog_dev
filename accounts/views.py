@@ -22,13 +22,15 @@ def logup(request):
             password = form.cleaned_data.get('password')
             MyUser.objects.create_myuser(email=email, enterprise=enterprise, first_name=first_name, last_name=last_name,
                                          password=password,)
+
             myuser = authenticate(email=email, password=password)
             # myuser.backend = 'django.contrib.auth.backends.ModelBackend'
             # authenticate(email=email, password=password)
             login(request, myuser)
-            welcome_post = u'{0}from {1} has joined the network.'.format(myuser.first_name, myuser.enterprise)
+            welcome_post = u'{0} from {1} has joined the network.'.format(myuser.first_name, myuser.enterprise)
             node = Node(myuser=myuser, post=welcome_post)
             node.save()
+            myuser.myuserprofile.notify_joined(enterprise=enterprise, node=node)
             return redirect('/')
     else:
         return render(request, 'accounts/logup.html', {'form': LogupForm()})

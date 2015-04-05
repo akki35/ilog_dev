@@ -83,6 +83,30 @@ class MyUserProfile(models.Model):
                          to_user=MyUser(id=user),
                          node=node).save()
 
+    def notify_joined(self, enterprise, node):
+        users = MyUser.objects.filter(enterprise=enterprise)
+
+        for user in users:
+            Notification(notification_type=Notification.ALSO_JOINED,
+                         from_user=self.myuser,
+                         to_user=user,
+                         node=node).save()
+
+    def notify_followed(self, user, node):
+        Notification(notification_type=Notification.FOLLOWS,
+                     from_user=self.myuser,
+                     to_user=user,
+                     node=node).save()
+
+    def notify_edited(self, enterprise, node):
+        users = MyUser.objects.filter(enterprise=enterprise)
+
+        for user in users:
+            Notification(notification_type=Notification.EDITED,
+                         from_user=self.myuser,
+                         to_user=user,
+                         node=node).save()
+
     # followers related things
 
     def add_relationship(self, person, status='F'):

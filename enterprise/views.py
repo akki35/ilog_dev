@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from enterprise.forms import EnterpriseRegistrationForm, ProductForm, AssetForm
+from enterprise.forms import *
 from enterprise.models import *
 from nodes.models import Node
 from accounts.models import MyUser
@@ -134,6 +134,54 @@ def capability(request, slug):
         'page_enterprise': page_enterprise,
 
         })
+
+def add_type(request):
+    form = TypeForm(request.POST)
+    if request.method == 'POST':
+
+        if not form.is_valid():
+            render(request, 'enterprise/add_type.html', {'form': form})
+        else:
+            name = form.cleaned_data.get('name')
+
+            t, created = Type.objects.get_or_create(name=name)
+
+            t.save()
+            return redirect('/enterprise/register')
+
+    else:
+        return render(request, 'enterprise/add_type.html', {'form': form})
+
+def add_operation(request):
+    form = OperationForm(request.POST)
+    if request.method == 'POST':
+
+        if not form.is_valid():
+            render(request, 'enterprise/add_operation.html', {'form': form})
+        else:
+            name = form.cleaned_data.get('name')
+            o, created = Operation.objects.get_or_create(name=name)
+            o.save()
+            return redirect('/enterprise/register')
+
+    else:
+        return render(request, 'enterprise/add_operation.html', {'form': form})
+
+
+def add_material(request):
+    form = MaterialForm(request.POST)
+    if request.method == 'POST':
+
+        if not form.is_valid():
+            render(request, 'enterprise/add_material.html', {'form': form})
+        else:
+            name = form.cleaned_data.get('name')
+            m, created = Material.objects.get_or_create(name=name)
+            m.save()
+            return redirect('/enterprise/register')
+
+    else:
+        return render(request, 'enterprise/add_material.html', {'form': form})
 
 
 # Create your views here.

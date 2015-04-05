@@ -19,7 +19,7 @@ def home(request):
         c = {'user': request.user,
              'profile': MyUserProfile.objects.get(myuser=request.user),
              'feed_nodes': feed_nodes}
-        return render_to_response('user_home.html', c)
+        return render_to_response('user_home.html', c, context_instance=RequestContext(request))
     else:
         return render(request, 'home.html')
 
@@ -115,12 +115,20 @@ def profile_edit(request):
 def follow(request):
     myuser = request.user
     if request.method == 'POST':
+        to_use = MyUser.objects.get(id=request.POST['to_user'])
         to_user = MyUser.objects.get(id=request.POST['to_user']).myuserprofile
         rel, created = Relationship.objects.get_or_create(
             from_user=myuser.myuserprofile,
             to_user=to_user,
             defaults={'status': 'F'}
         )
+        if created:
+            follow_post = u'{0}from {1} is now following you.'.format(myuser.first_name, myuser.enterprise)
+
+            node = Node(myuser=myuser, post=follow_post)
+            node.save()
+
+            myuser.myuserprofile.notify_followed(user=to_use, node=node)
 
         if not created:
             rel.status = 'F'

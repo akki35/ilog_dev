@@ -43,17 +43,14 @@ class Node(models.Model):
         ordering = ('-score', '-date')
 
     @staticmethod
-    def get_feeds(from_node=None):
-        if from_node is not None:
-            feeds = Node.feed.all(id__lte=from_node)
-        else:
-            feeds = Node.feed.all()
+    def get_feeds():
+        feeds = Node.feed.all()
         return feeds
 
-    @staticmethod
-    def get_feeds_after(node):
-        feeds = Node.feed.all(id__gt=node)
-        return feeds
+    # @staticmethod
+    # def get_feeds_after(node):
+    #     feeds = Node.feed.all(id__gt=node)
+    #     return feeds
 
     @staticmethod
     def get_nodes():
@@ -104,11 +101,13 @@ class Node(models.Model):
         likes = Activity.objects.filter(activity='L', node=self.pk).count()
         self.likes = likes
         self.save()
+        self.calculate_comments()
+        self.set_rank()
         return likes
 
-    def get_likes(self):
-        likes = Activity.objects.filter(activity_type=Activity.LIKE, node=self.pk)
-        return likes
+    # def get_likes(self):
+    #     likes = Activity.objects.filter(activity_type=Activity.LIKE, node=self.pk)
+    #     return likes
 
     def get_likers(self):
         likes = self.get_likes()
@@ -138,7 +137,7 @@ class Node(models.Model):
         gravity = 1.2
         delta = now() - self.date
         node_age = delta.total_seconds()/3600
-        popularity = self.likes - 1
+        popularity = self.likes + 3*self.comments
         self.score = popularity/pow((node_age+2), gravity)
         self.save()
 
