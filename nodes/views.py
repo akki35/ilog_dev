@@ -46,7 +46,7 @@ def post(request):
     # csrf_token = (csrf(request)['csrf_token'])
     if request.method == 'POST':
 
-        post = request.POST['post']
+        post = request.POST.get('post')
         myuser = request.user
         feed = Node.objects.create(post=post, myuser=myuser)
         feed.save()
@@ -74,7 +74,7 @@ def comment(request):
             myuser.myuserprofile.notify_commented(node)
             myuser.myuserprofile.notify_also_commented(node)
 
-        return HttpResponseRedirect('/nodes/')
+        return HttpResponseRedirect('/')
     else:
         node_id = request.GET.get('node')
         node = Node.objects.get(pk=node_id)

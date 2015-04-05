@@ -13,17 +13,18 @@
 	#user_box{
 		margin: 0px 20px 20px 0px;
 	}
-		#user_thumb{
+		#img_user_thumb{
 			display: block;
 			height: 80px;
 			margin-bottom: 5px;
 		}
-			.img_user_thumb{
+			.img_profile_thumb{
 				float: right;
 				width: 76px;
 				height: 76px;
 				border: 2px solid #9aa;
 			}
+
 		.name{
 			margin-bottom: 5px;
 			font-size: 1em;

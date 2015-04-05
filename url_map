@@ -1,0 +1,59 @@
+#ilog_dev
+url(r'^admin/', include(admin.site.urls)), # admin interface
+url(r'^$', 'myuserprofile.views.home', name='home'), # home page
+url(r'^logup$', 'accounts.views.logup', name='logup'), # logup page
+url(r'^login$', 'django.contrib.auth.views.login', {'template_name': 'login.html'}, name='login'),  # login page, redirects to 'home'
+url(r'^logout$', 'django.contrib.auth.views.logout', {'next_page': 'login'}, name='logout'), # logout page, redirects to 'login'
+
+url(r'^accounts/', include('accounts.urls', namespace='accounts')), # no use for now
+  #accounts
+  url(r'^logup/$', views.logup, name='logup'),                       
+  url(r'^logout/$', views.logout,)
+
+url(r'^enterprise/', include('enterprise.urls', namespace='enterprise')),  # enterprise domain
+  #enterprise
+  url(r'^register/$', views.register,),
+  url(r'^add_product/$', 'enterprise.views.add_product', name='add_product'),
+  url(r'^add_asset/$', 'enterprise.views.add_asset', name='add_asset'),
+  url(r'^edit/$', 'enterprise_profile.views.enterprise_profile_edit', name='enterprise_profile_edit'),
+  url(r'^(?P<slug>[^/]+)/$', 'enterprise_profile.views.enterprise_profile', name='enterprise_profile'),
+  url(r'^(?P<slug>[^/]+)/products/$', 'enterprise.views.product', name='product'),
+  url(r'^(?P<slug>[^/]+)/people/$', 'enterprise.views.people', name='people'),
+  url(r'^(?P<slug>[^/]+)/about/$', 'enterprise.views.about', name='about'),
+  url(r'^(?P<slug>[^/]+)/capability/$', 'enterprise.views.capability', name='capability'),
+
+url(r'^user/', include('myuserprofile.urls', namespace='myuserprofile')), # user domain
+  #myuserprofile
+  url(r'^edit/$', 'myuserprofile.views.profile_edit', name='profile_edit'),
+  url(r'^network/$', 'myuserprofile.views.network', name='network'),
+  url(r'^skillset/$', 'myuserprofile.views.skillset', name='skillset'),
+  url(r'^relationships', include('relationships.urls', namespace='relationships')),
+    #relationships
+    url(r'^follow/$', 'myuserprofile.views.follow', name='follow'),
+    url(r'^unfollow/$', 'myuserprofile.views.unfollow', name='unfollow'),
+    url(r'^block/$', 'myuserprofile.views.block', name='block'),
+    url(r'^unblock/$', 'myuserprofile.views.unblock', name='unblock'),
+  url(r'^(?P<slug>[^/]+)/$', 'myuserprofile.views.profile', name='profile'),
+  url(r'^(?P<slug>[^/]+)/$', 'myuserprofile.views.activity', name='activity'),
+
+url(r'^nodes/', include('nodes.urls', namespace='nodes')),
+  #nodes
+  url(r'^$', 'nodes', name='nodes'),
+  url(r'^post/$', 'post', name='post'),
+  url(r'^comment/$', 'comment', name='comment'),
+  url(r'^like/$', 'like', name='like'),
+
+url(r'^like/$', 'nodes.views.like', name='like'),
+url(r'^search/$', 'search.views.search', name='search'),
+# url(r'^search_adv/$', 'search.views.search_adv', name='search_adv'),
+
+url(r'^images/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),
+url(r'^notifications/$', 'activities.views.notifications', name='notifications'),
+
+url(r'^robots.txt/$', TemplateView.as_view(template_name='robots.txt')),
+
+
+
+#message
+url(r'^$', 'inbox', name='inbox'),
+url(r'^send/$', 'send', name='send_message'),
