@@ -1,0 +1,49 @@
+#content_logup{
+  text-align: center;
+}
+
+.header_form{
+  text-align: center;
+  font-size: 0.8em;
+}
+
+h2{
+  margin-bottom: 20px;
+}
+
+#form_logup{
+  margin: 20px auto;
+}
+
+  #form_logup li{
+    margin-top: 15px;
+  }
+   label{
+     text-align: right;
+     display: inline-block;
+     width: 170px;
+   }
+   input{
+     border: 1px solid #489;
+     border-top-right-radius: 25px;
+     padding: 5px;
+     text-align: center;
+     font-family: 'Segoe Marker','Lucida Console';
+   }
+   select{
+     border: 1px solid #489;
+     padding: 5px;
+     width: 143px;
+     border-top-right-radius: 25px;
+   }
+   .helptext{
+     display: none;
+     color: #280;
+   }
+
+   .button_submit{
+     display: block;
+     width: 150px;
+     margin: 25px auto;
+     border-radius: 0px;
+   }
