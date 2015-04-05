@@ -12,6 +12,7 @@ urlpatterns = patterns('',
                        url(r'^skillset/$', 'myuserprofile.views.skillset', name='skillset'),
                        url(r'^relationships', include('relationships.urls', namespace='relationships')),
                        url(r'^(?P<slug>[^/]+)/$', 'myuserprofile.views.profile', name='profile'),
+                       url(r'^(?P<slug>[^/]+)/$', 'myuserprofile.views.activity', name='activity'),
 
 
 

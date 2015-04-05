@@ -1,79 +1,49 @@
-{% extends "base.html" %}
+{% extends "user_home.html" %}
 {% load imagekit %}
 {% load staticfiles %}
 {% load i18n %}
 
-{% block css %}
-	<link rel="stylesheet" type="text/css" href={% static 'css/home_styler.css' %}>
-	<link rel="stylesheet" type="text/css" href={% static 'css/feed_styler.css' %}>
+{% block css_2 %}
 	<link rel="stylesheet" type="text/css" href={% static 'css/profile_styler.css' %}>
+	{% block css_3 %}
+	{% endblock %}
 {% endblock %}
 
-{% block menu_links %}
-    <li class="link"><a class="a_menu" href="{% url 'home' %}">Home</a></li>
-    <li class="link"><a class="a_menu" href="{% url 'myuserprofile:profile' user.slug %}">Profile</a></li>
-    <li class="link"><a class="a_menu" href="{% url 'enterprise:enterprise_profile' user.enterprise.slug %}">Workplace</a></li>
-    <li class="link"><a class="a_menu" href="">Messages</a></li>
-    <li class="link right"><a class="a_menu" href="">People</a></li>
-    <li class="link right"><a class="a_menu" href="">Enterprises</a></li>
-{% endblock %}
-
-{% block content %}
-	<section id="left_content">
-		<ul id="left_menu">
-			<li class="left_menu_button show" da>Details</li>
-			<li class="left_menu_button">Activity</li>
-			<li class="left_menu_button">Follows</li>
-			<li class="left_menu_button">Followers</li>
-		</ul>
-		<div id="people_list">
-			<p class="list_head">People you may know...</p>
-
-		</div>
-	</section>
-
-	<section id="mid_content">
-		{% ifequal page_user user %}
-		<div class="edit">edit</div>
-		{% endifequal %}
-		<img class="user_thumb" src="/images/{{ page_user_profile.get_image }}" alt="{{ user.get_full_name }}">
-		<dl class="profile_box">
-			<dt class="info_name">Full Name :</dt>
-			<dd class="info_data">{{ page_user_profile.get_screen_name }}</dd>
-			<dt class="info_name">Works At :</dt>
-			<dd class="info_data ilog">{{ page_user.enterprise }}</dd>
-			<dt class="info_name">Position :</dt>
-			<dd class="info_data">{{ page_user_profile.job_position }}</dd>
-			<dt class="info_name">Gender :</dt>
-			<dd class="info_data">{% ifequal page_user_profile.gender 'M' %}Male{% else %}Female{% endifequal %}</dd>
-			<dt class="info_name">Date of Birth :</dt>
-			<dd class="info_data">{{ page_user_profile.job_position }}</dd>
-			<dt class="info_name">Experienced in :</dt>
-			<dd class="info_data wide">{{ page_user_profile.experience }}</dd>
-			<dt class="info_name">Skillset :</dt>
-			<dd class="info_data">{% for skills in skillset %}		    
-									{{skills}}
-								  {% endfor %}</dd>
-		</dl>
-	</section>
-
-	<section id="right_content">
-		<div id="enterprise_list">
-			<p class="list_head">Enterprises you may find interesting...</p>
-
-		</div>
-		<div id="product_list">
-			<p class="list_head">Products you may be looking for...</p>
-
-		</div>
-	</section>
-	
-{% endblock %}
-
-{% block footer %}
-	<ul>
-    	<li><a href="{% url 'logout' %}">Log Out</a></li>
+{% block left_content %}
+	<ul id="left_menu">
+		<li class="left_menu_button show">Details</li>
+		<li class="left_menu_button">Activity</li>
+		<li class="left_menu_button">Follows</li>
+		<li class="left_menu_button">Followers</li>
 	</ul>
+	<div id="people_list">
+		<p class="list_head">People you may know...</p>
+	</div>
+{% endblock %}
+
+{% block mid_content %}
+	{% ifequal page_user user %}
+	<a class="edit" href="{% url 'myuserprofile:profile_edit' %}">edit</a>
+	{% endifequal %}
+	<img class="user_thumb" src="/images/{{ page_user_profile.get_image }}" alt="{{ user.get_full_name }}">
+	<dl class="profile_box">
+		<dt class="info_name">Full Name :</dt>
+		<dd class="info_data">{{ page_user_profile.get_screen_name }}</dd>
+		<dt class="info_name">Works At :</dt>
+		<dd class="info_data ilog">{{ page_user.enterprise }}</dd>
+		<dt class="info_name">Position :</dt>
+		<dd class="info_data">{{ page_user_profile.job_position }}</dd>
+		<dt class="info_name">Gender :</dt>
+		<dd class="info_data">{% ifequal page_user_profile.gender 'M' %}Male{% else %}Female{% endifequal %}</dd>
+		<dt class="info_name">Date of Birth :</dt>
+		<dd class="info_data">{{ page_user_profile.job_position }}</dd>
+		<dt class="info_name">Experienced in :</dt>
+		<dd class="info_data wide">{{ page_user_profile.experience }}</dd>
+		<dt class="info_name">Skillset :</dt>
+		<dd class="info_data">{% for skills in skillset %}		    
+								{{skills}}
+							  {% endfor %}</dd>
+	</dl>
 {% endblock %}
 
 {% block scripts %}
