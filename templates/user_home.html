@@ -15,8 +15,9 @@
     <li class="link"><a class="a_menu" href="{% url 'myuserprofile:profile' user.slug %}">Profile</a></li>
     <li class="link"><a class="a_menu" href="{% url 'enterprise:enterprise_profile' user.enterprise.slug %}">Workplace</a></li>
     <li class="link"><a class="a_menu" href="{% url 'messages:inbox' %}">Messages</a></li>
-    <li class="link right"><a class="a_menu" href="">People</a></li>
-    <li class="link right"><a class="a_menu" href="">Enterprises</a></li>
+    <li class="link"><a class="a_menu" href="{% url 'notifications' %}">Notifications</a></li>
+    <li class="link right"><a class="a_menu" href="{% url 'myuserprofile:people' %}">People</a></li>
+    <li class="link right"><a class="a_menu" href="{% url 'myuserprofile:enterprises' %}">Enterprises</a></li>
 {% endblock %}
 
 {% block content %}
@@ -27,13 +28,14 @@
 			<div class="name"><a href="">{{ user.get_full_name }}</a></div>
 			<div class="name ent"><a href="">{{ user.enterprise }}</a></div>
 		</div>
+		{% block left_menu %}
 		<ul id="left_menu">
 			<li class="left_menu_button show">Feeds</li>
 			<li class="left_menu_button">Articles</li>
 		</ul>
+		{% endblock %}
 		<div id="people_list">
 			<p class="list_head">People you may know...</p>
-
 		</div>
 	{% endblock %}
 	</section>
@@ -63,6 +65,9 @@
 						{{ comments.post }}
 					</div>
 				{% endfor %}
+					<div class="comment_user">
+							{{ user}} | {{ user.enterprise}}
+					</div>
 					<form class="form_comment" action="{% url 'nodes:comment' %}" method="POST">
 						<textarea class="input_comment" name="post" placeholder="aao to"></textarea>
 						<input type="hidden" name="node" value="{{ node.pk }}">

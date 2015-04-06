@@ -1,12 +1,23 @@
-{% extends 'myuserprofile/profile.html' %}
+{% extends 'user_home.html' %}
 
-{% block content %}
+{% block left_menu %}
+{% endblock %}
 
-  {% if notifications %}
-  
-	
-	{% for notification in notifications %}
-      <li class="clearfix">
+{% block mid_content %}
+  <ul class="list">
+	{% for notification in unread %}
+      <li class="unread">
+        <a href="{% url 'myuserprofile:profile' notification.from_user.slug %}"><img src="{{ MEDIA_URL }}{{ notification.from_user.myuserprofile.get_image_thumbnail }}" class="user_picture"></a>
+        <div>
+          <small>{{ notification.date}}</small>
+          <p>{{ notification|safe }}</p>
+        </div>
+      </li>
+    {% empty %}
+      <li>You have no notification</li>
+    {% endfor %}
+    {% for notification in read %}
+      <li class="read">
         <a href="{% url 'myuserprofile:profile' notification.from_user.slug %}"><img src="{{ MEDIA_URL }}{{ notification.from_user.myuserprofile.get_image_thumbnail }}" class="user-picture"></a>
         <div>
           <small>{{ notification.date}}</small>
@@ -16,7 +27,5 @@
     {% empty %}
       <li>You have no notification</li>
     {% endfor %}
-	
-  {% endif %}
-
+    </ul>
 {% endblock %}

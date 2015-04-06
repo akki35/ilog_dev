@@ -13,13 +13,4 @@
             </li>
         {% endfor %}
         </ul>
-		
-    <h2>People in the network</h2>
-        <ul class="list">
-        {% for myuser in myusers %}
-            <li class="name_people">
-                <a href="{% url 'myuserprofile:profile' myuser.slug %}">{{ myuser }}</a>
-            </li>
-        {% endfor %}
-        </ul>
 {% endblock %}

@@ -1,66 +1,30 @@
-{% extends 'base.html' %}
+{% extends 'user_home.html' %}
 {% load i18n %}
 
-
-{% block content %}
-
-	
-    <h2>{{page_enterprise}}: Inbox</h2>
-	
-	  {% if messages %}
-        <ul>
+{% block mid_content %}
+  <h2>{{page_enterprise}}: Inbox</h2>
+    <ul>
+      {% if messages %}
         {% for message in messages %}
-			
-            <li>{{message.from_user}}:  {{message}}</li>
-			
-						
+          <li>{{message.from_user}}:  {{message}}</li>
         {% endfor %}
-        </ul>
-    
-	  {% else %}
-	    no messages
-	  {% endif %}
-	<li class="send-message">
-      
-      <div style="margin-top: .3em">
-        <form role="form" method="post" action="{% url 'messages:send_message' %}" id="send">
-          {% csrf_token %}
-          <input type="hidden" value="{{ active }}">
-		  <input class="form-control typeahead" type="text" id="to" placeholder="to.." name="to">
-          <input class="form-control" type="text" name="message" placeholder="Write a message..." maxlength="1000" autocomplete="off">
-		  <div class="form-group">
-			<div class="col-sm-11 col-sm-offset-1">
-			  <button type="submit" class="btn btn-primary">Send</button>
-			</div>
-		  </div>
-        </form>
-      </div>
-    </li>
-    
-
+      {% else %}
+        <li>no messages</li>
+      {% endif %}
+    </ul>
+	<div class="send-message">    
+    <div>
+      <form id="form_message" role="form" method="post" action="{% url 'messages:send_message' %}">
+        <input type="hidden" value="{{ active }}">
+		    <input type="text" id="to" placeholder="to.." name="to">
+        <input type="text" name="message" placeholder="Write a message..." maxlength="1000" autocomplete="off">
+		    <div class="form-group">
+          <div class="col-sm-11 col-sm-offset-1">
+			      <button type="submit" class="btn btn-primary">Send</button>
+	     		</div>
+  		  </div>
+        {% csrf_token %}
+      </form>
+    </div>
+  </div>
 {% endblock %}
-
-
-
-
-{% block container %}
-  {% if messages %}
-  <ul class="conversation">
-    {% for message in messages %}
-      {{message}}
-    {% endfor %}
-    <li class="send-message">
-      <img src="{{ user.profile.get_picture }}" class="picture">
-      <div style="margin-top: .3em">
-        <form role="form" method="post" action="{% url 'messeges:send_message' %}" id="send">
-          {% csrf_token %}
-          <input type="hidden" name="to" value="{{ active }}">
-          <input class="form-control" type="text" name="message" placeholder="Write a message..." maxlength="1000" autocomplete="off">
-        </form>
-      </div>
-    </li>
-  </ul>
-  {% else %}
-    <h4>Your inbox is empty!</h4>
-  {% endif %}
-{% endblock container %}

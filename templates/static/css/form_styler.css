@@ -55,8 +55,6 @@
      font-family: 'Segoe Marker','Lucida Console';
    }
    #submit_logup{
-    position: relative;
-      left: 110px;
       margin: 30px auto;
    }
 
@@ -67,4 +65,11 @@
   width: 200px;
 }
 #ul_register label{
+}
+#submit_edit{
+  float: right;
+  margin-top: -20px;
+}
+#form_edit{
+
 }

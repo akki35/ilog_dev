@@ -66,6 +66,9 @@
 	vertical-align: top;
 	width:58%;
 }
+	h2{
+		text-align: center;
+	}
 	#form_feed{
 		position: relative;
 		margin-bottom: 20px;
@@ -105,3 +108,14 @@
 		border-top: 2px solid #9aa;
 		padding-top: 10px;
 	}
+
+.list{
+	padding: 25px;
+}
+
+.name_people{
+	line-height: 25px;
+}
+.name_enterprise{
+	line-height: 25px;
+}
