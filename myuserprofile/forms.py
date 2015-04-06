@@ -1,5 +1,6 @@
 from django import forms
 from myuserprofile.models import MyUserProfile
+from enterprise.models import Operation
 
 
 class ProfileForm(forms.ModelForm):
@@ -9,6 +10,7 @@ class ProfileForm(forms.ModelForm):
     job_position = forms.CharField(max_length=255, required=False)
     experience = forms.CharField(widget=forms.Textarea, max_length=5000)
     summary = forms.CharField(widget=forms.Textarea, max_length=5000)
+    skillset = forms.ModelMultipleChoiceField(queryset=Operation.objects.all(), required=False)
 
     class Meta:
         model = MyUserProfile
