@@ -7,12 +7,12 @@ from django.contrib.auth.decorators import login_required
 @login_required
 def notifications(request):
     myuser = request.user
-    notifications = Notification.objects.filter(to_user=myuser)
+    read = Notification.objects.filter(to_user=myuser, is_read=True)
     unread = Notification.objects.filter(to_user=myuser, is_read=False)
     for notification in unread:
         notification.is_read = True
         notification.save()
-    return render(request, 'activities/notifications.html', {'notifications': notifications})
+    return render(request, 'activities/notifications.html', {'read': read, 'unread':unread})
 
 @login_required
 # @ajax_required

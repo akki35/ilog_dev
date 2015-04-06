@@ -3,7 +3,7 @@ from myuserprofile.models import MyUserProfile
 
 
 class ProfileForm(forms.ModelForm):
-    image = forms.ImageField(required=False)
+    image = forms.ImageField(required=False, widget=forms.FileInput)
     GenderChoices = (('M', 'Male'), ('F', 'Female'),)
     gender = forms.ChoiceField(choices=GenderChoices, widget=forms.Select(attrs={'class':'regDropDown'}))
     job_position = forms.CharField(max_length=255, required=False)

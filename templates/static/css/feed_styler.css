@@ -31,6 +31,9 @@
     font-size: 0.9em;
     margin-left: 10%;
   }
+  .comments{
+    margin-bottom: 5px;
+  }
     .comment_user{
       color: #157;
     }

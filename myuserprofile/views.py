@@ -36,10 +36,15 @@ def activity(request):
 
 FEEDS_NUM_PAGES=8
 @login_required
-def network(request):
+def enterprises(request):
     myusers = MyUser.objects.all()
     enterprises = Enterprise.objects.all()
-    return render(request, 'myuserprofile/network.html', {'myusers': myusers, 'enterprises':enterprises})
+    return render(request, 'search/enterprises.html', {'enterprises':enterprises})
+@login_required
+def people(request):
+    myusers = MyUser.objects.all()
+    enterprises = Enterprise.objects.all()
+    return render(request, 'search/people.html', {'myusers': myusers})
 
 # @login_required
 def profile(request, slug):
@@ -97,8 +102,6 @@ def profile_edit(request):
             experience = form.cleaned_data.get('experience')
             summary = form.cleaned_data.get('summary')
             job_position = form.cleaned_data.get('job_position')
-            skillset = form.cleaned_data.get('skillset')
-
 
             mup.image = image
             mup.image_thumbnail = image
@@ -106,9 +109,9 @@ def profile_edit(request):
             mup.summary = summary
             mup.experience = experience
             mup.job_position = job_position
-            mup.skillset = skillset
             mup.save()
-            return redirect('/')
+
+            return redirect('/user/'+myuser.slug)
 
     else:
         form = ProfileForm(instance=myuser, initial={

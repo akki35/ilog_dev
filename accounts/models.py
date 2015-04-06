@@ -126,7 +126,7 @@ class MyUser(AbstractBaseUser):
 
     objects = MyUserManager()
     USERNAME_FIELD = "email"
-    REQUIRED_FIELDS = ['enterprise', 'first_name', 'last_name']
+    REQUIRED_FIELDS = ['first_name', 'last_name']
 
     def __unicode__(self):
         full_name = '%s %s' % (self.first_name, self.last_name)

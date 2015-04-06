@@ -1,32 +1,25 @@
-{% extends 'base.html' %}
-{% load i18n %}
+{% extends 'user_home.html' %}
 
+{% block left_menu %}
 
-{% block content %}
+{% endblock %}
 
-	<h2>Enterprises</h2>
-    {% if enterprises %}
-        <ul>
+{% block mid_content %}
+	<h2>Enterprises in the network</h2>
+        <ul class="list">
         {% for enterprise in enterprises %}
-            <li><a href="{{ post.get_absolute_url }}">{{ enterprise}}</a></li>
+            <li class="name_enterprise">
+                <a href="{% url 'enterprise:enterprise_profile' enterprise.slug %}">{{ enterprise|capfirst }}</a>
+            </li>
         {% endfor %}
         </ul>
-    {% else %}
-        <p>There are no posts.</p>
-    {% endif %}
 		
     <h2>People in the network</h2>
-    {% if myusers %}
-        <ul>
+        <ul class="list">
         {% for myuser in myusers %}
-			
-            <li><a href="{{ post.get_absolute_url }}">{{ myuser }}</a></li>
+            <li class="name_people">
+                <a href="{% url 'myuserprofile:profile' myuser.slug %}">{{ myuser }}</a>
+            </li>
         {% endfor %}
         </ul>
-    {% else %}
-        <p>There are no posts.</p>
-    {% endif %}
-
-    
-
 {% endblock %}

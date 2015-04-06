@@ -10,12 +10,12 @@
 		<header class="header_form">
 			<h2>Update yours Profile</h2>
 		</header>
-		<form class="forms_home" enctype="multipart/form-data" action="" method="POST" role="form" >
+		<form id="form_edit" class="forms_home" enctype="multipart/form-data" action="" method="POST" role="form" >
 			<ul class="uls_home">
+				<li><input id="submit_edit" class="submit_main" type="submit" value="Save"></li>
 				{{ form.as_ul }}
 				{{ form.errors }} {{ form.non_field_errors }}
 				{% csrf_token %}
-				<li><input class="submit_main" type="submit" value="submit"></li>
 			</ul>
 		</form>
 	</section>
