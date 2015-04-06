@@ -41,8 +41,12 @@ def nodes(request):
 # @ajax_required
 def post(request):
     if request.method == 'POST':
+
         print("fuck")
         post = request.POST['post']
+
+        # post = request.POST.get('post')
+# >>>>>>> origin/master
         myuser = request.user
 
         node = Node(post=post, myuser=myuser)
@@ -72,7 +76,7 @@ def comment(request):
             myuser.myuserprofile.notify_commented(node)
             myuser.myuserprofile.notify_also_commented(node)
 
-        return HttpResponseRedirect('/nodes/')
+        return HttpResponseRedirect('/')
     else:
         node_id = request.GET.get('node')
         node = Node.objects.get(pk=node_id)

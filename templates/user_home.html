@@ -1,25 +1,27 @@
 {% extends "base.html" %}
 {% load imagekit %}
 {% load staticfiles %}
-{% load i18n %}
+{% load humanize %}
 
 {% block css %}
 	<link rel="stylesheet" type="text/css" href={% static 'css/home_styler.css' %}>
 	<link rel="stylesheet" type="text/css" href={% static 'css/feed_styler.css' %}>
-	<link rel="stylesheet" type="text/css" href={% static 'css/profile_styler.css' %}>
+	{% block css_2 %}
+	{% endblock %}
 {% endblock %}
 
 {% block menu_links %}
     <li class="link"><a class="a_menu" href="{% url 'home' %}">Home</a></li>
     <li class="link"><a class="a_menu" href="{% url 'myuserprofile:profile' user.slug %}">Profile</a></li>
     <li class="link"><a class="a_menu" href="{% url 'enterprise:enterprise_profile' user.enterprise.slug %}">Workplace</a></li>
-    <li class="link"><a class="a_menu" href="">Messages</a></li>
+    <li class="link"><a class="a_menu" href="{% url 'messages:inbox' %}">Messages</a></li>
     <li class="link right"><a class="a_menu" href="">People</a></li>
     <li class="link right"><a class="a_menu" href="">Enterprises</a></li>
 {% endblock %}
 
 {% block content %}
 	<section id="left_content">
+	{% block left_content %}
 		<div id="user_box">
 			<a id="img_user_thumb" href=""><img class="img_profile_thumb" src="/images/{{ profile.get_image_thumbnail }}" alt="{{ user.get_full_name }}"></a>
 			<div class="name"><a href="">{{ user.get_full_name }}</a></div>
@@ -33,16 +35,15 @@
 			<p class="list_head">People you may know...</p>
 
 		</div>
+	{% endblock %}
 	</section>
-
-	
 		
-		<section id="mid_content">
+	<section id="mid_content">
+	{% block mid_content %}
 		<form id="form_feed" role="form" action="{% url 'nodes:post' %}" method="POST">
-			{% csrf_token %}
-			<input type="hidden" name="myuser" value="{{ myuser.pk }}">
 			<textarea class="input_feed" form="form_feed" autofocus="autofocus" name="post" placeholder="Got something..? Spit it out.."></textarea>
-			<input class="submit_feed" type="submit" value="Post">
+			<input class="submit_feed" type="submit" value="Feed">
+			{% csrf_token %}
 		</form>
 
 	{% for node in feed_nodes %}
@@ -62,16 +63,21 @@
 						{{ comments.post }}
 					</div>
 				{% endfor %}
-					<textarea class="input_comment" name="comment" placeholder="aao to">
-					</textarea>
-					<div class="div_button">Reply</div>
+					<form class="form_comment" action="{% url 'nodes:comment' %}" method="POST">
+						<textarea class="input_comment" name="post" placeholder="aao to"></textarea>
+						<input type="hidden" name="node" value="{{ node.pk }}">
+						<input class="div_button" type="submit" value="Reply">
+						{% csrf_token %}
+					</form>
 				</div>
 			</div>
 		</article>
 	{% endfor %}
+	{% endblock %}
 	</section>
 
 	<section id="right_content">
+	{% block right_content %}
 		<div id="enterprise_list">
 			<p class="list_head">Enterprises you may find interesting...</p>
 
@@ -80,6 +86,7 @@
 			<p class="list_head">Products you may be looking for...</p>
 
 		</div>
+	{% endblock %}
 	</section>
 	
 {% endblock %}

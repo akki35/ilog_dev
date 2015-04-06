@@ -1,10 +1,4 @@
-{% extends "base.html" %}
-{% load staticfiles %}
-
-
-{% block css %}
-	<link rel="stylesheet" type="text/css" href={% static 'css/accounts/login.css' %}>
-{% endblock %}
+{% extends "home.html" %}
 
 {% block title %}Log in to i-Logger{% endblock %}
 
@@ -14,15 +8,15 @@
 {% endblock %}
 
 {% block content %}
-	<section id='content_login'>
+	<section id='content_login' class="contents">
 		<header class="header_form">
 			<h2>LOG IN</h2>
 		</header>
-		<form id="form_login" action="/login" method="POST" role="form" >
-			<ul>
+		<form id="form_login" class="forms_home" action="{% url 'login' %}" method="POST" role="form" >
+			<ul id="ul_login" class="uls_home">
 				{{ form.as_ul }}
 				{% csrf_token %}
-				<li><input type="submit" value="submit" class="button_submit"></li>
+				<li><input id="submit_login" class="submit_main" type="submit" value="LOG IN"></li>
 			</ul>
 		</form>
 	</section>

@@ -58,7 +58,3 @@ media/
 
 .env
 images/
-templates/myuserprofile/profile.html
-*.html
-templates/myuserprofile/profile.html
-templates/myuserprofile/profile.html

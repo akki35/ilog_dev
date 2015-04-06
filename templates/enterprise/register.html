@@ -1,29 +1,20 @@
-{% extends "base.html" %}
-{% load staticfiles %}
+{% extends "home.html" %}
 
-{% block css %}
-	<link rel="stylesheet" type="text/css" href={% static 'css/accounts/signup.css' %}>
-{% endblock %}
-
-{% block header %}
-	<h1><span class="ilog">i-Log</span></h1>
-    <nav class="nav_top">
-        <ul class="ul_top">
-            <a href="/home"><li class="link">Home</li></a>
-        </ul>
-    </nav>
+{% block menu_links %}
+    <li class="link"><a href="{% url 'home' %}">Home</a></li>
+    <li class="link"><a href="{% url 'logup' %}">Log Up</a></li>
 {% endblock %}
 
 {% block content %}
-	<section id="content_register">
+	<section id="content_register" class="contents">
 		<header class="header_form">
 			<h2>Register your company and be a part of this network.</h2>
 		</header>
-		<form id="form_register" action="/enterprise/register/" method="POST" role="form" >
-			<ul>
+		<form id="form_register" class="forms_home" action="{% url 'enterprise:register' %}" method="POST" role="form" >
+			<ul id="ul_register" class="uls_home">
 				{{ form.as_ul }}
 				{% csrf_token %}
-				<li><input type="submit" value="submit" class="button_submit"></li>
+				<li><input id="submit_register" class="submit_main" type="submit" value="ADD"></li>
 			</ul>
 		</form>
 	</section>

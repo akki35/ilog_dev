@@ -4,7 +4,7 @@ from enterprise import views
 
 
 urlpatterns = patterns('',
-                       url(r'^register/$', views.register,),
+                       url(r'^register/$', views.register, name='register'),
 
                        url(r'^add_product/$', 'enterprise.views.add_product', name='add_product'),
                        url(r'^add_asset/$', 'enterprise.views.add_asset', name='add_asset'),
