@@ -85,7 +85,7 @@ def skillset(request, slug):
     skillset = page_user_profile.skillset.all()
     data={'skillset':skillset}
     return render_to_response('myuserprofile/skillset.html', data, context_instance=context)
-
+#ye master me dikhega
 @login_required
 def profile_edit(request):
     myuser = request.user
