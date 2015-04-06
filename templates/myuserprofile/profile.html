@@ -25,7 +25,7 @@
 	{% ifequal page_user user %}
 	<a class="edit" href="{% url 'myuserprofile:profile_edit' %}">edit</a>
 	{% endifequal %}
-	<img class="user_thumb" src="/images/{{ page_user_profile.get_image_thumbnail }}" alt="{{ user.get_full_name }}">
+	<img class="user_thumb" src="/images/{{ page_user.myuserprofile.get_image }}" alt="{{ user.get_full_name }}">
 	<dl class="profile_box">
 		<dt class="info_name">Full Name :</dt>
 		<dd class="info_data">{{ page_user_profile.get_screen_name }}</dd>

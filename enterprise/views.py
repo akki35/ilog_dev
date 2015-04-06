@@ -92,22 +92,24 @@ def add_asset(request):
 def product(request, slug):
     page_enterprise = get_object_or_404(Enterprise, slug=slug)
     products = EnterpriseProduct.objects.filter(enterprise=page_enterprise)
+    product_intro = page_enterprise.enterpriseprofile.product_intro
 
     return render(request, 'products/products.html', {
         'page_enterprise': page_enterprise,
         'products': products,
-        # 'image': product_image,
+        'product_intro': product_intro,
         })
 
 
 def people(request, slug):
     page_enterprise = get_object_or_404(Enterprise, slug=slug)
     members = MyUser.objects.filter(enterprise=page_enterprise)
+    people_detail = page_enterprise.enterpriseprofile.people_detail
 
     return render(request, 'products/people.html', {
         'page_enterprise': page_enterprise,
         'members': members,
-        # 'image': product_image,
+        'people_detail': people_detail,
         })
 
 def about(request, slug):
@@ -127,13 +129,15 @@ def capability(request, slug):
     page_enterprise = get_object_or_404(Enterprise, slug=slug)
     assets = EnterpriseAsset.objects.filter(enterprise=page_enterprise)
     operations = page_enterprise.operations.all()
+    capabilities = page_enterprise.enterpriseprofile.capabilities
 
     return render(request, 'products/capability.html', {
         'assets': assets,
         'operations': operations,
         'page_enterprise': page_enterprise,
-
+        'capabilities': capabilities,
         })
+
 
 def add_type(request):
     form = TypeForm(request.POST)

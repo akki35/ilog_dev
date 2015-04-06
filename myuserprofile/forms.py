@@ -12,6 +12,7 @@ class ProfileForm(forms.ModelForm):
     summary = forms.CharField(widget=forms.Textarea, max_length=5000)
     skillset = forms.ModelMultipleChoiceField(queryset=Operation.objects.all(), required=False)
 
+
     class Meta:
         model = MyUserProfile
         exclude = ['follows', 'score', 'myuser']

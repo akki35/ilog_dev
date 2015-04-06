@@ -37,7 +37,7 @@ class MyUserProfile(models.Model):
 
     def get_image(self):
         default_image = 'user/main/user.jpg'
-        if self.image.url:
+        if self.image:
             return self.image
         else:
             return default_image
