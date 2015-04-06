@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from enterprise.forms import EnterpriseRegistrationForm, ProductForm, AssetForm
+from enterprise.forms import *
 from enterprise.models import *
 from nodes.models import Node
 from accounts.models import MyUser
@@ -92,22 +92,24 @@ def add_asset(request):
 def product(request, slug):
     page_enterprise = get_object_or_404(Enterprise, slug=slug)
     products = EnterpriseProduct.objects.filter(enterprise=page_enterprise)
+    product_intro = page_enterprise.enterpriseprofile.product_intro
 
     return render(request, 'products/products.html', {
         'page_enterprise': page_enterprise,
         'products': products,
-        # 'image': product_image,
+        'product_intro': product_intro,
         })
 
 
 def people(request, slug):
     page_enterprise = get_object_or_404(Enterprise, slug=slug)
     members = MyUser.objects.filter(enterprise=page_enterprise)
+    people_detail = page_enterprise.enterpriseprofile.people_detail
 
     return render(request, 'products/people.html', {
         'page_enterprise': page_enterprise,
         'members': members,
-        # 'image': product_image,
+        'people_detail': people_detail,
         })
 
 def about(request, slug):
@@ -127,13 +129,63 @@ def capability(request, slug):
     page_enterprise = get_object_or_404(Enterprise, slug=slug)
     assets = EnterpriseAsset.objects.filter(enterprise=page_enterprise)
     operations = page_enterprise.operations.all()
+    capabilities = page_enterprise.enterpriseprofile.capabilities
 
     return render(request, 'products/capability.html', {
         'assets': assets,
         'operations': operations,
         'page_enterprise': page_enterprise,
-
+        'capabilities': capabilities,
         })
+
+
+def add_type(request):
+    form = TypeForm(request.POST)
+    if request.method == 'POST':
+
+        if not form.is_valid():
+            render(request, 'enterprise/add_type.html', {'form': form})
+        else:
+            name = form.cleaned_data.get('name')
+
+            t, created = Type.objects.get_or_create(name=name)
+
+            t.save()
+            return redirect('/enterprise/register')
+
+    else:
+        return render(request, 'enterprise/add_type.html', {'form': form})
+
+def add_operation(request):
+    form = OperationForm(request.POST)
+    if request.method == 'POST':
+
+        if not form.is_valid():
+            render(request, 'enterprise/add_operation.html', {'form': form})
+        else:
+            name = form.cleaned_data.get('name')
+            o, created = Operation.objects.get_or_create(name=name)
+            o.save()
+            return redirect('/enterprise/register')
+
+    else:
+        return render(request, 'enterprise/add_operation.html', {'form': form})
+
+
+def add_material(request):
+    form = MaterialForm(request.POST)
+    if request.method == 'POST':
+
+        if not form.is_valid():
+            render(request, 'enterprise/add_material.html', {'form': form})
+        else:
+            name = form.cleaned_data.get('name')
+            m, created = Material.objects.get_or_create(name=name)
+            m.save()
+            return redirect('/enterprise/register')
+
+    else:
+        return render(request, 'enterprise/add_material.html', {'form': form})
 
 
 # Create your views here.

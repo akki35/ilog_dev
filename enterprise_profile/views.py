@@ -4,6 +4,7 @@ from enterprise_profile.forms import EnterpriseProfileForm
 from enterprise_profile.models import EnterpriseProfile
 from enterprise.models import Enterprise
 from accounts.models import MyUser
+from nodes.models import Node
 from django.core.urlresolvers import reverse
 
 
@@ -20,6 +21,9 @@ def enterprise_profile_edit(request):
             contact = form.cleaned_data.get('contact')
             website = form.cleaned_data.get('website')
             address = form.cleaned_data.get('address')
+            capabilities = form.cleaned_data.get('capabilities')
+            people_detail = form.cleaned_data.get('people_detail')
+            product_intro = form.cleaned_data.get('product_intro')
 
             ep = EnterpriseProfile.objects.get(enterprise=enterprise)
 
@@ -29,7 +33,17 @@ def enterprise_profile_edit(request):
             ep.contact = contact
             ep.about = about
             ep.website = website
+            ep.capabilities = capabilities
+            ep.people_detail = people_detail
+            ep.product_intro = product_intro
             ep.save()
+
+            myuser = request.user
+            edit_post = u'{0} from {1} has edited the enterprise profile.'.format(myuser.first_name, myuser.enterprise)
+            node = Node(myuser=myuser, post=edit_post)
+            node.save()
+
+            myuser.myuserprofile.notify_edited(enterprise=enterprise, node=node)
 
             return redirect('/')
         else:
@@ -42,6 +56,9 @@ def enterprise_profile_edit(request):
             'contact': enterprise.enterpriseprofile.contact,
             'website': enterprise.enterpriseprofile.website,
             'image': enterprise.enterpriseprofile.image,
+            'capabilities': enterprise.enterpriseprofile.capabilities,
+            'people_detail': enterprise.enterpriseprofile.people_detail,
+            'product_intro': enterprise.enterpriseprofile.product_intro,
             })
     return render(request, 'enterprise_profile/enterprise_profile_edit.html', {'form':form})
 

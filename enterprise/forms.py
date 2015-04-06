@@ -51,4 +51,30 @@ class AssetForm(forms.ModelForm):
         fields = ['asse', 'asset_image', 'description', 'caption']
 
 
-    
+class TypeForm(forms.ModelForm):
+    name = forms.CharField(max_length=25)
+
+    class Meta:
+        model = Type
+        exclude = ['slug', 'is_active']
+        fields = ['name']
+
+
+class MaterialForm(forms.ModelForm):
+    name = forms.CharField(max_length=25)
+
+    class Meta:
+        model = Material
+        exclude = ['slug', 'is_active', ]
+        fields = ['name']
+
+
+class OperationForm(forms.ModelForm):
+    name = forms.CharField(max_length=25)
+
+    class Meta:
+        model = Operation
+        exclude = ['slug', 'is_active', ]
+        fields = ['name']
+
+

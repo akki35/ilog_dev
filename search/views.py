@@ -7,52 +7,52 @@ from myuserprofile.models import MyUserProfile
 from enterprise_profile.models import EnterpriseProfile
 
 
-def search(request):     # dynamic search on each page requested through ajax
-    if 'q' in request.GET:
-        querystring = request.GET.get('q')
-        terms = querystring.split()
-        if not terms:
-            return redirect('/search/')
-        pquery = None
-        qquery = None
-        rquery = None
-        for term in terms:
+# def search(request):     # dynamic search on each page requested through ajax
+#     if 'q' in request.GET:
+#         querystring = request.GET.get('q')
+#         terms = querystring.split()
+#         if not terms:
+#             return redirect('/search/')
+#         pquery = None
+#         qquery = None
+#         rquery = None
+#         for term in terms:
+#
+#             q = MyUser.objects.filter(Q(first_name__icontains=term)
+#                                       | Q(last_name__icontains=term))
+#             p = Enterprise.objects.filter(enterprise__icontains=term)
+#             r = Product.objects.filter(name__icontains=term)
+#
+#             if pquery is None:
+#                 pquery = p
+#             else:
+#                 pquery = pquery & p
+#
+#
+#             if qquery is None:
+#                 qquery = q
+#             else:
+#                 qquery = qquery & q
+#
+#             if rquery is None:
+#                 rquery = r
+#             else:
+#                 rquery = rquery & r
+#
+#
+#
+#         return render(request, 'search/results.html', {
+#
+#             'querystring': querystring,
+#             'qquery': qquery,
+#             'pquery': pquery,
+#             'rquery': rquery,
+#             't': terms})
+#     else:
+#         return render(request, 'search/search.html')
 
-            q = MyUser.objects.filter(Q(first_name__icontains=term)
-                                      | Q(last_name__icontains=term))
-            p = Enterprise.objects.filter(enterprise__icontains=term)
-            r = Product.objects.filter(name__icontains=term)
 
-            if pquery is None:
-                pquery = p
-            else:
-                pquery = pquery & p
-
-
-            if qquery is None:
-                qquery = q
-            else:
-                qquery = qquery & q
-
-            if rquery is None:
-                rquery = r
-            else:
-                rquery = rquery & r
-
-
-
-        return render(request, 'search/results.html', {
-
-            'querystring': querystring,
-            'qquery': qquery,
-            'pquery': pquery,
-            'rquery': rquery,
-            't': terms})
-    else:
-        return render(request, 'search/search.html')
-
-
-def search_adv(request):
+def search(request):
     if 'q' in request.GET:
         querystring = request.GET.get('q')
         terms = querystring.split(' ')

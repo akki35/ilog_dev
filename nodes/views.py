@@ -16,46 +16,48 @@ def nodes(request):
     all_nodes = Node.get_feeds()
     paginator = Paginator(all_nodes, NODES_NUM_PAGES)
     nodes = paginator.page(1)
-    from_node = -1
-    if nodes:
-        from_node = nodes[0].id
+
     return render(request, 'nodes/nodes.html', {
         'nodes': nodes,
-        'from_node': from_node,
         'page': 1,
         })
     # return all_nodes
 
-def _html_feeds(last_feed, user, csrf_token, feed_source='all'):
-    feeds = Node.get_feeds_after(last_feed)
-    if feed_source != 'all':
-        feeds = feeds.filter(user__id=feed_source)
-    html = u''
-    for feed in feeds:
-        html = u'{0}{1}'.format(html, render_to_string('feeds/partial_feed.html', {
-            'feed': feed,
-            'user': user,
-            'csrf_token': csrf_token
-            })
-        )
-    return html
+# def _html_feeds(last_feed, user, csrf_token, feed_source='all'):
+#     feeds = Node.get_feeds_after(last_feed)
+#     if feed_source != 'all':
+#         feeds = feeds.filter(user__id=feed_source)
+#     html = u''
+#     for feed in feeds:
+#         html = u'{0}{1}'.format(html, render_to_string('feeds/partial_feed.html', {
+#             'feed': feed,
+#             'user': user,
+#             'csrf_token': csrf_token
+#             })
+#         )
+#     return html
 
 @login_required
 # @ajax_required
 def post(request):
-    # csrf_token = (csrf(request)['csrf_token'])
     if request.method == 'POST':
 
-        post = request.POST.get('post')
+        print("fuck")
+        post = request.POST['post']
+
+        # post = request.POST.get('post')
+# >>>>>>> origin/master
         myuser = request.user
-        feed = Node.objects.create(post=post, myuser=myuser)
-        feed.save()
+
+        node = Node(post=post, myuser=myuser)
+        node.save()
 
         return HttpResponseRedirect('/')
+
     else:
-        # html = _html_feeds(last_feed, myuser, csrf_token)
-        # return HttpResponse(html)
         return HttpResponseRedirect('/')
+
+
 
 @login_required
 # @ajax_required

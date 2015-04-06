@@ -26,15 +26,26 @@ class Notification(models.Model):
     LIKED = 'L'
     COMMENTED = 'C'
     ALSO_COMMENTED = 'S'
+    # JOINED = 'J'
+    ALSO_JOINED = 'K'
+    EDITED = 'E'
+    FOLLOWS = 'F'
 
     NOTIFICATION_TYPES = (
         (LIKED, 'Liked'),
         (COMMENTED, 'Commented'),
-        (ALSO_COMMENTED, 'Also commented')
+        (ALSO_COMMENTED, 'Also commented'),
+        (ALSO_JOINED, 'Also joined'),
+        (EDITED, 'Edited'),
+        (FOLLOWS, 'Follows')
     )
     _LIKED_TEMPLATE = u'<a href="/user/{0}/">{1}</a> liked your post: <a href="/feeds/{2}/">{3}</a>'
     _COMMENTED_TEMPLATE = u'<a href="/user/{0}/">{1}</a> commented on your post: <a href="/feeds/{2}/">{3}</a>'
     _ALSO_COMMENTED_TEMPLATE = u'<a href="/user/{0}/">{1}</a> also commented on the post: <a href="/feeds/{2}/">{3}</a>'
+    # _JOINED_TEMPLATE = u'<a href="/user/{0}/">{1}</a> has joined your enterprise'
+    _ALSO_JOINED_TEMPLATE = u'<a href="/user/{0}/">{1}</a> also joined your enterprise'
+    _EDITED_TEMPLATE = u'<a href="/user/{0}/">{1}</a> has made some edits to the enterprise profile'
+    _FOLLOWS_TEMPLATE = u'<a href="/user/{0}/">{1}</a> from <a href="/enterprise/{2}/">{3}</a> is following you now'
     from_user = models.ForeignKey(MyUser, related_name='+')
     to_user = models.ForeignKey(MyUser, related_name='+')
     date = models.DateTimeField(auto_now_add=True)
@@ -63,12 +74,32 @@ class Notification(models.Model):
                 escape(self.get_summary(self.node.post))
                 )
 
-        elif self.notification_type == self.AlSO_COMMENTED:
+        elif self.notification_type == 'S':
             return self._ALSO_COMMENTED_TEMPLATE.format(
                 escape(self.from_user.slug),
                 escape(self.from_user.get_full_name()),
                 self.node.pk,
                 escape(self.get_summary(self.node.post))
+                )
+
+        elif self.notification_type == 'F':
+            return self._FOLLOWS_TEMPLATE.format(
+                escape(self.from_user.slug),
+                escape(self.from_user.get_full_name()),
+                escape(self.from_user.enterprise.slug),
+                escape(self.from_user.enterprise)
+                )
+
+        elif self.notification_type == 'K':
+            return self._ALSO_JOINED_TEMPLATE.format(
+                escape(self.from_user.slug),
+                escape(self.from_user.get_full_name()),
+                )
+
+        elif self.notification_type == 'E':
+            return self._EDITED_TEMPLATE.format(
+                escape(self.from_user.slug),
+                escape(self.from_user.get_full_name()),
                 )
 
         else:
