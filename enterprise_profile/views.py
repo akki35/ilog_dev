@@ -11,8 +11,9 @@ from django.core.urlresolvers import reverse
 @login_required
 def enterprise_profile_edit(request):
     enterprise = request.user.enterprise
+    
     if request.method == 'POST':
-
+        
         form = EnterpriseProfileForm(request.POST, request.FILES)
         print(form.errors)
         if form.is_valid():
@@ -56,9 +57,9 @@ def enterprise_profile_edit(request):
             'contact': enterprise.enterpriseprofile.contact,
             'website': enterprise.enterpriseprofile.website,
             'image': enterprise.enterpriseprofile.image,
-            'capabilities': enterprise.enterpriseprofile.capabilities,
-            'people_detail': enterprise.enterpriseprofile.people_detail,
-            'product_intro': enterprise.enterpriseprofile.product_intro,
+            #'capabilities': enterprise.enterpriseprofile.capabilities,
+            #'people_detail': enterprise.enterpriseprofile.people_detail,
+            #'product_intro': enterprise.enterpriseprofile.product_intro,
             })
     return render(request, 'enterprise_profile/enterprise_profile_edit.html', {'form':form})
 
@@ -73,7 +74,8 @@ def enterprise_profile(request, slug):
         'page_enterprise': page_enterprise,
         'profile':EnterpriseProfile.objects.get(enterprise=page_enterprise),
         'members': members,
-        'slug': slug
+        'slug': slug,
+        'myuser': myuser
         })
     # return HttpResponseRedirect(reverse('enterprise:enterprise_profile'),  {
     #     'page_enterprise': page_enterprise,

@@ -16,17 +16,20 @@
     <li class="link"><a class="a_menu" href="{% url 'enterprise:enterprise_profile' user.enterprise.slug %}">Workplace</a></li>
     <li class="link"><a class="a_menu" href="{% url 'messages:inbox' %}">Messages</a></li>
     <li class="link"><a class="a_menu" href="{% url 'notifications' %}">Notifications</a></li>
+    <li class="link right"><a href="{% url 'logout' %}">Log Out</a></li>
+    <!--
     <li class="link right"><a class="a_menu" href="{% url 'myuserprofile:people' %}">People</a></li>
     <li class="link right"><a class="a_menu" href="{% url 'myuserprofile:enterprises' %}">Enterprises</a></li>
+    -->
 {% endblock %}
 
 {% block content %}
 	<section id="left_content">
 	{% block left_content %}
 		<div id="user_box">
-			<a id="img_user_thumb" href=""><img class="img_profile_thumb" src="/images/{{ profile.get_image_thumbnail }}" alt="{{ user.get_full_name }}"></a>
-			<div class="name"><a href="">{{ user.get_full_name }}</a></div>
-			<div class="name ent"><a href="">{{ user.enterprise }}</a></div>
+			<a id="img_user_thumb" href="{% url 'myuserprofile:profile' user.slug %}"><img class="img_profile_thumb" src="/images/{{ profile.get_image_thumbnail }}" alt="{{ user.get_full_name }}"></a>
+			<div class="name"><a href="{% url 'myuserprofile:profile' user.slug %}">{{ user.get_full_name }}</a></div>
+			<div class="name ent"><a href="{% url 'enterprise:enterprise_profile' user.enterprise.slug %}">{{ user.enterprise }}</a></div>
 		</div>
 		{% block left_menu %}
 		<ul id="left_menu">
@@ -43,7 +46,7 @@
 	<section id="mid_content">
 	{% block mid_content %}
 		<form id="form_feed" role="form" action="{% url 'nodes:post' %}" method="POST">
-			<textarea class="input_feed" form="form_feed" autofocus="autofocus" name="post" placeholder="Got something..? Spit it out.."></textarea>
+			<textarea class="input_feed" form="form_feed" autofocus="autofocus" name="post" placeholder="Got something..? Spit it out.." required></textarea>
 			<input class="submit_feed" type="submit" value="Feed">
 			{% csrf_token %}
 		</form>
@@ -69,7 +72,7 @@
 							{{ user}} | {{ user.enterprise}}
 					</div>
 					<form class="form_comment" action="{% url 'nodes:comment' %}" method="POST">
-						<textarea class="input_comment" name="post" placeholder="aao to"></textarea>
+						<textarea class="input_comment" name="post" placeholder="aao to" required></textarea>
 						<input type="hidden" name="node" value="{{ node.pk }}">
 						<input class="div_button" type="submit" value="Reply">
 						{% csrf_token %}
@@ -94,10 +97,4 @@
 	{% endblock %}
 	</section>
 	
-{% endblock %}
-
-{% block footer %}
-	<ul>
-    	<li><a href="{% url 'logout' %}">Log Out</a></li>
-	</ul>
 {% endblock %}

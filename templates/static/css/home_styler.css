@@ -8,7 +8,6 @@
 	vertical-align: top;
 	width:15%;
 	text-align: right;
-	margin-right: 2%;
 }
 	#user_box{
 		margin: 0px 20px 20px 0px;
@@ -64,7 +63,10 @@
 #mid_content{
 	display: inline-block;
 	vertical-align: top;
-	width:58%;
+	width:59%;
+	padding: 0% 2%;
+	border-left: 1px solid #9aa;
+	border-right: 1px solid #9aa;
 }
 	h2{
 		text-align: center;
@@ -93,13 +95,12 @@
 
 
 #right_content{
-	float: right;
+	display: inline-block;
 	vertical-align: top;
-	width:17%;
-	margin-left: 50px;
+	width:15%;
+	margin-left: 3%;
 }
 	#enterprise_list{
-		margin-top: 60px;
 		border-top: 2px solid #9aa;
 		padding-top: 10px;
 	}

@@ -1,20 +1,13 @@
-{% extends "base.html" %}
+{% extends "user_home.html" %}
+{% load imagekit %}
 {% load staticfiles %}
 
-{% block css %}
-	<link rel="stylesheet" type="text/css" href={% static 'css/accounts/signup.css' %}>
+{% block css_2 %}
+	<link rel="stylesheet" type="text/css" href={% static 'css/profile_styler.css' %}>
+	<link rel="stylesheet" type="text/css" href={% static 'css/form_styler.css' %}>
 {% endblock %}
 
-{% block header %}
-	<h1><span class="ilog">i-Log</span></h1>
-    <nav class="nav_top">
-        <ul class="ul_top">
-            <a href="/home"><li class="link">Home</li></a>
-        </ul>
-    </nav>
-{% endblock %}
-
-{% block content %}
+{% block mid_content %}
 	<section id="content_enterprise_profile_edit">
 		<header class="header_form">
 			<h2>You.., fill me up...</h2>
@@ -23,7 +16,7 @@
 			<ul>
 				{{ form.as_ul }}
 				{% csrf_token %}
-				{{ form.errors }} and {{ form.non_field_errors }}
+				{{ form.errors }}{{ form.non_field_errors }}
 				<li><input type="submit" value="submit" class="button_submit"></li>
 			</ul>
 		</form>
