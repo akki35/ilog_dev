@@ -38,12 +38,12 @@ def activity(request):
         return render(request, 'home.html')
 
 FEEDS_NUM_PAGES=8
-@login_required
+# @login_required
 def enterprises(request):
     myusers = MyUser.objects.all()
     enterprises = Enterprise.objects.all()
     return render(request, 'search/enterprises.html', {'enterprises':enterprises})
-@login_required
+# @login_required
 def people(request):
     myusers = MyUser.objects.all()
     enterprises = Enterprise.objects.all()
