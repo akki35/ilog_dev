@@ -1,22 +1,13 @@
-{% extends "myuserprofile/profile.html" %}
-{% load staticfiles %}
-
-{% block css_3 %}
-	<link rel="stylesheet" type="text/css" href={% static 'css/form_styler.css' %}>
-{% endblock %}
-
-{% block mid_content %}
-	<section id="content_profile_edit">
-		<header class="header_form">
-			<h2>Update yours Profile</h2>
-		</header>
-		<form id="form_edit" class="forms_home" enctype="multipart/form-data" action="" method="POST" role="form" >
-			<ul class="uls_home">
-				<li><input id="submit_edit" class="submit_main" type="submit" value="Save"></li>
-				{{ form.as_ul }}
-				{{ form.errors }} {{ form.non_field_errors }}
-				{% csrf_token %}
-			</ul>
-		</form>
-	</section>
-{% endblock %}
+<section id="content_profile_edit">
+	<header class="header_form">
+		<h2>Update yours Profile</h2>
+	</header>
+	<form id="form_edit" class="forms_home" enctype="multipart/form-data" action="{% url 'myuserprofile:profile_edit' %}" method="POST" role="form" >
+		<ul class="uls_home">
+			<li><input class="pop_link_left aj_f" type="submit" value="Save" data-link=></li>
+			{{ form.as_ul }}
+			{{ form.errors }} {{ form.non_field_errors }}
+			{% csrf_token %}
+		</ul>
+	</form>
+</section>

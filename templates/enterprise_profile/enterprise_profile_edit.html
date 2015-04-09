@@ -1,24 +1,17 @@
-{% extends "user_home.html" %}
-{% load imagekit %}
-{% load staticfiles %}
 
-{% block css_2 %}
-	<link rel="stylesheet" type="text/css" href={% static 'css/profile_styler.css' %}>
-	<link rel="stylesheet" type="text/css" href={% static 'css/form_styler.css' %}>
-{% endblock %}
-
-{% block mid_content %}
-	<section id="content_enterprise_profile_edit">
-		<header class="header_form">
-			<h2>You.., fill me up...</h2>
-		</header>
-		<form enctype="multipart/form-data" action="" method="POST" role="form" >
-			<ul>
-				{{ form.as_ul }}
-				{% csrf_token %}
-				{{ form.errors }}{{ form.non_field_errors }}
-				<li><input type="submit" value="submit" class="button_submit"></li>
-			</ul>
-		</form>
-	</section>
-{% endblock %}
+<section id="content_enterprise_profile_edit">
+	<header class="header_form">
+		<h2>Update your enterprise info . . .</h2>
+	</header>
+	<form enctype="multipart/form-data" action="" method="POST" role="form" >
+		<ul class="form_edit">
+		<li><input type="submit" value="save" class="pop_link_left">
+		</li>
+			{{ form.as_ul }}
+			{% csrf_token %}
+			{{ form.errors }}{{ form.non_field_errors }}
+			<li><input type="submit" value="save" class="pop_link_left">
+		</li>				
+		</ul>
+	</form>
+</section>

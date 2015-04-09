@@ -15,8 +15,14 @@
     <li class="link"><a class="a_menu" href="{% url 'myuserprofile:profile' user.slug %}">Profile</a></li>
     <li class="link"><a class="a_menu" href="{% url 'enterprise:enterprise_profile' user.enterprise.slug %}">Workplace</a></li>
     <li class="link"><a class="a_menu" href="{% url 'messages:inbox' %}">Messages</a></li>
-    <li class="link"><a class="a_menu" href="{% url 'notifications' %}">Notifications</a></li>
+    <li class="link"><a class="a_menu framer" target="triframe" href="{% url 'notifications' %}">Notifications</a></li>
     <li class="link right"><a href="{% url 'logout' %}">Log Out</a></li>
+    <li class="link_user">
+		<a class="thumb_user" href="{% url 'myuserprofile:profile' user.slug %}"><img class="img_thumb" src="/images/{{ user.myuserprofile.get_image_thumbnail }}" alt="{{ user.get_full_name }}"></a>
+		<div class="name"><a href="{% url 'myuserprofile:profile' user.slug %}">{{ user.get_full_name }}</a> | 
+		<a href="{% url 'enterprise:enterprise_profile' user.enterprise.slug %}">{{ user.enterprise }}</a>
+		</div>
+	</li>
     <!--
     <li class="link right"><a class="a_menu" href="{% url 'myuserprofile:people' %}">People</a></li>
     <li class="link right"><a class="a_menu" href="{% url 'myuserprofile:enterprises' %}">Enterprises</a></li>
@@ -26,27 +32,22 @@
 {% block content %}
 	<section id="left_content">
 	{% block left_content %}
-		<div id="user_box">
-			<a id="img_user_thumb" href="{% url 'myuserprofile:profile' user.slug %}"><img class="img_profile_thumb" src="/images/{{ profile.get_image_thumbnail }}" alt="{{ user.get_full_name }}"></a>
-			<div class="name"><a href="{% url 'myuserprofile:profile' user.slug %}">{{ user.get_full_name }}</a></div>
-			<div class="name ent"><a href="{% url 'enterprise:enterprise_profile' user.enterprise.slug %}">{{ user.enterprise }}</a></div>
-		</div>
 		{% block left_menu %}
 		<ul id="left_menu">
 			<li class="left_menu_button show">Feeds</li>
 			<li class="left_menu_button">Articles</li>
 		</ul>
 		{% endblock %}
-		<div id="people_list">
+		<aside id="people_list">
 			<p class="list_head">People you may know...</p>
-		</div>
+		</aside>
 	{% endblock %}
 	</section>
 		
 	<section id="mid_content">
 	{% block mid_content %}
 		<form id="form_feed" role="form" action="{% url 'nodes:post' %}" method="POST">
-			<textarea class="input_feed" form="form_feed" autofocus="autofocus" name="post" placeholder="Got something..? Spit it out.." required></textarea>
+			<textarea class="input_feed" form="form_feed" name="post" placeholder="Got something..? Spit it out.." required></textarea>
 			<input class="submit_feed" type="submit" value="Feed">
 			{% csrf_token %}
 		</form>
@@ -54,7 +55,7 @@
 	{% for node in feed_nodes %}
 		<article class="feed_box" >
 			<div class="feed_user">
-				<a href="">{{ node.myuser }}</a> | <a href="">{{ node.myuser.enterprise }}</a>
+				<a href="{% url 'myuserprofile:profile' node.myuser.slug %}">{{ node.myuser }}</a> | <a href="{% url 'enterprise:enterprise_profile' node.myuser.enterprise.slug %}">{{ node.myuser.enterprise }}</a>
 				<div class="feed_date">{{ node.date }}</div>
 			</div>
 			<div class="feed_data">
@@ -86,14 +87,23 @@
 
 	<section id="right_content">
 	{% block right_content %}
-		<div id="enterprise_list">
+		<aside id="enterprise_list">
 			<p class="list_head">Enterprises you may find interesting...</p>
+			<ul>
+				{% for enterprises in all_enterprises %}
+				<li class="list_object">
+					<img class="img_thumb_large" src="/images/{{ enterprises.enterpriseprofile.get_image_thumbnail }}">
+					<div>{{ enterprises }}</div>
+					<div>{{ enterprises.type }}</div>
+				</li>
+				{% endfor %}
+			</ul>
 
-		</div>
-		<div id="product_list">
+		</aside>
+		<aside id="product_list">
 			<p class="list_head">Products you may be looking for...</p>
 
-		</div>
+		</aside>
 	{% endblock %}
 	</section>
 	

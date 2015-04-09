@@ -1,0 +1,13 @@
+{% ifequal myuser.enterprise page_enterprise %}
+<div class="pop_link_left aj" data-link="{% url 'enterprise:enterprise_profile_edit' %}">edit</div>
+{% endifequal %}
+<dl class="profile_box">
+	<div class="info_box">
+	<dt class="info_name">About :</dt>
+	<dd class="info_data wide">{{ profile.about }}</dd>
+	</div>
+	<div class="info_box half">
+	<dt class="info_name">Address :</dt>
+	<dd class="info_data wide">{{ profile.address }}</dd>
+	</div>
+</dl>

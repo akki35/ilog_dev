@@ -4,23 +4,22 @@
 
 {% block css_2 %}
 	<link rel="stylesheet" type="text/css" href={% static 'css/profile_styler.css' %}>
+	<link rel="stylesheet" type="text/css" href={% static 'css/form_styler.css' %}>
 	{% block css_3 %}
 	{% endblock %}
 {% endblock %}
 
 {% block menu_content_links %}
-	<li class="link_user">
-		
-	</li>
-	<li class="link_content"><a class="a_menu" href="{% url 'enterprise:enterprise_profile' page_enterprise.slug %}">About</a></li>
-    <li class="link_content"><a class="a_menu" href="{% url 'enterprise:product' page_enterprise.slug %}">Products</a></li>
-    <li class="link_content"><a class="a_menu" href="{% url 'enterprise:enterprise_profile' user.enterpriset.slug %}">Capabilities</a></li>
-    <li class="link_content"><a class="a_menu" href="{% url 'messages:inbox' %}">People</a></li>
+	<h3 class="ent_title"><a href="{% url 'enterprise:enterprise_profile' page_enterprise.slug %}">{{ page_enterprise }}</a></h3>
+	<li class="link_content aj" class="a_menu" data-link="{% url 'enterprise:enterprise_profile_aj' page_enterprise.slug %}">About</li>
+    <li class="link_content aj" class="a_menu" data-link="{% url 'enterprise:product' page_enterprise.slug %}">Products</li>
+    <li class="link_content aj" class="a_menu" data-link="{% url 'enterprise:capability' page_enterprise.slug %}">Capabilities</li>
+    <li class="link_content aj" class="a_menu" data-link="{% url 'enterprise:people' page_enterprise.slug %}">People</li>
+    <li class="link_content aj" class="a_menu" data-link="">Connections</li>
 {% endblock %}
 
 {% block left_content %}
 	<div id="left_ent">
-		<h3 class="ent_title"><a href="{% url 'enterprise:enterprise_profile' page_enterprise.slug %}">{{ page_enterprise }}</a></h3>
 		<img id="ent_img" src="/images/{{ profile.get_image }}" alt="{{ page_enterprise }}">
 	</div>
 	<dl class="left_info">
@@ -42,20 +41,36 @@
 {% endblock %}
 
 {% block mid_content %}
-	{% ifequal myuser.enterprise page_enterprise %}
-	<a class="pop_link_left" href="{% url 'enterprise:enterprise_profile_edit' %}">edit</a>
-	{% endifequal %}
-	<dl class="profile_box">
-		<div class="info_box">
-		<dt class="info_name">About :</dt>
-		<dd class="info_data wide">{{ profile.about }}</dd>
-		</div>
-		<div class="info_box half">
-		<dt class="info_name">Address :</dt>
-		<dd class="info_data wide">{{ profile.address }}</dd>
-		</div>
-	</dl>
+	<section id="mid_content_box">
+		{% ifequal myuser.enterprise page_enterprise %}
+		<div class="pop_link_left aj" data-link="{% url 'enterprise:enterprise_profile_edit' %}">edit</div>
+		{% endifequal %}
+		<dl class="profile_box">
+			<div class="info_box">
+			<dt class="info_name">About :</dt>
+			<dd class="info_data wide">{{ profile.about }}</dd>
+			</div>
+			<div class="info_box half">
+			<dt class="info_name">Address :</dt>
+			<dd class="info_data wide">{{ profile.address }}</dd>
+			</div>
+		</dl>
+	</section>
 {% endblock %}
 
 {% block scripts %}
+	<script type="text/javascript">
+		$('.aj').click(function(){
+			var $this = $(this);
+			var url = $(this).data('link');
+			console.log($('#mid_content_box').text());
+			$('#mid_content_box').load(url);
+			
+			function hido(){
+				var hide = $('.profile').find('.hidden');
+				var hide_this = hide.data('hide');
+				$('.'+hide_this).text('');
+			}
+		});
+	</script>
 {% endblock %}

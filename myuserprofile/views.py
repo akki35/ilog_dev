@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404, HttpResponseRedirect, render_to_response
-from enterprise.models import Enterprise
+from enterprise.models import Enterprise, Product
 from accounts.models import MyUser
 from django.contrib.auth.decorators import login_required
 # from nodes.views import nodes
@@ -16,9 +16,15 @@ def home(request):
     if request.user.is_authenticated():
         feed_nodes = Node.get_feeds()
         comment_nodes = Node.objects.filter(myuser=request.user, category='C')
+        all_users = MyUser.objects.all()
+        all_enterprises = Enterprise.objects.all()
+        all_products = Product.objects.all()
         c = {'user': request.user,
              'profile': MyUserProfile.objects.get(myuser=request.user),
-             'feed_nodes': feed_nodes}
+             'feed_nodes': feed_nodes,
+             'all_users':all_users,
+             'all_enterprises':all_enterprises,
+             'all_products':all_products}
         return render_to_response('user_home.html', c, context_instance=RequestContext(request))
 # <<<<<<< HEAD
 # =======

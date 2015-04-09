@@ -10,7 +10,7 @@
 {% block content %}
 	<section id="content_logup" class="contents">
 		<header class="header_form">
-			<h2>Fill me up sir...</h2>
+			<h2>A Hassle-Free login, to keep YOU SECURE .</h2>
 		</header>
 		<form id="form_logup" class="forms_home" action="{% url 'logup' %}" method="POST" role="form" >
 			<ul id="ul_logup" class="uls_home">
@@ -19,7 +19,9 @@
 				<li><input class="submit_main" type="submit" value="SIGN UP"></li>
 			</ul>
 		</form>
-		<h3>Didnt Find your enterprise..?</h3>
-		<h4>Koi baat nhi, <a href="{% url 'enterprise:register' %}">register</a> here :D</h4>
+		<div id="add">
+			<h3>Didnt find your enterprise..?</h3>
+			<h4><a href="{% url 'enterprise:register' %}">Click here to <span class="ilog">add</span></a></h4>
+		</div>
 	</section>
 {% endblock %}

@@ -15,11 +15,11 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Node',
             fields=[
-                ('id', models.AutoField(auto_created=True, serialize=False, verbose_name='ID', primary_key=True)),
-                ('category', models.CharField(max_length=1, default='F', choices=[('F', 'Feed'), ('A', 'Article'), ('C', 'Comment')])),
-                ('title', models.TextField(db_index=True, max_length=255, null=True, blank=True)),
+                ('id', models.AutoField(primary_key=True, serialize=False, verbose_name='ID', auto_created=True)),
+                ('category', models.CharField(choices=[('F', 'Feed'), ('A', 'Article'), ('C', 'Comment')], default='F', max_length=1)),
+                ('title', models.TextField(db_index=True, null=True, blank=True, max_length=255)),
                 ('post', models.TextField()),
-                ('slug', models.SlugField(max_length=255, null=True, blank=True)),
+                ('slug', models.SlugField(null=True, blank=True, max_length=255)),
                 ('date', models.DateTimeField(auto_now_add=True)),
                 ('comments', models.IntegerField(default=0)),
                 ('likes', models.IntegerField(default=0)),
@@ -30,12 +30,11 @@ class Migration(migrations.Migration):
             options={
                 'ordering': ('-score', '-date'),
             },
-            bases=(models.Model,),
         ),
         migrations.CreateModel(
             name='Tag',
             fields=[
-                ('id', models.AutoField(auto_created=True, serialize=False, verbose_name='ID', primary_key=True)),
+                ('id', models.AutoField(primary_key=True, serialize=False, verbose_name='ID', auto_created=True)),
                 ('tag', models.CharField(max_length=50)),
                 ('article', models.ForeignKey(to='nodes.Node')),
             ],
@@ -43,7 +42,6 @@ class Migration(migrations.Migration):
                 'verbose_name': 'Tag',
                 'verbose_name_plural': 'Tags',
             },
-            bases=(models.Model,),
         ),
         migrations.AlterUniqueTogether(
             name='tag',

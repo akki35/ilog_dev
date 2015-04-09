@@ -25,7 +25,6 @@
 			}
 
 		.name{
-			margin-bottom: 5px;
 			font-size: 1em;
 		}
 
@@ -100,9 +99,12 @@
 	width:15%;
 	margin-left: 3%;
 }
+	.list_head{
+		margin-bottom: 15px;
+	}
 	#enterprise_list{
 		border-top: 2px solid #9aa;
-		padding-top: 10px;
+		padding-top: 5px;
 	}
 	#product_list{
 		margin-top: 60px;
@@ -119,4 +121,8 @@
 }
 .name_enterprise{
 	line-height: 25px;
+}
+
+.list_object{
+	margin: 5px;
 }

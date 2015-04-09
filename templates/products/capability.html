@@ -1,42 +1,19 @@
-{% extends 'base.html' %}
-{% load i18n %}
-
-
-{% block content %}
-
-	{{capabilities}}
-	
-    <h2>{{page_enterprise}}: Capability</h2>
+{{capabilities}}	
+	<h2>{{page_enterprise}}: Capability</h2>
 	<li><h3>Operations we can perform:<h3></li>
-    {% if operations %}
-        <ul>
-        {% for o in operations %}
-			
-		
-          <li>{{o}}</li> 
-			
-						
-        {% endfor %}
-	{% else %}
+   	<ul>
+    {% for o in operations %}		
+		<li>{{o}}</li> 
+	{% empty %}
 		<p>There are no operations yet.</p>
-	{% endif %}	
+	{% endfor %}
+
 	<li><h3>Assets we have:<h3></li>
-	{% if assets %}
-        <ul>
-        {% for asset in assets %}
-			
-            <li><img src="{{ MEDIA_URL }}{{ asset.get_asset_image_thumbnail }}" class="picture"><strong>{{ asset }}</strong> : {{ asset.description }}</a></li>
-			
-			<img src="{{ MEDIA_URL }}{{ asset.get_asset_image }}" class="picture">
-			
-			.
-			
-        {% endfor %}
-        </ul>
-    {% else %}
+    <ul>
+   {% for asset in assets %}
+   	<li><img src="{{ MEDIA_URL }}{{ asset.get_asset_image_thumbnail }}" class="picture"><strong>{{ asset }}</strong> : {{ asset.description }}</a></li>		
+	<img src="{{ MEDIA_URL }}{{ asset.get_asset_image }}" class="picture">
+    </ul>
+    {% empty %}
         <p>There are no assets.</p>
-    {% endif %}
-
-    
-
-{% endblock %}
+    {% endfor %}

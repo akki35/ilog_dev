@@ -32,7 +32,7 @@ def register(request):
             node = Node(myuser=MyUser.objects.get(pk=1), post=welcome)
             node.save()
 
-            return redirect('/accounts/signup')
+            return redirect('/accounts/logup')
     else:
         return render(request, 'enterprise/register.html', {'form': EnterpriseRegistrationForm()})
 

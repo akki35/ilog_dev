@@ -4,36 +4,50 @@
 
 {% block css_2 %}
 	<link rel="stylesheet" type="text/css" href={% static 'css/profile_styler.css' %}>
+	<link rel="stylesheet" type="text/css" href={% static 'css/form_styler.css' %}>
 	{% block css_3 %}
 	{% endblock %}
 {% endblock %}
 
-{% block left_content %}
-	<ul id="left_menu">
-		<li class="left_menu_button show">Details</li>
-		<li class="left_menu_button">Activity</li>
-		<li class="left_menu_button">Follows</li>
-		<li class="left_menu_button">Followers</li>
-	</ul>
-	<div id="people_list">
-		<p class="list_head">People you may know...</p>
+{% block menu_content_links %}
+	<h3 class="ent_title"><a href="{% url 'myuserprofile:profile' page_user.slug %}">{{ page_user }}</a></h3>
+	<li class="link_content aj" class="a_menu" data-link="{% url 'myuserprofile:profile' page_user.slug %}">About</li>
+{% endblock %}
+
+{% block left_menu %}
+	<div id="left_ent">
+		<img id="ent_img" src="/images/{{ page_user_profile.get_image }}" alt="{{ page_user }}">
 	</div>
+	{% ifnotequal page_user user %}
+	<a class="follow" href="{% url 'relationships:follow' %}">Follow</a>
+	{% endifnotequal %}
 {% endblock %}
 
 {% block mid_content %}
+<section id="mid_content_box">
 	{% ifequal page_user user %}
-	<a class="edit" href="{% url 'myuserprofile:profile_edit' %}">edit</a>
+	<div class="pop_link_left aj" data-link="{% url 'myuserprofile:profile_edit' %}">edit</div>
 	{% endifequal %}
-	<img class="user_thumb" src="/images/{{ page_user.myuserprofile.get_image }}" alt="{{ user.get_full_name }}">
 	<dl class="profile_box">
-		<dt class="info_name">Full Name :</dt>
-		<dd class="info_data">{{ page_user_profile.get_screen_name }}</dd>
-		<dt class="info_name">Works At :</dt>
-		<dd class="info_data ilog">{{ page_user.enterprise }}</dd>
-		<dt class="info_name">Position :</dt>
-		<dd class="info_data">{{ page_user_profile.job_position }}</dd>
-		<dt class="info_name">Gender :</dt>
-		<dd class="info_data">{% ifequal page_user_profile.gender 'M' %}Male{% else %}Female{% endifequal %}</dd>
+		<div class="info_box half">
+			<dt class="info_name">Full Name :</dt>
+			<dd class="info_data">{{ page_user_profile.get_screen_name }}</dd>
+		</div>
+		<div class="info_box half">
+			<dt class="info_name">Works At :</dt>
+			<dd class="info_data ilog">{{ page_user.enterprise }}</dd>
+		</div>
+		<div class="info_box half">
+			<dt class="info_name">Position :</dt>
+			<dd class="info_data">{{ page_user_profile.job_position }}</dd>
+		</div>
+		<div class="info_box half">
+			<dt class="info_name">Gender :</dt>
+			<dd class="info_data">
+				{% ifequal page_user_profile.gender 'M' %}Male{% endifequal %}
+				{% ifequal page_user_profile.gender 'F' %}Female{% endifequal %}
+			</dd>
+		</div>
 		<dt class="info_name">Date of Birth :</dt>
 		<dd class="info_data">{{ page_user_profile.job_position }}</dd>
 		<dt class="info_name">Experienced in :</dt>
@@ -47,21 +61,32 @@
 		{% endfor %}
 		</dd>
 	</dl>
+</section>
 {% endblock %}
 
 {% block scripts %}
 	<script type="text/javascript">
-		$('.left_menu_button').click(function(){
+		$('.aj').click(function(){
 			var $this = $(this);
-			$('.current').removeClass('current');
-			$this.addClass('current');
 			var url = $(this).data('link');
-			$('.content_home').load(url,hido);
+			$('#mid_content_box').load(url);
 			
 			function hido(){
-				var hide = $('.content_home').find('.hidden');
+				var hide = $('.profile').find('.hidden');
 				var hide_this = hide.data('hide');
-				console.log(hide_this);
+				$('.'+hide_this).text('');
+			}
+		});
+		$('.aj_f').click(function(){
+			var $this = $(this);
+			var url = $(this).data('link');
+			var form = $('#form_edit').serialize();
+			console.log(form,url);
+			//$('#mid_content_box').load(url);
+			
+			function hido(){
+				var hide = $('.profile').find('.hidden');
+				var hide_this = hide.data('hide');
 				$('.'+hide_this).text('');
 			}
 		});

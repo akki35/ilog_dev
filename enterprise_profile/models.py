@@ -14,9 +14,9 @@ class EnterpriseProfile(models.Model):
     contact = models.CharField(max_length=30, blank=True, null=True)
     website = models.URLField(max_length=255, null=True, blank=True)
     about = models.TextField(null=True, blank=True)
-    #capabilities = models.TextField(null=True, blank=True)
-    #people_detail = models.TextField(null=True, blank=True)
-    #product_intro = models.TextField(null=True, blank=True)
+    capabilities = models.TextField(null=True, blank=True)
+    people_detail = models.TextField(null=True, blank=True)
+    product_intro = models.TextField(null=True, blank=True)
     image = ProcessedImageField(upload_to='enterprise/main',
                                 processors=[ResizeToFill(1000, 1000)],
                                 format='JPEG',
