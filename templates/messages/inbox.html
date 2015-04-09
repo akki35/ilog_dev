@@ -1,17 +1,19 @@
 {% extends 'user_home.html' %}
 {% load i18n %}
 
-{% block mid_content %}
-  <h2>{{page_enterprise}}: Inbox</h2>
+{% block left_content %}
+<h2>{{user}}: Inbox</h2>
     <ul>
-      {% if messages %}
-        {% for message in messages %}
-          <li>{{message.from_user}}:  {{message}}</li>
-        {% endfor %}
-      {% else %}
+      {% for message in messages %}
+        <li>{{message.from_user}}:  {{message}}</li>
+      {% empty %}
         <li>no messages</li>
-      {% endif %}
+      {% endfor %}
     </ul>
+{% endblock %}
+
+{% block mid_content %}
+  
 	<div class="send-message">    
     <div>
       <form id="form_message" role="form" method="post" action="{% url 'messages:send_message' %}">

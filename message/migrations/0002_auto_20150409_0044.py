@@ -7,26 +7,23 @@ from django.db import models, migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('activities', '0001_initial'),
+        ('message', '0001_initial'),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='activity',
-            name='myuser',
-            field=models.ForeignKey(to='accounts.MyUser'),
-            preserve_default=True,
+            model_name='message',
+            name='conversation',
+            field=models.ForeignKey(to='accounts.MyUser', related_name='+'),
         ),
         migrations.AlterField(
-            model_name='notification',
+            model_name='message',
             name='from_user',
             field=models.ForeignKey(to='accounts.MyUser', related_name='+'),
-            preserve_default=True,
         ),
         migrations.AlterField(
-            model_name='notification',
-            name='to_user',
+            model_name='message',
+            name='myuser',
             field=models.ForeignKey(to='accounts.MyUser', related_name='+'),
-            preserve_default=True,
         ),
     ]

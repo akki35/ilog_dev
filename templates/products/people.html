@@ -1,25 +1,8 @@
-{% extends 'base.html' %}
-{% load i18n %}
-
-
-{% block content %}
-
-	
-    <h2>{{page_enterprise}}: Members</h2>
+<h2>{{page_enterprise}}: Members</h2>
 	{{ people_detail }}
-    {% if members %}
-        <ul>
-        {% for myuser in members %}
-			
-            <li><img src="{{ MEDIA_URL }}{{ myuser.myuserprofile.get_image_thumbnail }}" class="picture"><strong>{{ myuser }}</strong> : {{ myuser.myuserprofile.summary }}</a></li>
-			
-						
-        {% endfor %}
-        </ul>
-    {% else %}
+    {% for myuser in members %}		
+    <li><img src="{{ MEDIA_URL }}{{ myuser.myuserprofile.get_image_thumbnail }}" class="picture"><strong>{{ myuser }}</strong> : {{ myuser.myuserprofile.summary }}</a></li>
+    </ul>
+    {% empty %}
         <p>There are no People yet.</p>
-    {% endif %}
-
-    
-
-{% endblock %}
+    {% endfor %}

@@ -1,6 +1,12 @@
-.contents{
-  text-align: center;
+label{
+  display: inline-block;
+  text-align: right;
+  vertical-align: top;
+  width: 150px;
+  margin-right: 10px;
+  color: #444;
 }
+
   .header_form{
     margin-bottom: 20px;
     text-align: center;
@@ -10,52 +16,43 @@
     color: #555;
     border-bottom: 1px solid #9aa;
   }
-  .uls_home li{
-    line-height: 50px;
-    margin: auto;
+
+  .forms_home{
+    margin-left: 10%;
   }
-  .uls_home label{
-    display: inline-block;
-    text-align: right;
-    vertical-align: top;
-    width: 150px;
-    margin-right: 10px;
-    color: #444;
-   }
+
+    .uls_home li{
+      line-height: 50px;
+    }
    .uls_home input{
      width: 150px;
      padding: 5px;
-     text-align: center;
      font-family: 'Segoe Marker','Lucida Console';
    }
-  .uls_home textarea{
-     width: 300px;
-     padding: 5px;
-     text-align: center;
-     font-family: 'Segoe Marker','Lucida Console';
-  }
 
    .submit_main{
+      margin-left: 170px;
       cursor: pointer;
    }
    #submit_login{
     position: relative;
-      left: 80px;
       margin: 40px auto;
    }
 
   .uls_home .helptext{
     display: none;
   }
+  .uls_home .errorlist{
+    display: none;
+  }
 
    .uls_home select{
      width: 150px;
-     padding: 5px;
-     text-align: center;
+     padding: 5px 10px;
      font-family: 'Segoe Marker','Lucida Console';
    }
    #submit_logup{
-      margin: 30px auto;
+      margin-left: 220px;
    }
 
 #ul_logup li{
@@ -70,6 +67,14 @@
   float: right;
   margin-top: -20px;
 }
-#form_edit{
+.form_edit textarea{
+  width: 60%;
+}
 
+.form_edit label{
+  width: 100px;
+}
+
+#add_ent{
+  margin: 20px 0px 20px 250px;
 }

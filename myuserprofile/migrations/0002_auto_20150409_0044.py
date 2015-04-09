@@ -15,6 +15,5 @@ class Migration(migrations.Migration):
             model_name='myuserprofile',
             name='myuser',
             field=models.OneToOneField(to='accounts.MyUser'),
-            preserve_default=True,
         ),
     ]

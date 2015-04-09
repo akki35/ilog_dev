@@ -11,8 +11,9 @@ from django.core.urlresolvers import reverse
 @login_required
 def enterprise_profile_edit(request):
     enterprise = request.user.enterprise
+    
     if request.method == 'POST':
-
+        
         form = EnterpriseProfileForm(request.POST, request.FILES)
         print(form.errors)
         if form.is_valid():
@@ -73,7 +74,8 @@ def enterprise_profile(request, slug):
         'page_enterprise': page_enterprise,
         'profile':EnterpriseProfile.objects.get(enterprise=page_enterprise),
         'members': members,
-        'slug': slug
+        'slug': slug,
+        'myuser': myuser
         })
     # return HttpResponseRedirect(reverse('enterprise:enterprise_profile'),  {
     #     'page_enterprise': page_enterprise,
@@ -82,5 +84,18 @@ def enterprise_profile(request, slug):
     #     'args': slug,
     #     }, args=(slug,))
 
+def enterprise_profile_aj(request, slug):
+    # slug = request.user.slug
+    myuser = request.user
+    page_enterprise = get_object_or_404(Enterprise, slug=slug)
+    members = MyUser.objects.filter(enterprise=page_enterprise)
+
+    return render(request, 'enterprise_profile/enterprise_profile_aj.html', {
+        'page_enterprise': page_enterprise,
+        'profile':EnterpriseProfile.objects.get(enterprise=page_enterprise),
+        'members': members,
+        'slug': slug,
+        'myuser': myuser
+        })
 
 # Create your views here.

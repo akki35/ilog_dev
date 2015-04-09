@@ -1,14 +1,53 @@
-.edit{
-	display: block;
+.nav_content{
+	padding: 0px;
 	text-align: right;
-	right: 0px;
-	font-size: 1.2em;
-	color: #157;
-	cursor: pointer;
-	margin-bottom: 10px;
+	font-family: 'Calibri';
+	margin-bottom: 20px;
+	font-size: 1em;
 }
+	.ul_content{
+		display: block;
+		min-height: 25px;
+	}
+		.link_content{
+			display: inline-block;
+			width: 12%;
+			text-align: center;
+			box-shadow: 0px 1px 1px #157;
+			cursor: pointer;
+		}
+		.left{
+			float: left;
+			box-shadow: 0px 0px 0px #c36;
+		}
+		.link_content:hover{
+			box-shadow: -1px 1px 2px #175;
+		}
+
+#ent_img{
+	display: block;
+	margin: auto;
+	width: 150px;
+	height: 150px;
+	box-shadow: 0px 0px 5px 2px #157;
+}
+.ent_title{
+	text-align: center;
+	float: left;
+	width: 15%;
+	color: #666;
+	font-size: 1.2em;
+}
+
+.left_info{
+	width: 80%;
+	text-align: left;
+	margin: 20px auto;
+}
+
 .profile_box{
-	width: 60%;
+	width: 100%;
+	text-align: left;
 }
 	.user_thumb{
 		float: right;
@@ -16,24 +55,61 @@
 		height: 150px;
 		box-shadow: 0px 0px 5px 2px #157;
 	}
+
+	.info_box{
+		width: 100%;
+	}
+	.half{
+		width: 50%;
+	}
 	.info_name{
 		display: inline-block;
-		text-align: right;
+		text-align: center;
 		color: #666;
-		width: 30%;
-		font-size: 1.2em;
-		margin-bottom: 10px;
+		font-size: 1.1em;
+		margin-bottom: 5px;
+		margin-right: 20px;
 	}
 	.info_data{
-		display: inline-block;
-		width: 60%;
-		margin-left: 20px;
-		font-size: 1.3em;
-		text-align: right;
+		width: 95%;
+		font-size: 0.9em;
 		vertical-align: top;
-		max-height: 100px;
-		overflow: auto;
-		margin-bottom: 10px;
+		padding: 5px 10px;
+		margin-bottom: 20px;
+		box-shadow: 0px 0px 5px #9aa;
+		border-top-right-radius: 15px;
+		border-bottom-right-radius: 15px;
 	}
 	.wide{
 	}
+
+.pop_link_left{
+	float: right;
+	margin-right: -3%;
+	text-align: center;
+	padding: 2px 20px;
+	background-color: #157;
+	color: #dee;
+	box-shadow: -3px 0px 2px #9aa;
+	border-top-left-radius: 15px;
+	border-bottom-left-radius: 15px;
+	cursor: pointer;
+}
+.pop_link_left:hover{
+	box-shadow: 0px 0px 2px #9aa;
+}
+
+.follow{
+	display: block;
+	margin: auto;
+	width: 140px;
+	text-align: center;
+	padding: 0px 5px;
+	margin-top: 15px;
+	background: #6fb;
+	box-shadow: 0px 0px 5px 2px #6fb;
+}
+
+#people_list{
+	margin-top: 50px;
+}
