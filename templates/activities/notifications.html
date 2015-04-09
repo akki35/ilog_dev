@@ -1,23 +1,24 @@
-{% extends 'user_home.html' %}
+{% extends 'frame.html' %}
 
-{% block left_menu %}
+{% block header %}
+  <a href="{% url 'home' %}"><h2 class='ilog'>Notifications</h2></a>
 {% endblock %}
 
-{% block mid_content %}
+{% block content %}
   <ul class="list">
 	{% for notification in unread %}
-      <li class="unread">
-        <a href="{% url 'myuserprofile:profile' notification.from_user.slug %}"><img src="{{ MEDIA_URL }}{{ notification.from_user.myuserprofile.get_image_thumbnail }}" class="user_picture"></a>
-        <div>
+      <li class="unread notebox">
           <small>{{ notification.date}}</small>
-          <p>{{ notification|safe }}</p>
-        </div>
+          <a href="{% url 'myuserprofile:profile' notification.from_user.slug %}"><img src="{{ MEDIA_URL }}{{ notification.from_user.myuserprofile.get_image_thumbnail }}" class="user_picture"></a>
+          <div>
+            <p>{{ notification|safe }}</p>
+          </div>
       </li>
     {% empty %}
-      <li>You have no notification</li>
+      <li>All seen</li>
     {% endfor %}
     {% for notification in read %}
-      <li class="read">
+      <li class="read notebox">
         <a href="{% url 'myuserprofile:profile' notification.from_user.slug %}"><img src="{{ MEDIA_URL }}{{ notification.from_user.myuserprofile.get_image_thumbnail }}" class="user-picture"></a>
         <div>
           <small>{{ notification.date}}</small>
@@ -25,7 +26,8 @@
         </div>
       </li>
     {% empty %}
-      <li>You have no notification</li>
+      <li>No notifications</li>
     {% endfor %}
     </ul>
+    <a class="close" href="{% url 'home' %}" target="_parent">close</a>
 {% endblock %}
