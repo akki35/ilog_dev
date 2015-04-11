@@ -70,8 +70,13 @@ WSGI_APPLICATION = 'ilog_dev.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'mysql.connector.django',
+        'NAME': 'ilog_dev_db',
+        'USER': 'root',
+        'PASSWORD': '',
+        'HOST': 'localhost',
+        'PORT': '3306',
+        'autocommit': True,
     }
 }
 
@@ -118,3 +123,4 @@ STATIC_ROOT = os.path.join(ROOT_DIR, 'templates')
 # STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [os.path.join(ROOT_DIR, 'templates/static')]
+

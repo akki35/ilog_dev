@@ -75,7 +75,7 @@ def search(request):
             enterpriseo = EnterpriseProfile.objects.filter(Q(about__icontains=term) | Q(capabilities__icontains=term)
                                                            | Q(product_intro__icontains=term))
 
-            
+
             if feed is None:
                 feed = feedo
             else:

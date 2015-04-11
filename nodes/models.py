@@ -137,7 +137,7 @@ class Node(models.Model):
         gravity = 1.2
         delta = now() - self.date
         node_age = delta.total_seconds()/3600
-        popularity = self.likes + 3*self.comments
+        popularity = 0.3*self.likes + 0.7*self.comments
         self.score = popularity/pow((node_age+2), gravity)
         self.save()
 
