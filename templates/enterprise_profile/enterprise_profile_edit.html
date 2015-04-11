@@ -1,17 +1,22 @@
+{% extends 'frame.html' %}
+{% load staticfiles %}
 
+{% block css %}
+	<link href={% static 'css/form_styler.css' %} media="all" rel="stylesheet" type="text/css" />
+{% endblock %}
+
+{% block content %}
 <section id="content_enterprise_profile_edit">
 	<header class="header_form">
 		<h2>Update your enterprise info . . .</h2>
 	</header>
-	<form enctype="multipart/form-data" action="" method="POST" role="form" >
+	<form enctype="multipart/form-data" action="{% url 'enterprise:enterprise_profile_edit' page_enterprise.slug %}" target='_parent' method="POST" role="form" >
+		<input type="submit" value="save" class="pop_link_left">
 		<ul class="form_edit">
-		<li><input type="submit" value="save" class="pop_link_left">
-		</li>
 			{{ form.as_ul }}
 			{% csrf_token %}
 			{{ form.errors }}{{ form.non_field_errors }}
-			<li><input type="submit" value="save" class="pop_link_left">
-		</li>				
 		</ul>
 	</form>
 </section>
+{% endblock %}

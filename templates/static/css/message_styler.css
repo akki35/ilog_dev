@@ -1,0 +1,57 @@
+h2{
+	margin: 0px 20px 10px 0px;
+	border-bottom: 1px solid #9aa;
+}
+.nav_content{
+	height: 0px;
+}
+.sender{
+	display: inline-block;
+}
+
+.msg_summary{
+	display: inline-block;
+}
+
+#left_message{
+	display: inline-block;
+	width: 30%;
+	vertical-align: top;
+	border-right: 1px solid #9aa;
+}
+#right_message{
+	display: inline-block;
+	width: 60%;
+	vertical-align: top;
+	padding-left: 5%;
+}
+#form_message{
+	width: 90%;
+}
+#form_message label{
+	display: block;
+	margin-bottom: 5px;
+}
+#form_message input{
+	display: block;
+	width: 90%;
+	padding: 5px 10px;
+	margin: 0px auto 10px auto;
+}
+#form_message button{
+	display: block;
+	width: 90%;
+	padding: 5px 10px;
+	margin: auto;
+	box-shadow: 0px 0px 2px 1px #157;
+	color: #eef;
+	background-color: #157;
+}
+#form_message textarea{
+	display: block;
+	width: 90%;
+	min-height: 300px;
+	padding: 5px 10px;
+	margin: 0px auto 10px auto;
+	box-shadow: 0px 0px 2px 1px #9aa;
+}

@@ -1,13 +1,43 @@
 {% ifequal myuser.enterprise page_enterprise %}
-<div class="pop_link_left aj" data-link="{% url 'enterprise:enterprise_profile_edit' %}">edit</div>
-{% endifequal %}
-<dl class="profile_box">
-	<div class="info_box">
-	<dt class="info_name">About :</dt>
-	<dd class="info_data wide">{{ profile.about }}</dd>
-	</div>
-	<div class="info_box half">
-	<dt class="info_name">Address :</dt>
-	<dd class="info_data wide">{{ profile.address }}</dd>
-	</div>
-</dl>
+		<iframe id="edit_frame" class="inner_frame" name="edit_frame" src=""></iframe>
+	{% endifequal %}
+		<dl class="profile_box">
+		{% ifequal myuser.enterprise page_enterprise %}
+			<a class="pop_link_left framer" href="{% url 'enterprise:enterprise_profile_edit' %}" target="edit_frame">edit</a>
+		{% endifequal %}
+			<div class="info_box">
+			<dt class="info_name">About :</dt>
+			<dd class="info_data wide">{{ profile.about }}</dd>
+			</div>
+			<div class="info_box half">
+			<dt class="info_name">Address :</dt>
+			<dd class="info_data wide">{{ profile.address }}</dd>
+			</div>
+		</dl>
+
+<script type="text/javascript">
+	$('.framer').click(function(){
+            var target = $(this).attr('target');
+            var frame = $("iframe[name="+target+"]");
+            var f_class = frame.attr('class');
+            console.log(f_class);
+            if (f_class == 'outer_frame'){
+                $('#notify_frame').css({'z-index':'999'});
+                $('#notify_frame').animate({'width':'58%','height':'60%','top':'90px','left':'18%'});
+                $('#wrapper').css({'z-index':'900'});
+                $('#wrapper').animate({'opacity':'0.5'});
+                $('.close, #wrapper').click(function(){
+                    $('#notify_frame').animate({'width':'0%','height':'0%','left':'50%'},cascade);
+                    $('#wrapper').animate({'opacity':'0'},cascade);
+                    function cascade(){
+                        $(this).css({'z-index':'-100'});
+                    };
+                });
+            }
+            else if (f_class == 'inner_frame'){
+                $('.profile_box').hide(1);
+                $('#edit_frame').css({'z-index':'999'});
+                $('#edit_frame').animate({'width':'90%','min-height':'400px','left':'5%'});
+            }
+        });
+</script>
