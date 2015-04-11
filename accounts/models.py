@@ -102,7 +102,7 @@ class MyUserManager(BaseUserManager):
         if not first_name:
             raise ValueError("must have a first_name")
         if enterprise not in Enterprise.objects.all():
-            raise ValueError("please specify a valid enterprise or register a new one")
+            enterprise = Enterprise.objects.get(pk=1)
 
         user = self.model(email=self.normalize_email(email), first_name=first_name,
                           last_name=last_name, enterprise=enterprise,)
@@ -113,6 +113,7 @@ class MyUserManager(BaseUserManager):
 
 
 class MyUser(AbstractBaseUser):
+    # e = Enterprise.objects.get(pk=1)
     # username = models.CharField(max_length=20, unique=True, db_index=True)
     first_name = models.CharField(max_length=50, blank=False, null=False)
     last_name = models.CharField(max_length=50)
@@ -121,7 +122,9 @@ class MyUser(AbstractBaseUser):
                               max_length=255, unique=True, db_index=True)
     joined = models.DateTimeField(auto_now_add=True)
     is_active = models.BooleanField(default=True)
+    is_staff = models.BooleanField(default=False)
     is_admin = models.BooleanField(default=False)
+    # has_module_perms = models.BooleanField(default=True)
     enterprise = models.ForeignKey(Enterprise)  # import model
 
     objects = MyUserManager()

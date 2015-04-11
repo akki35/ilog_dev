@@ -7,13 +7,14 @@ from django.db import models, migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('nodes', '0001_initial'),
+        ('nodes', '0002_remove_node_is_active'),
     ]
 
     operations = [
-        migrations.AlterField(
+        migrations.AddField(
             model_name='node',
-            name='myuser',
-            field=models.ForeignKey(to='accounts.MyUser'),
+            name='is_active',
+            field=models.BooleanField(default=True),
+            preserve_default=True,
         ),
     ]

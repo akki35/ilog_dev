@@ -5,12 +5,7 @@
 {% endblock %}
 
 {% block mid_content %}
-	<h2>People in the network</h2>
-        <ul class="list">
-        {% for myuser in myusers %}
-            <li class="name_people">
-                <a href="{% url 'myuserprofile:profile' myuser.slug %}">{{ myuser }}</a>
-            </li>
-        {% endfor %}
-        </ul>
+	{% for my in myusers %}
+		<a href="{% url 'myuserprofile:profile' my.slug %}">{{ my|capfirst }}</a>
+	{% endfor %}
 {% endblock %}

@@ -1,0 +1,16 @@
+{% extends "home.html" %}
+
+{% block title %}Log in to i-Logger{% endblock %}
+
+{% block menu_links %}
+    <li class="link"><a href="{% url 'home' %}">Home</a></li>
+    <li class="link"><a href="{% url 'logup' %}">Log Up</a></li>
+{% endblock %}
+
+{% block content %}
+	{% for ent in enterprises %}
+		<li class="name_enterprises">
+			<a href="{% url 'enterprise:enterprise_profile' ent.slug %}">{{ ent|capfirst }}</a>
+		</li>
+	{% endfor %}
+{% endblock %}

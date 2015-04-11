@@ -20,10 +20,16 @@
 	<div id="left_ent">
 		<img id="ent_img" src="/images/{{ page_user_profile.get_image }}" alt="{{ page_user }}">
 		{% ifnotequal page_user user %}
-		<a class="follow" href="{% url 'relationships:follow' %}">Follow</a>
+		<form action="{% if relationship_status == 'F' %}{% url 'myuserprofile:relationships:unfollow' %}{% else %}{% url 'myuserprofile:relationships:follow'  %}{% endif %}" method="POST">
+			{% csrf_token %}
+		<input type="hidden" value="{{ page_user.id }}" name="to_user">
+		<input type="submit" class="{% if relationship_status == 'F' %}btn{% else %}btn-primary{% endif %}" value="{% if relationship_status == 'F' %}Unfollow{% else %}Follow{% endif %}">	
+		</form>
 		{% endifnotequal %}
 	</div>
 {% endblock %}
+
+
 
 {% block mid_content %}
 <section id="mid_content_box">

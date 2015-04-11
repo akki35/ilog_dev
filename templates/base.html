@@ -14,7 +14,7 @@
     {% block css %}{% endblock %}
     <script type="text/javascript" src={% static 'js/jquery-2.1.1.js' %}></script>
     {% block js %}{% endblock %}
-    <title>{% block title %}Welcome to the Industry Logger{% endblock %}</title>
+    <title>{% block title %}IndustryLogger{% endblock %}</title>
 </head>
 
 <body>
@@ -23,7 +23,7 @@
     <div class="container">
         <header class='header_top'>
         {% block header %}
-            <a href="{% url 'home' %}"><h1 class='ilog'>Industry logger</h1></a>
+            <a href="{% url 'home' %}"><h1 class='ilog'>IndustryLogger</h1></a>
         {% endblock %}
         {% if not hide_search %}
             <form id="search" action="{% url 'search' %}">

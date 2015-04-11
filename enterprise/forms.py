@@ -9,11 +9,14 @@ def unique_enterprise_validator(value):
 
 
 class EnterpriseRegistrationForm(forms.ModelForm):
-    enterprise = forms.CharField(max_length=255)
-    types = forms.ModelMultipleChoiceField(queryset=Type.objects.all(), required=False)
+    enterprise = forms.CharField(max_length=255, help_text='If you give a name like "Abc Enterprises, you will get a url'
+                                                           ' like www.industrylogger.com/enterprises/abc-enterprises')
+    types = forms.ModelMultipleChoiceField(queryset=Type.objects.all(), required=False,
+                                           help_text='Select one or more  Use Ctrl to select more than one')
     # assets = forms.ModelMultipleChoiceField(queryset=Asset.objects.all(), required=False)
     # products = forms.ModelMultipleChoiceField(queryset=Product.objects.all(), required=False)
-    materials = forms.ModelMultipleChoiceField(queryset=Material.objects.all(), required=False)
+    materials = forms.ModelMultipleChoiceField(queryset=Material.objects.all(), required=False,
+                                               help_text='Select one or more  Use Ctrl to select more than one')
     operations = forms.ModelMultipleChoiceField(queryset=Operation.objects.all(), required=False)
 
 

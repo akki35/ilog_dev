@@ -71,7 +71,7 @@ WSGI_APPLICATION = 'ilog_dev.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'mysql.connector.django',
-        'NAME': 'ilog_dev_db',
+        'NAME': 'ilog_prefinal',
         'USER': 'root',
         'PASSWORD': '',
         'HOST': 'localhost',

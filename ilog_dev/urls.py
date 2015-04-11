@@ -17,7 +17,7 @@ urlpatterns = patterns('',
                        url(r'^enterprise/', include('enterprise.urls', namespace='enterprise')),  # enterprise domain
                        url(r'^user/', include('myuserprofile.urls', namespace='myuserprofile')), # user domain
                        url(r'^nodes/', include('nodes.urls', namespace='nodes')),
-                       url(r'^relationships', include('relationships.urls', namespace='relationships')),
+                       url(r'^relationships/', include('relationships.urls', namespace='relationships')),
 
                        url(r'^messages/', include('message.urls', namespace='messages')),
                        url(r'^like/$', 'nodes.views.like', name='like'),

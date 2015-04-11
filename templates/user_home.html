@@ -57,7 +57,7 @@
 	<section id="mid_content">
 	{% block mid_content %}
 		<form id="form_feed" role="form" action="{% url 'nodes:post' %}" method="POST">
-			<textarea class="input_feed" form="form_feed" name="post" placeholder="Got something..? Spit it out.." required></textarea>
+			<textarea class="input_feed" form="form_feed" name="post" placeholder="Got something to discuss..?" required></textarea>
 			<input class="submit_feed" type="submit" value="Feed">
 			{% csrf_token %}
 		</form>
@@ -83,7 +83,7 @@
 							{{ user}} | {{ user.enterprise}}
 					</div>
 					<form class="form_comment" action="{% url 'nodes:comment' %}" method="POST">
-						<textarea class="input_comment" name="post" placeholder="aao to" required></textarea>
+						<textarea class="input_comment" name="post" placeholder="post a reply..." required></textarea>
 						<input type="hidden" name="node" value="{{ node.pk }}">
 						<input class="div_button" type="submit" value="Reply">
 						{% csrf_token %}

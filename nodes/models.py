@@ -8,12 +8,14 @@ from activities.models import Activity
 
 class FeedManager(models.Manager):
     def get_queryset(self):
-        return super(FeedManager, self).get_queryset().filter(parent=None, category='F')
+        return super(FeedManager, self).get_queryset().\
+            filter(parent=None, category='F', is_active=True).order_by('-date', '-score')
 
 
 class ArticleManager(models.Manager):
     def get_queryset(self):
-        return super(ArticleManager, self).get_queryset().filter(parent=None, category='A')
+        return super(ArticleManager, self).get_queryset().\
+            filter(parent=None, category='A', is_active=True).order_by('date', '-score')
 
 
 class Node(models.Model):
@@ -28,6 +30,7 @@ class Node(models.Model):
     comments = models.IntegerField(default=0)
     likes = models.IntegerField(default=0)
     score = models.FloatField(default=0)
+    is_active = models.BooleanField(default=True)
 
     objects = models.Manager()
     feed = FeedManager()
@@ -136,9 +139,9 @@ class Node(models.Model):
     def set_rank(self):
         gravity = 1.2
         delta = now() - self.date
-        node_age = delta.total_seconds()/3600
+        node_age = delta.total_seconds()//3600
         popularity = 0.3*self.likes + 0.7*self.comments
-        self.score = popularity/pow((node_age+2), gravity)
+        self.score = popularity//pow((node_age+2), gravity)
         self.save()
 
     # def linkfy_post(self):

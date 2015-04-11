@@ -31,7 +31,7 @@ def logup(request):
             node = Node(myuser=myuser, post=welcome_post)
             node.save()
             myuser.myuserprofile.notify_joined(enterprise=enterprise, node=node)
-            return redirect('/')
+            return redirect('/enterprise/'+myuser.enterprise.slug)
     else:
         return render(request, 'accounts/logup.html', {'form': LogupForm()})
 

@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404, HttpResponseRedirect, render_to_response
-from enterprise.models import Enterprise, Product
+from enterprise.models import Enterprise, EnterpriseProduct
 from accounts.models import MyUser
 from django.contrib.auth.decorators import login_required
 # from nodes.views import nodes
@@ -12,18 +12,24 @@ from PIL import Image
 from django.template import RequestContext
 
 
+NODES_NUM_PAGES = 18
+
+
 def home(request):
     if request.user.is_authenticated():
-        feed_nodes = Node.get_feeds()
+        all_feed_nodes = Node.get_feeds()
+        paginator = Paginator(all_feed_nodes, NODES_NUM_PAGES)
+        feed_nodes = paginator.page(1)
         comment_nodes = Node.objects.filter(myuser=request.user, category='C')
-        all_users = MyUser.objects.all()[:10]
+        all_users = MyUser.objects.all().order_by('-last_login')[:10]
         all_enterprises = Enterprise.objects.all()[:4]
-        all_products = Product.objects.all()[:4]
+        all_products = EnterpriseProduct.objects.all()[:4]
         c = {'user': request.user,
              'profile': MyUserProfile.objects.get(myuser=request.user),
              'feed_nodes': feed_nodes,
-             'all_users':all_users,
-             'all_enterprises':all_enterprises,
+             'page': 2,
+             'all_users': all_users,
+             'all_enterprises': all_enterprises,
              'all_products':all_products}
         return render_to_response('user_home.html', c, context_instance=RequestContext(request))
     else:
@@ -44,13 +50,13 @@ FEEDS_NUM_PAGES=8
 # @login_required
 def enterprises(request):
     myusers = MyUser.objects.all()
-    enterprises = Enterprise.objects.all()
-    return render(request, 'search/enterprises.html', {'enterprises':enterprises})
+    enterprises = Enterprise.objects.all().order_by('-date')
+    return render(request, 'enterprises.html', {'enterprises':enterprises})
 # @login_required
 def people(request):
-    myusers = MyUser.objects.all()
+    myusers = MyUser.objects.all().order_by('-date')
     enterprises = Enterprise.objects.all()
-    return render(request, 'search/people.html', {'myusers': myusers})
+    return render(request, 'people.html', {'myusers': myusers})
 
 # @login_required
 def profile(request, slug):
@@ -108,6 +114,7 @@ def profile_edit(request):
             experience = form.cleaned_data.get('experience')
             summary = form.cleaned_data.get('summary')
             job_position = form.cleaned_data.get('job_position')
+            skillset = form.cleaned_data.get('skillset')
 
             mup.image = image
             mup.image_thumbnail = image
@@ -115,6 +122,7 @@ def profile_edit(request):
             mup.summary = summary
             mup.experience = experience
             mup.job_position = job_position
+            mup.skillset = skillset
             mup.save()
 
             return redirect('/user/'+myuser.slug)
@@ -134,6 +142,7 @@ def profile_edit(request):
 @login_required
 def follow(request):
     myuser = request.user
+    # to_us = MyUser.objects.get(id=request.POST['to_user'])
     if request.method == 'POST':
         to_use = MyUser.objects.get(id=request.POST['to_user'])
         to_user = MyUser.objects.get(id=request.POST['to_user']).myuserprofile
@@ -145,7 +154,7 @@ def follow(request):
         if created:
             follow_post = u'{0}from {1} is now following you.'.format(myuser.first_name, myuser.enterprise)
 
-            node = Node(myuser=myuser, post=follow_post)
+            node = Node(myuser=myuser, post=follow_post, is_active=False)
             node.save()
 
             myuser.myuserprofile.notify_followed(user=to_use, node=node)
@@ -154,9 +163,9 @@ def follow(request):
             rel.status = 'F'
             rel.save()
 
-        return HttpResponseRedirect('/')
+        return HttpResponseRedirect('/user/'+to_use.slug)
     else:
-        return HttpResponseRedirect(reverse('/'))
+        return HttpResponseRedirect('/')
 
 @login_required()
 def block(request):

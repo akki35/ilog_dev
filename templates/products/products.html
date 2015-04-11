@@ -10,8 +10,9 @@
 <ul>
 {% for product in products %}
     <li><img src="{{ MEDIA_URL }}{{ product.get_product_image_thumbnail }}" class="img_thumb_larger"><strong>{{ product }}</strong> : {{ product.description }}</a></li>
+	
 {% empty %}
-	<li>There are no products.</li>
+	<li>No products have been listed till now.</li>
 {% endfor %}
 </ul>
 
