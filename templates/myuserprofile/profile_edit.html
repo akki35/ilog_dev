@@ -1,13 +1,22 @@
+{% extends 'frame.html' %}
+{% load staticfiles %}
+
+{% block css %}
+	<link href={% static 'css/form_styler.css' %} media="all" rel="stylesheet" type="text/css" />
+{% endblock %}
+
+{% block content %}
 <section id="content_profile_edit">
 	<header class="header_form">
 		<h2>Update yours Profile</h2>
 	</header>
-	<form id="form_edit" class="forms_home" enctype="multipart/form-data" action="{% url 'myuserprofile:profile_edit' %}" method="POST" role="form" >
-		<ul class="uls_home">
-			<li><input class="pop_link_left aj_f" type="submit" value="Save" data-link=></li>
+	<form enctype="multipart/form-data" action="{% url 'myuserprofile:profile_edit' %}" target="_parent" method="POST" role="form" >
+		<ul class="form_edit">
+			<input class="pop_link_left aj_f" type="submit" value="Save">
 			{{ form.as_ul }}
-			{{ form.errors }} {{ form.non_field_errors }}
 			{% csrf_token %}
+			{{ form.errors }} {{ form.non_field_errors }}
 		</ul>
 	</form>
 </section>
+{% endblock %}

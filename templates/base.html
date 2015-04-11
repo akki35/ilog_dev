@@ -18,7 +18,7 @@
 </head>
 
 <body>
-    <iframe id="try" src="" width="200" height="200" name="triframe" frameborder="0"></iframe>
+    <iframe id="notify_frame" class="outer_frame" src="" name="notify_frame"></iframe>
     <div id="wrapper"></div>
     <div class="container">
         <header class='header_top'>
@@ -56,7 +56,7 @@
         <footer class='footer_bottom'>
             {% block footer %}
             {% endblock %}
-            <p id="brandline"><i>version 0.01; under beta testing</i></p>
+            <p id="brandline"><i>version 0.01; under beta testing from <strong>12 Apr 2015</strong></i></p>
         </footer>
     </div>
 
@@ -73,20 +73,28 @@
         }
 
         $('.framer').click(function(){
-            var print = $(this).attr('target');
-            console.log(print);
-            $('#try').css({'z-index':'999'});
-            $('#try').animate({'width':'58%','height':'60%','top':'90px','left':'18%'});
-            $('#wrapper').css({'z-index':'900'});
-            $('#wrapper').animate({'opacity':'0.5'});
-        });
-
-        $('.close, #wrapper').click(function(){
-            $('#try').animate({'width':'58%','height':'0%','top':'0%','left':'18%'},cascade);
-            $('#wrapper').animate({'opacity':'0'},cascade);
-            function cascade(){
-                $(this).css({'z-index':'-100'});
-            };
+            var target = $(this).attr('target');
+            var frame = $("iframe[name="+target+"]");
+            var f_class = frame.attr('class');
+            console.log(f_class);
+            if (f_class == 'outer_frame'){
+                $('#notify_frame').css({'z-index':'999'});
+                $('#notify_frame').animate({'width':'58%','height':'60%','top':'90px','left':'18%'});
+                $('#wrapper').css({'z-index':'900'});
+                $('#wrapper').animate({'opacity':'0.5'});
+                $('.close, #wrapper').click(function(){
+                    $('#notify_frame').animate({'width':'0%','height':'0%','left':'50%'},cascade);
+                    $('#wrapper').animate({'opacity':'0'},cascade);
+                    function cascade(){
+                        $(this).css({'z-index':'-100'});
+                    };
+                });
+            }
+            else if (f_class == 'inner_frame'){
+                $('.profile_box').hide(1);
+                $('#edit_frame').css({'z-index':'999'});
+                $('#edit_frame').animate({'min-height':'400px'});
+            }
         });
     </script>
     <script>

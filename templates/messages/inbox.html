@@ -1,32 +1,39 @@
 {% extends 'user_home.html' %}
+{% load staticfiles %}
 {% load i18n %}
 
-{% block left_content %}
-<h2>{{user}}: Inbox</h2>
-    <ul>
+{% block css_2 %}
+  <link rel="stylesheet" type="text/css" href={% static 'css/message_styler.css' %}>
+  {% block css_3 %}
+  {% endblock %}
+{% endblock %}
+
+{% block menu_content_links %}
+{% endblock %}
+
+{% block content %}
+  <div id="left_message" class="send-message">
+    <h2 id="left_head" class="head_messages">Send a Message</h2>
+    <form id="form_message" role="form" method="post" action="{% url 'messages:send_message' %}">
+      <input type="hidden" value="{{ active }}">
+      <label class="send_to">To</label>
+      <input type="text" id="to" placeholder="to.." name="to">
+      <label class="send_message">Message</label>
+      <textarea type="text" id="message" name="message" placeholder="Write a message..." maxlength="1000" autocomplete="off"></textarea>
+      <button type="submit" class="btn btn-primary" value="Send">Send</button>
+      {% csrf_token %}
+    </form>
+  </div>
+  <div id="right_message">
+    <h2 id="right_head" class="head_messages">{{user}}: Recent Messages</h2>
+    <ul class="inbox">
       {% for message in messages %}
-        <li>{{message.from_user}}:  {{message}}</li>
+        {% if message.from_user %}
+        <li><div class="sender"><a href="{% url 'myuserprofile:profile' message.from_user.slug %}">{{message.from_user}}</a></div>: <div class="msg_summary">{{message}}</div></li>
+        {%endif%}
       {% empty %}
         <li>no messages</li>
       {% endfor %}
     </ul>
-{% endblock %}
-
-{% block mid_content %}
-  
-	<div class="send-message">    
-    <div>
-      <form id="form_message" role="form" method="post" action="{% url 'messages:send_message' %}">
-        <input type="hidden" value="{{ active }}">
-		    <input type="text" id="to" placeholder="to.." name="to">
-        <input type="text" name="message" placeholder="Write a message..." maxlength="1000" autocomplete="off">
-		    <div class="form-group">
-          <div class="col-sm-11 col-sm-offset-1">
-			      <button type="submit" class="btn btn-primary">Send</button>
-	     		</div>
-  		  </div>
-        {% csrf_token %}
-      </form>
-    </div>
   </div>
 {% endblock %}

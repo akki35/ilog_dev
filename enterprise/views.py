@@ -58,7 +58,7 @@ def add_product(request):
                                                   caption=caption, product_image=product_image,
                                                   product_image_thumbnail=product_image)
 
-            return redirect('/enterprise/add_product')
+            return redirect('/enterprise/'+enterprise.slug)
     else:
         return render(request, 'products/add_product.html', {'form': ProductForm()})
 

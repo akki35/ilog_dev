@@ -24,6 +24,10 @@
 			box-shadow: -1px 1px 2px #175;
 		}
 
+#left_ent{
+	margin-bottom: 50px;
+}
+
 #ent_img{
 	display: block;
 	margin: auto;
@@ -57,7 +61,7 @@
 	}
 
 	.info_box{
-		width: 100%;
+		width: 90%;
 	}
 	.half{
 		width: 50%;
@@ -71,6 +75,8 @@
 		margin-right: 20px;
 	}
 	.info_data{
+		display: inline-block;
+		word-wrap: break-word;
 		width: 95%;
 		font-size: 0.9em;
 		vertical-align: top;
@@ -111,5 +117,16 @@
 }
 
 #people_list{
-	margin-top: 50px;
+}
+
+#add{
+	width: 100px;
+	padding: 5px 10px;
+	margin-bottom: 20px;
+}
+
+.intro{
+	margin: 10px 0px;
+	padding: 5px;
+	box-shadow: 0px 0px 4px 1px #9aa;
 }

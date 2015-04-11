@@ -1,10 +1,24 @@
 <h2>{{page_enterprise}}: Products</h2>
+<p class="intro">
+	{% if product_intro %}
 	{{ product_intro }}
-        <ul>
-        {% for product in products %}
-            <li><img src="{{ MEDIA_URL }}{{ product.get_product_image_thumbnail }}" class="picture"><strong>{{ product }}</strong> : {{ product.description }}</a></li>
-			<img src="{{ MEDIA_URL }}{{ product.get_product_image }}" class="picture">
-			{% empty %}
-    		</ul>
-        	<p>There are no products.</p>
-    		{% endfor %}
+	{% else %}
+	Introduce your products... go to the | About | section and click on | edit | to add one...
+	{% endif %}
+</p>
+<div id="add" class="link_content aj" data-link="{% url 'enterprise:add_product' %}">Add A Product</div>
+<ul>
+{% for product in products %}
+    <li><img src="{{ MEDIA_URL }}{{ product.get_product_image_thumbnail }}" class="img_thumb_larger"><strong>{{ product }}</strong> : {{ product.description }}</a></li>
+{% empty %}
+	<li>There are no products.</li>
+{% endfor %}
+</ul>
+
+<script type="text/javascript">
+	$('.aj').click(function(){
+		var $this = $(this);
+		var url = $this.data('link');
+		$('#mid_content_box').load(url);
+	});
+</script>

@@ -11,11 +11,11 @@
 
 {% block menu_content_links %}
 	<h3 class="ent_title"><a href="{% url 'enterprise:enterprise_profile' page_enterprise.slug %}">{{ page_enterprise }}</a></h3>
-	<li class="link_content aj" class="a_menu" data-link="{% url 'enterprise:enterprise_profile_aj' page_enterprise.slug %}">About</li>
-    <li class="link_content aj" class="a_menu" data-link="{% url 'enterprise:product' page_enterprise.slug %}">Products</li>
-    <li class="link_content aj" class="a_menu" data-link="{% url 'enterprise:capability' page_enterprise.slug %}">Capabilities</li>
-    <li class="link_content aj" class="a_menu" data-link="{% url 'enterprise:people' page_enterprise.slug %}">People</li>
-    <li class="link_content aj" class="a_menu" data-link="">Connections</li>
+	<a href="{% url 'enterprise:enterprise_profile' page_enterprise.slug %}"><li class="link_content">About</li></a>
+    <li class="link_content aj" data-link="{% url 'enterprise:product' page_enterprise.slug %}">Products</li>
+    <li class="link_content aj" data-link="{% url 'enterprise:capability' page_enterprise.slug %}">Capabilities</li>
+    <li class="link_content aj" data-link="{% url 'enterprise:people' page_enterprise.slug %}">People</li>
+    <li class="link_content aj">Connections</li>
 {% endblock %}
 
 {% block left_content %}
@@ -35,17 +35,20 @@
 		</div>
 		<div class="info_box">
 			<dt class="info_name">Website :</dt>
-			<dd class="info_data">{{ profile.website }}</dd>
+			<dd class="info_data"><a href="{{ profile.website }}" >{{ profile.website }}</a></dd>
 		</div>
 	</dl>
 {% endblock %}
 
 {% block mid_content %}
 	<section id="mid_content_box">
-		{% ifequal myuser.enterprise page_enterprise %}
-		<div class="pop_link_left aj" data-link="{% url 'enterprise:enterprise_profile_edit' %}">edit</div>
-		{% endifequal %}
+{% ifequal myuser.enterprise page_enterprise %}
+	<iframe id="edit_frame" class="inner_frame" name="edit_frame" src=""></iframe>
+{% endifequal %}
 		<dl class="profile_box">
+		{% ifequal myuser.enterprise page_enterprise %}
+			<a class="pop_link_left framer" href="{% url 'enterprise:enterprise_profile_edit' page_enterprise.slug %}" target="edit_frame">edit</a>
+		{% endifequal %}
 			<div class="info_box">
 			<dt class="info_name">About :</dt>
 			<dd class="info_data wide">{{ profile.about }}</dd>

@@ -69,6 +69,13 @@ label{
 }
 .form_edit textarea{
   width: 60%;
+  margin-bottom: 20px;
+  padding: 5px;
+}
+.form_edit input{
+  width: 60%;
+  margin-bottom: 20px;
+  padding: 5px;
 }
 
 .form_edit label{

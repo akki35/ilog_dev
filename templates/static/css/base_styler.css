@@ -17,7 +17,7 @@ div{
 	opacity: 0;
 }
 
-iframe{
+.outer_frame{
 	display: block;
 	z-index: -100;
 	position: fixed;
@@ -28,6 +28,16 @@ iframe{
 	top: 50%;
 }
 
+.inner_frame{
+	display: block;
+	z-index: -100;
+	position: absolute;
+	left: 1%;
+	width: 99%;
+	height: 0%;
+	background: #fcfffc;
+}
+
 li{
 	list-style: none;
 }
@@ -35,6 +45,12 @@ li{
 a{
 	text-decoration: none;
 	color: #157;
+}
+
+h2{
+	font-family: 'Calibri';
+    font-variant: small-caps;
+    font-weight: 600;
 }
 
 input, textarea, select{
@@ -136,9 +152,18 @@ body{
 						border: 1px solid #157;
 					}
 					.img_thumb_large{
-						width: 48px;
-						height: 48px;
+						display: inline-block;
+						width: 32px;
+						height: 32px;
 						border: 2px solid #157;
+						margin: 0px 2px;
+					}
+					.img_thumb_larger{
+						display: inline-block;
+						width: 73px;
+						height: 73px;
+						box-shadow: 0px 0px 2px 1px #1c8;
+						margin: 0px 2px;
 					}
 					.name{
 						display: inline-block;

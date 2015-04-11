@@ -9,9 +9,9 @@ from django.core.urlresolvers import reverse
 
 
 @login_required
-def enterprise_profile_edit(request):
+def enterprise_profile_edit(request, slug):
     enterprise = request.user.enterprise
-    
+    page_enterprise = get_object_or_404(Enterprise, slug=slug)    
     if request.method == 'POST':
         
         form = EnterpriseProfileForm(request.POST, request.FILES)
@@ -46,7 +46,7 @@ def enterprise_profile_edit(request):
 
             myuser.myuserprofile.notify_edited(enterprise=enterprise, node=node)
 
-            return redirect('/')
+            return redirect('/enterprise/'+ slug)
         else:
             print('wtf')
 
@@ -61,7 +61,7 @@ def enterprise_profile_edit(request):
             'people_detail': enterprise.enterpriseprofile.people_detail,
             'product_intro': enterprise.enterpriseprofile.product_intro,
             })
-    return render(request, 'enterprise_profile/enterprise_profile_edit.html', {'form':form})
+    return render(request, 'enterprise_profile/enterprise_profile_edit.html', {'form':form,'page_enterprise':page_enterprise})
 
 
 def enterprise_profile(request, slug):

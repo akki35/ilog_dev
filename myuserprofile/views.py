@@ -16,9 +16,9 @@ def home(request):
     if request.user.is_authenticated():
         feed_nodes = Node.get_feeds()
         comment_nodes = Node.objects.filter(myuser=request.user, category='C')
-        all_users = MyUser.objects.all()
-        all_enterprises = Enterprise.objects.all()
-        all_products = Product.objects.all()
+        all_users = MyUser.objects.all()[:10]
+        all_enterprises = Enterprise.objects.all()[:4]
+        all_products = Product.objects.all()[:4]
         c = {'user': request.user,
              'profile': MyUserProfile.objects.get(myuser=request.user),
              'feed_nodes': feed_nodes,
@@ -26,8 +26,6 @@ def home(request):
              'all_enterprises':all_enterprises,
              'all_products':all_products}
         return render_to_response('user_home.html', c, context_instance=RequestContext(request))
-# <<<<<<< HEAD
-# =======
     else:
         return render(request, 'home.html')
 
@@ -39,7 +37,6 @@ def activity(request):
              'profile': MyUserProfile.objects.get(myuser=request.user),
              'feed_nodes': feed_nodes}
         return render_to_response('user_home.html', c)
-# >>>>>>> origin/master
     else:
         return render(request, 'home.html')
 
