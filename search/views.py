@@ -61,8 +61,8 @@ def search(request):
             return redirect('/search/')
 
         type=asset=product=operation=material=feed=myuser=enterprise=None
-        c=d=e=f=g=h=None
-        cc=dc=ec=fc=gc=hc=0
+        c=d=e=f=g=h=n=pquery=qquery=rquery=None
+        cc=dc=ec=fc=gc=hc=nc=0
         for term in terms:
             typeo = Type.objects.filter(name__icontains=term)
             asseto = Asset.objects.filter(name__icontains=term)
@@ -75,6 +75,24 @@ def search(request):
             enterpriseo = EnterpriseProfile.objects.filter(Q(about__icontains=term) | Q(capabilities__icontains=term)
                                                            | Q(product_intro__icontains=term))
 
+            q = MyUser.objects.filter(Q(first_name__icontains=term) | Q(last_name__icontains=term))
+            p = Enterprise.objects.filter(enterprise__icontains=term)
+            r = Product.objects.filter(name__icontains=term)
+
+            if pquery is None:
+                pquery = p
+            else:
+                pquery = pquery & p
+
+            if qquery is None:
+                qquery = q
+            else:
+                qquery = qquery & q
+
+            if rquery is None:
+                rquery = r
+            else:
+                rquery = rquery & r
 
             if feed is None:
                 feed = feedo
@@ -138,6 +156,8 @@ def search(request):
                 g = Enterprise.objects.filter(materials=material)
                 gc = g.count()
 
+
+            n = feed.count()
 
         # return locals()
 

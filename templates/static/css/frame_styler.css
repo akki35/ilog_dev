@@ -48,10 +48,28 @@ input, textarea, select{
 		width: 95%;
 		margin: auto;
 		padding: 5px;
+		overflow-x: hidden;
 	}
 
 .close{
 	position: fixed;
 	top: 100%;
 	margin: auto;
+}
+
+.pop_link_left{
+	position: fixed;
+	right: 0px;
+	width: 70px;
+  text-align: center;
+  padding: 2px 20px;
+  background-color: #157;
+  color: #dee;
+  box-shadow: -3px 0px 2px #9aa;
+  border-top-left-radius: 15px;
+  border-bottom-left-radius: 15px;
+  cursor: pointer;
+}
+.pop_link_left:hover{
+  box-shadow: 0px 0px 2px #9aa;
 }

@@ -11,24 +11,29 @@
 
 {% block menu_content_links %}
 	<h3 class="ent_title"><a href="{% url 'myuserprofile:profile' page_user.slug %}">{{ page_user }}</a></h3>
-	<li class="link_content aj" class="a_menu" data-link="{% url 'myuserprofile:profile' page_user.slug %}">About</li>
+	<a href="{% url 'myuserprofile:profile' page_user.slug %}"><li class="link_content">About</li></a>
+	<!--
+	<li class="link_content aj" class="a_menu" data-link="{% url 'myuserprofile:profile' page_user.slug %}">About</li>-->
 {% endblock %}
 
 {% block left_menu %}
 	<div id="left_ent">
 		<img id="ent_img" src="/images/{{ page_user_profile.get_image }}" alt="{{ page_user }}">
+		{% ifnotequal page_user user %}
+		<a class="follow" href="{% url 'relationships:follow' %}">Follow</a>
+		{% endifnotequal %}
 	</div>
-	{% ifnotequal page_user user %}
-	<a class="follow" href="{% url 'relationships:follow' %}">Follow</a>
-	{% endifnotequal %}
 {% endblock %}
 
 {% block mid_content %}
 <section id="mid_content_box">
 	{% ifequal page_user user %}
-	<div class="pop_link_left aj" data-link="{% url 'myuserprofile:profile_edit' %}">edit</div>
+		<iframe id="edit_frame" class="inner_frame" name="edit_frame" src=""></iframe>
 	{% endifequal %}
 	<dl class="profile_box">
+	{% ifequal page_user user %}
+	<a class="pop_link_left framer" href="{% url 'myuserprofile:profile_edit' %}" target="edit_frame">edit</a>
+	{% endifequal %}
 		<div class="info_box half">
 			<dt class="info_name">Full Name :</dt>
 			<dd class="info_data">{{ page_user_profile.get_screen_name }}</dd>
@@ -41,25 +46,20 @@
 			<dt class="info_name">Position :</dt>
 			<dd class="info_data">{{ page_user_profile.job_position }}</dd>
 		</div>
+		<div class="info_box">
+			<dt class="info_name">Experienced in :</dt>
+			<dd class="info_data wide">{{ page_user_profile.experience }}</dd>
+		</div>
 		<div class="info_box half">
-			<dt class="info_name">Gender :</dt>
+			<dt class="info_name">Skillset :</dt>
 			<dd class="info_data">
-				{% ifequal page_user_profile.gender 'M' %}Male{% endifequal %}
-				{% ifequal page_user_profile.gender 'F' %}Female{% endifequal %}
+			{% for skills in skillset %}
+				<ul>
+					<li>{{skills}}</li>
+				</ul>
+			{% endfor %}
 			</dd>
 		</div>
-		<dt class="info_name">Date of Birth :</dt>
-		<dd class="info_data">{{ page_user_profile.job_position }}</dd>
-		<dt class="info_name">Experienced in :</dt>
-		<dd class="info_data wide">{{ page_user_profile.experience }}</dd>
-		<dt class="info_name">Skillset :</dt>
-		<dd class="info_data">
-		{% for skills in skillset %}
-			<ul>
-				<li>{{skills}}</li>
-			</ul>
-		{% endfor %}
-		</dd>
 	</dl>
 </section>
 {% endblock %}

@@ -6,8 +6,10 @@
 	position: relative;
 	display: inline-block;
 	vertical-align: top;
-	width:15%;
+	width:14%;
+	padding: 0.5%;
 	text-align: right;
+	border-right: 1px solid #9aa;
 }
 	#user_box{
 		margin: 0px 20px 20px 0px;
@@ -51,21 +53,16 @@
 			background-color: rgba(226,246,246,0);
 		}
 
-	#people_list{
-		border-top: 2px solid #9aa;
-		padding-top: 10px;
-	}
 		.list_head{
 			text-align: center;
 		}
 
 #mid_content{
+	position: relative;
 	display: inline-block;
 	vertical-align: top;
 	width:59%;
 	padding: 0% 2%;
-	border-left: 1px solid #9aa;
-	border-right: 1px solid #9aa;
 }
 	h2{
 		text-align: center;
@@ -96,8 +93,9 @@
 #right_content{
 	display: inline-block;
 	vertical-align: top;
-	width:15%;
-	margin-left: 3%;
+	width:18%;
+	padding-left: 1%;
+	border-left: 1px solid #9aa;
 }
 	.list_head{
 		margin-bottom: 15px;
@@ -107,7 +105,7 @@
 		padding-top: 5px;
 	}
 	#product_list{
-		margin-top: 60px;
+		margin-top: 30px;
 		border-top: 2px solid #9aa;
 		padding-top: 10px;
 	}
@@ -126,3 +124,28 @@
 .list_object{
 	margin: 5px;
 }
+
+.list_object_name_1{
+	display: inline-block;
+	line-height: 34px;
+	vertical-align: top;
+	font-size: 0.9em;
+}
+.list_object_name_2{
+	display: inline-block;
+	line-height: 17px;
+	vertical-align: top;
+	font-size: 0.9em;
+}
+
+aside{
+	display: block;
+	height: 240px;
+	overflow: auto;
+}
+
+#people_list{
+		border-top: 2px solid #9aa;
+		padding-top: 10px;
+		height: 480px;
+	}

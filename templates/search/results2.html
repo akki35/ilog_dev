@@ -1,139 +1,142 @@
-{% extends 'base.html' %}
+{% extends 'user_home.html' %}
+{% load staticfiles %}
 {% load i18n %}
 
-	
- 
+{% block css_2 %}
+    <link rel="stylesheet" type="text/css" href={% static 'css/results_styler.css' %}>
+    {% block css3 %}
+    {% endblock %}
+{% endblock %}
 
+{% block menu_content_links %}
+{% endblock %}
 
 {% block content %}
-    <h2>Results</h2>
-    {% if c %}
-	{{ cc }} Industries found of matching type({{type}})
-        <ul>
-        {% for result in c %}
-			
-            <li><a href="{{ post.get_absolute_url }}">{{ result.enterprise }}</a></li>
-        {% endfor %}
-        </ul>
-		
-	
-    {% endif %}
-	{% if d %}
-	{{ dc }} industries found having matching assets({{asset}})
-        <ul>
-        {% for result in d %}
-			
-            <li><a href="{{ post.get_absolute_url }}">{{ result.enterprise }}</a></li>
-        {% endfor %}
-        </ul>
-	
-    {% endif %}
-	{% if e %}
-	{{ ec }} industries found having matching products
-        <ul>
-        {% for result in e %}
-			
-            <li><a href="{{ post.get_absolute_url }}">{{ result.enterprise }}</a></li>
-        {% endfor %}
-        </ul>
-	
-    {% endif %}
-	{% if f %}
-	{{ fc }} industries found performing matching operations({{operation}})
-	    <ul>
-        {% for result in f %}
-			
-            <li><a href="{{ post.get_absolute_url }}">{{ result.enterprise }}</a></li>
-        {% endfor %}
-        </ul>
-	
-    {% endif %}
-	{% if g %}
-	{{ gc }} industries found using matching material({{material}})
-        <ul>
-        {% for result in g %}
-			
-            <li><a href="{{ post.get_absolute_url }}">{{ result.enterprise }}</a></li>
-        {% endfor %}
-        </ul>
-	
-    {% endif %}
-	{% if h %}
-	{{ hc }} people found having matching skillset
-        <ul>
-        {% for result in h %}
-			
-            <li><a href="{{ post.get_absolute_url }}">{{ result }}</a></li>
-        {% endfor %}
-        </ul>
-	
-    {% endif %}
-	
-	{% if type %}
-        <ul>
-        {% for result in type %}
-			
-            <li>{{ result }}</li>
-        {% endfor %}
-        </ul>
-		
-	
-    {% endif %}
-	
-	{% if material %}
-        <ul>
-        {% for result in material %}
-			
-            <li><a href="{{ post.get_absolute_url }}">{{ result }}</a></li>
-        {% endfor %}
-        </ul>
-		
-	
-    {% endif %}
-	{% if asset %}
-        <ul>
-        {% for result in asset %}
-			
-            <li><a href="{{ post.get_absolute_url }}">{{ result }}</a></li>
-        {% endfor %}
-        </ul>
-		
-	
-    {% endif %}
-	{% if operation %}
-        <ul>
-        {% for result in operation %}
-			
-            <li><a href="{{ post.get_absolute_url }}">{{ result }}</a></li>
-        {% endfor %}
-        </ul>
-		
-	
-    {% endif %}
-	
-	
-	
-	{% if feed %}
-        <ul>
-        {% for result in feed %}
-		    <li><a href="{{ post.get_absolute_url }}">{{ result }}</a></li>
-        {% endfor %}
-        </ul>
-    {% endif %}
-	{% if myuser %}
-        <ul>
-        {% for result in myuser %}
-		    <li><a href="{{ post.get_absolute_url }}">{{ result }}</a></li>
-        {% endfor %}
-        </ul>
-    {% endif %}
-	{% if enterprise %}
-        <ul>
-        {% for result in enterprise %}
-		    <li><a href="{{ post.get_absolute_url }}">{{ result }}</a></li>
-        {% endfor %}
-        </ul>
-    {% endif %}
-	
-	   
+    <article id="adv_search_result">
+        <h3>Advanced Search Results</h3>
+        <section id="industries" class='result_box'>
+        {% if c %}
+            <h4 class="head_result">{{ cc }} Industries found of matching type (
+                {% for result in type %}<span class="mathcbox">{% if forloop.counter0 %}, {% endif %}{{result}}</span>{% endfor %} )</h4>
+            <ul class="result_list">
+            {% for result in c %}
+                <li><a href="{% url 'enterprise:enterprise_profile' result.slug %}">{{ result.enterprise }}</a></li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+        </section>
+        <section id="assets" class='result_box'>
+        {% if d %}
+            <h4 class="head_result">{{ dc }} Industries found having matching assets (
+                {% for result in asset %}<span class="mathcbox">{% if forloop.counter0 %}, {% endif %}{{result}}</span>{% endfor %} )</h4>
+            <ul class="result_list">
+            {% for result in d %}
+                <li><a href="{% url 'enterprise:enterprise_profile' result.slug %}">{{ result.enterprise }}</a></li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+        </section>
+        <section id="products" class='result_box'>
+        {% if e %}
+            <h4 class="head_result">{{ ec }} Industries found having matching products (
+                {% for result in product %}<span class="mathcbox">{% if forloop.counter0 %}, {% endif %}{{result}}</span>{% endfor %} )</h4>
+            <ul class="result_list">
+            {% for result in e %}
+                <li><a href="{% url 'enterprise:enterprise_profile' result.slug %}">{{ result.enterprise }}</a></li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+        </section>
+        <section id="operations" class="result_box">
+        {% if f %}
+            <h4 class="head_result">{{ fc }} Industries found performing matching operations (
+                {% for result in operation %}<span class="mathcbox">{% if forloop.counter0 %}, {% endif %}{{result}}</span>{% endfor %} )</h4>
+            <ul class="result_list">
+            {% for result in f %}
+                <li><a href="{% url 'enterprise:enterprise_profile' result.slug %}">{{ result.enterprise }}</a></li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+        </section>
+        <section id="materials" class='result_box'>
+        {% if g %}
+            <h4 class="head_result">{{ gc }} Industries found using matching materials (
+                {% for mat in material %}<span class="mathcbox">{% if forloop.counter0 %}, {% endif %}{{mat}}</span>{% endfor %} )</h4>
+            <ul class="result_list">
+            {% for result in g %}
+                <li><a href="{% url 'enterprise:enterprise_profile' result.slug %}">{{ result.enterprise }}</a></li>
+            {% endfor %}
+            </ul>        
+        {% endif %}
+        </section>
+        <section id="people" class="result_box">
+        {% if h %}
+            <h4 class="head_result">{{ hc }} People found having matching skillset (
+                {% for skill in operation %}<span class="mathcbox">{% if forloop.counter0 %}, {% endif %}{{mat}}</span>{% endfor %} )</h4>
+            <ul class="result_list">
+            {% for result in h %}
+                <li><a href="{% url 'myuserprofile:profile' result.slug %}">{{ result.myuser }}</a></li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+        </section>
+    </article>
+
+    <article id="search_result">
+        <section id="industries">
+            <h3>Match By Content</h3>
+        {% if enterprise %}
+            <ul class="result_list">
+            {% for result in enterpris %}
+                <li><a href="{{ post.get_absolute_url }}">{{ result }}</a></li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+        {% if myuser %}
+            <ul class="result_list">
+            {% for result in myuser %}
+                <li><a href="{{ post.get_absolute_url }}">{{ result }}</a></li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+        {% if feed %}
+            <h4 class="head_result">{{ n }} Feeds</h4>
+            <ul class="result_list">
+            {% for result in feed %}
+                <li><a href="{{ post.get_absolute_url }}">{{ result }}</a></li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+        </section>
+        <section id="people">
+            <h3>Match By Name</h3>
+        {% if pquery %}
+            <ul class="result_list open">
+            {% for result in pquery %}
+                <li><a href="{% url 'myuserprofile:profile' result.slug %}">{{ result }}</a></li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+        {% if qquery %}
+            <ul class="result_list open">
+            {% for result in qquery %}
+                <li><a href="{% url 'myuserprofile:profile' result.slug %}">{{ result }}</a></li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+        {% if rquery %}
+            <ul class="result_list open">
+            {% for result in rquery %}
+                <li>{{ result }}</li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+        </section>
+    </article>  
+{% endblock %}
+
+{% block scripts %}
+    <script type="text/javascript">
+        $()
+    </script>
 {% endblock %}
