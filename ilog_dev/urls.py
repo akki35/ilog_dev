@@ -29,7 +29,6 @@ urlpatterns = patterns('',
 
                        url(r'^robots.txt/$', TemplateView.as_view(template_name='robots.txt')),
 
-
 )   + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 # urlpatterns += patterns('',

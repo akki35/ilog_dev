@@ -26,8 +26,6 @@ def home(request):
              'all_enterprises':all_enterprises,
              'all_products':all_products}
         return render_to_response('user_home.html', c, context_instance=RequestContext(request))
-# <<<<<<< HEAD
-# =======
     else:
         return render(request, 'home.html')
 
@@ -39,17 +37,16 @@ def activity(request):
              'profile': MyUserProfile.objects.get(myuser=request.user),
              'feed_nodes': feed_nodes}
         return render_to_response('user_home.html', c)
-# >>>>>>> origin/master
     else:
         return render(request, 'home.html')
 
 FEEDS_NUM_PAGES=8
-@login_required
+# @login_required
 def enterprises(request):
     myusers = MyUser.objects.all()
     enterprises = Enterprise.objects.all()
     return render(request, 'search/enterprises.html', {'enterprises':enterprises})
-@login_required
+# @login_required
 def people(request):
     myusers = MyUser.objects.all()
     enterprises = Enterprise.objects.all()

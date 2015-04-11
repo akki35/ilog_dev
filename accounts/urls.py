@@ -4,7 +4,7 @@ from accounts import views
 
 urlpatterns = patterns('',
                        url(r'^logup/$', views.logup, name='logup'),
-                       
+
                        url(r'^logout/$', views.logout,)
 )
 
