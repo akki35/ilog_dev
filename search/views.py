@@ -137,24 +137,29 @@ def search(request):
             if type:
                 c = Enterprise.objects.filter(types=type)
                 cc = c.count()
+                type_c = type.count()
 
             if asset:
                 d = Enterprise.objects.filter(assets=asset)
                 dc = d.count()
+                asset_c = asset.count()
 
             if product:
                 e = Enterprise.objects.filter(products=product)
                 ec = e.count()
+                product_c = product.count()
 
             if operation:
                 f = Enterprise.objects.filter(operations=operation)
                 h = MyUserProfile.objects.filter(skillset=operation)
                 fc = f.count()
                 hc = h.count()
+                operation_c = operation.count()
 
             if material:
                 g = Enterprise.objects.filter(materials=material)
                 gc = g.count()
+                material_c = material.count()
 
 
             n = feed.count()

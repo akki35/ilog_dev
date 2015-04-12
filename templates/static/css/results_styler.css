@@ -28,3 +28,26 @@ h3{
 	padding: 0px 10px 5px 0px;
 	border-bottom: 1px solid #157
 }
+
+.search_no{
+	display: inline-block;
+	background-color: #cdd;
+	padding: 3px 5px;
+	cursor: pointer;
+	border: 1px solid #cdd;
+}
+
+.search_no:hover{
+	border: 1px solid #455;
+}
+
+.result_box{
+	margin-bottom: 10px;
+}
+
+.result_list, .match_list{
+	margin: 1% 0px;
+	padding: 1%;
+	border: 1px solid #9aa;
+	width: 96%;
+}

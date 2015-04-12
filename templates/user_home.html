@@ -13,17 +13,21 @@
 
 {% block menu_links %}
     <li class="link"><a class="a_menu" href="{% url 'home' %}">Home</a></li>
+    {% if user.is.authenticated %}
     <li class="link"><a class="a_menu" href="{% url 'myuserprofile:profile' user.slug %}">My Profile</a></li>
     <li class="link"><a class="a_menu" href="{% url 'enterprise:enterprise_profile' user.enterprise.slug %}">Workplace</a></li>
     <li class="link"><a class="a_menu" href="{% url 'messages:inbox' %}">Messages</a></li>
     <li class="link"><a class="a_menu framer" target="notify_frame" href="{% url 'notifications' %}">Notifications</a></li>
+	{% endif %}
     <li class="link right"><a href="{% url 'logout' %}">Log Out</a></li>
+    {% if user.is.authenticated %}
     <li class="link_user">
 		<a class="thumb_user" href="{% url 'myuserprofile:profile' user.slug %}"><img class="img_thumb" src="/images/{{ user.myuserprofile.get_image_thumbnail }}" alt="{{ user.get_full_name }}"></a>
 		<div class="name"><a href="{% url 'myuserprofile:profile' user.slug %}">{{ user.get_full_name }}</a> | 
 		<a href="{% url 'enterprise:enterprise_profile' user.enterprise.slug %}">{{ user.enterprise }}</a>
 		</div>
 	</li>
+	{% endif %}
     <!--
     <li class="link right"><a class="a_menu" href="{% url 'myuserprofile:people' %}">People</a></li>
     <li class="link right"><a class="a_menu" href="{% url 'myuserprofile:enterprises' %}">Enterprises</a></li>

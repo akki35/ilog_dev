@@ -16,8 +16,13 @@
         <h3>Advanced Search Results</h3>
         <section id="industries" class='result_box'>
         {% if c %}
-            <h4 class="head_result">{{ cc }} Industries found of matching type (
-                {% for result in type %}<span class="mathcbox">{% if forloop.counter0 %}, {% endif %}{{result}}</span>{% endfor %} )</h4>
+                <div class="search_no ind">{{ cc }} Industries found</div> of 
+                <div class="search_no mat">{{ type_c }} matching type</div>
+            <ul class="match_list">
+            {% for result in type %}
+                <li>{{result}}</li>
+            {% endfor %}
+            </ul>
             <ul class="result_list">
             {% for result in c %}
                 <li><a href="{% url 'enterprise:enterprise_profile' result.slug %}">{{ result.enterprise }}</a></li>
@@ -27,8 +32,13 @@
         </section>
         <section id="assets" class='result_box'>
         {% if d %}
-            <h4 class="head_result">{{ dc }} Industries found having matching assets (
-                {% for result in asset %}<span class="mathcbox">{% if forloop.counter0 %}, {% endif %}{{result}}</span>{% endfor %} )</h4>
+            <div class="search_no ind">{{ dc }} Industries found</div> having 
+            <div class="search_no mat">{{ asset_c }} matching assets</div>
+            <ul class="match_list">
+            {% for result in asset %}
+                <li>{{result}}</li>
+            {% endfor %}
+            </ul>
             <ul class="result_list">
             {% for result in d %}
                 <li><a href="{% url 'enterprise:enterprise_profile' result.slug %}">{{ result.enterprise }}</a></li>
@@ -38,8 +48,13 @@
         </section>
         <section id="products" class='result_box'>
         {% if e %}
-            <h4 class="head_result">{{ ec }} Industries found having matching products (
-                {% for result in product %}<span class="mathcbox">{% if forloop.counter0 %}, {% endif %}{{result}}</span>{% endfor %} )</h4>
+            <div class="search_no ind">{{ ec }} Industries found</div> having 
+            <div class="search_no mat">{{ product_c }} matching products</div>
+            <ul class="match_list">
+            {% for result in product %}
+                <li>{{result}}</li>
+            {% endfor %}
+            </ul>
             <ul class="result_list">
             {% for result in e %}
                 <li><a href="{% url 'enterprise:enterprise_profile' result.slug %}">{{ result.enterprise }}</a></li>
@@ -49,8 +64,13 @@
         </section>
         <section id="operations" class="result_box">
         {% if f %}
-            <h4 class="head_result">{{ fc }} Industries found performing matching operations (
-                {% for result in operation %}<span class="mathcbox">{% if forloop.counter0 %}, {% endif %}{{result}}</span>{% endfor %} )</h4>
+            <div class="search_no ind">{{ fc }} Industries found</div> performing 
+            <div class="search_no mat">{{ operation_c }} matching operations</div>
+            <ul class="match_list">
+            {% for result in operation %}
+                <li>{{result}}</li>
+            {% endfor %}
+            </ul>
             <ul class="result_list">
             {% for result in f %}
                 <li><a href="{% url 'enterprise:enterprise_profile' result.slug %}">{{ result.enterprise }}</a></li>
@@ -60,8 +80,13 @@
         </section>
         <section id="materials" class='result_box'>
         {% if g %}
-            <h4 class="head_result">{{ gc }} Industries found using matching materials (
-                {% for mat in material %}<span class="mathcbox">{% if forloop.counter0 %}, {% endif %}{{mat}}</span>{% endfor %} )</h4>
+            <div class="search_no ind">{{ gc }} Industries found</div> using
+            <div class="search_no mat">{{ material_c }} matching materials</div>
+            <ul class="match_list">
+            {% for result in material %}
+                <li>{{result}}</li>
+            {% endfor %}
+            </ul>
             <ul class="result_list">
             {% for result in g %}
                 <li><a href="{% url 'enterprise:enterprise_profile' result.slug %}">{{ result.enterprise }}</a></li>
@@ -71,8 +96,13 @@
         </section>
         <section id="people" class="result_box">
         {% if h %}
-            <h4 class="head_result">{{ hc }} People found having matching skillset (
-                {% for skill in operation %}<span class="mathcbox">{% if forloop.counter0 %}, {% endif %}{{mat}}</span>{% endfor %} )</h4>
+            <div class="search_no">{{ hc }} People found</div> having 
+            <div class="search_no">{{ operation_c }} matching skillset</div>
+            <ul class="match_list">
+            {% for result in operation %}
+                <li>{{result}}</li>
+            {% endfor %}
+            </ul>
             <ul class="result_list">
             {% for result in h %}
                 <li><a href="{% url 'myuserprofile:profile' result.slug %}">{{ result.myuser }}</a></li>
@@ -86,21 +116,21 @@
         <section id="industries">
             <h3>Match By Content</h3>
         {% if enterprise %}
-            <ul class="result_list">
+            <ul class="result_list_b">
             {% for result in enterpris %}
                 <li><a href="{{ post.get_absolute_url }}">{{ result }}</a></li>
             {% endfor %}
             </ul>
         {% endif %}
         {% if myuser %}
-            <ul class="result_list">
+            <ul class="result_list_b">
             {% for result in myuser %}
                 <li><a href="{{ post.get_absolute_url }}">{{ result }}</a></li>
             {% endfor %}
             </ul>
         {% endif %}
         {% if feed %}
-            <h4 class="head_result">{{ n }} Feeds</h4>
+            <h4 class="search_no ind">{{ n }} Feeds</h4>
             <ul class="result_list">
             {% for result in feed %}
                 <li><a href="{{ post.get_absolute_url }}">{{ result }}</a></li>
@@ -111,21 +141,21 @@
         <section id="people">
             <h3>Match By Name</h3>
         {% if pquery %}
-            <ul class="result_list open">
+            <ul class="result_list_b open">
             {% for result in pquery %}
                 <li><a href="{% url 'myuserprofile:profile' result.slug %}">{{ result }}</a></li>
             {% endfor %}
             </ul>
         {% endif %}
         {% if qquery %}
-            <ul class="result_list open">
+            <ul class="result_list_b open">
             {% for result in qquery %}
                 <li><a href="{% url 'myuserprofile:profile' result.slug %}">{{ result }}</a></li>
             {% endfor %}
             </ul>
         {% endif %}
         {% if rquery %}
-            <ul class="result_list open">
+            <ul class="result_list_b open">
             {% for result in rquery %}
                 <li>{{ result }}</li>
             {% endfor %}
@@ -137,6 +167,16 @@
 
 {% block scripts %}
     <script type="text/javascript">
-        $()
+        $('.match_list, .result_list').hide();
+        $('.ind').click(function(){
+            var par = $(this).parent();
+            console.log(par.children('.result_list').text())
+            par.children('.result_list').toggle();
+        });
+        $('.mat').click(function(){
+            var par = $(this).parent();
+            console.log(par.children('.match_list').text())
+            par.children('.match_list').toggle();
+        });
     </script>
 {% endblock %}
