@@ -147,7 +147,7 @@ class EnterpriseProduct(models.Model):
         return self.product.name
 
     def get_product_image(self):
-        default_image = 'products/main/product.png'
+        default_image = 'products/main/product.jpg'
         if self.product_image:
             return self.product_image
         else:
@@ -181,7 +181,7 @@ class EnterpriseAsset(models.Model):
         return self.asset.name
 
     def get_asset_image(self):
-        default_image = 'assets/main/asset.png'
+        default_image = 'assets/main/asset.jpg'
         if self.asset_image:
             return self.asset_image
         else:

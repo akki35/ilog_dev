@@ -55,7 +55,7 @@ class AssetForm(forms.ModelForm):
 
 
 class TypeForm(forms.ModelForm):
-    name = forms.CharField(max_length=25)
+    name = forms.CharField(max_length=50)
 
     class Meta:
         model = Type
@@ -64,7 +64,7 @@ class TypeForm(forms.ModelForm):
 
 
 class MaterialForm(forms.ModelForm):
-    name = forms.CharField(max_length=25)
+    name = forms.CharField(max_length=50)
 
     class Meta:
         model = Material
@@ -73,7 +73,7 @@ class MaterialForm(forms.ModelForm):
 
 
 class OperationForm(forms.ModelForm):
-    name = forms.CharField(max_length=25)
+    name = forms.CharField(max_length=50)
 
     class Meta:
         model = Operation
