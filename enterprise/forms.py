@@ -78,3 +78,18 @@ class OperationForm(forms.ModelForm):
         fields = ['name']
 
 
+class ProdForm(forms.ModelForm):
+    name = forms.CharField(max_length=50)
+
+    class Meta:
+        model = Product
+        exclude = ['slug', 'is_active', ]
+        fields = ['name']
+
+class AssForm(forms.ModelForm):
+    name = forms.CharField(max_length=50)
+
+    class Meta:
+        model = Asset
+        exclude = ['slug', 'is_active', ]
+        fields = ['name']

@@ -8,16 +8,16 @@ from django.conf import settings
 class Migration(migrations.Migration):
 
     dependencies = [
-        migrations.swappable_dependency(settings.AUTH_USER_MODEL),
         ('nodes', '__first__'),
+        migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
     operations = [
         migrations.CreateModel(
             name='Activity',
             fields=[
-                ('id', models.AutoField(serialize=False, auto_created=True, primary_key=True, verbose_name='ID')),
-                ('activity', models.CharField(max_length=1, choices=[('L', 'Like')])),
+                ('id', models.AutoField(primary_key=True, auto_created=True, serialize=False, verbose_name='ID')),
+                ('activity', models.CharField(choices=[('L', 'Like')], max_length=1)),
                 ('date', models.DateTimeField(auto_now_add=True)),
                 ('node', models.IntegerField(null=True, blank=True)),
                 ('myuser', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
@@ -31,9 +31,9 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Notification',
             fields=[
-                ('id', models.AutoField(serialize=False, auto_created=True, primary_key=True, verbose_name='ID')),
+                ('id', models.AutoField(primary_key=True, auto_created=True, serialize=False, verbose_name='ID')),
                 ('date', models.DateTimeField(auto_now_add=True)),
-                ('notification_type', models.CharField(max_length=1, choices=[('L', 'Liked'), ('C', 'Commented'), ('S', 'Also commented'), ('K', 'Also joined'), ('E', 'Edited'), ('F', 'Follows')])),
+                ('notification_type', models.CharField(choices=[('L', 'Liked'), ('C', 'Commented'), ('S', 'Also commented'), ('K', 'Also joined'), ('E', 'Edited'), ('F', 'Follows')], max_length=1)),
                 ('is_read', models.BooleanField(default=False)),
                 ('from_user', models.ForeignKey(related_name='+', to=settings.AUTH_USER_MODEL)),
                 ('node', models.ForeignKey(to='nodes.Node')),

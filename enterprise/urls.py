@@ -5,6 +5,8 @@ from enterprise import views
 
 urlpatterns = patterns('',
                        url(r'^register/$', views.register, name='register'),
+                       url(r'^add_ass/$', 'enterprise.views.add_ass', name='add_ass'),
+                       url(r'^add_prod/$', 'enterprise.views.add_prod', name='add_tprod'),
 
                        url(r'^add_product/$', 'enterprise.views.add_product', name='add_product'),
                        url(r'^add_asset/$', 'enterprise.views.add_asset', name='add_asset'),

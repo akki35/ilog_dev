@@ -15,18 +15,18 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Message',
             fields=[
-                ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True, serialize=False)),
+                ('id', models.AutoField(auto_created=True, serialize=False, primary_key=True, verbose_name='ID')),
                 ('message', models.TextField(max_length=5000)),
                 ('date', models.DateTimeField(auto_now_add=True)),
                 ('is_read', models.BooleanField(default=False)),
-                ('conversation', models.ForeignKey(related_name='+', to=settings.AUTH_USER_MODEL)),
-                ('from_user', models.ForeignKey(related_name='+', to=settings.AUTH_USER_MODEL)),
-                ('myuser', models.ForeignKey(related_name='+', to=settings.AUTH_USER_MODEL)),
+                ('conversation', models.ForeignKey(to=settings.AUTH_USER_MODEL, related_name='+')),
+                ('from_user', models.ForeignKey(to=settings.AUTH_USER_MODEL, related_name='+')),
+                ('myuser', models.ForeignKey(to=settings.AUTH_USER_MODEL, related_name='+')),
             ],
             options={
-                'verbose_name': 'Message',
                 'verbose_name_plural': 'Messages',
                 'ordering': ('date',),
+                'verbose_name': 'Message',
             },
             bases=(models.Model,),
         ),
