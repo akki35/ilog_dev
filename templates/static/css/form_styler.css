@@ -40,7 +40,10 @@ label{
    }
 
   .uls_home .helptext{
-    display: none;
+    display: inline-block;
+    color: #1c8;
+    font-size: 0.9em;
+    vertical-align: top;
   }
   .uls_home .errorlist{
     display: none;
@@ -60,8 +63,6 @@ label{
 }
 #ul_logup label{
   width: 200px;
-}
-#ul_register label{
 }
 #submit_edit{
   float: right;
@@ -84,4 +85,60 @@ label{
 
 #add_ent{
   margin: 20px 0px 20px 250px;
+}
+
+#ul_register li{
+  display: inline-block;
+  vertical-align: top;
+  width: 30%;
+  line-height: initial;
+  border-right: 1px solid #9aa;
+  border-left: 1px solid #9aa;
+  padding: 0px 1%;
+}
+
+#ul_register input{
+  margin-bottom: 5px;
+}
+#ul_register select{
+  margin-bottom: 15px;
+  min-height: 200px;
+}
+
+#ul_register .hepltext{
+  text-align: justify;
+}
+
+#ul_register li:first-child{
+  display: block;
+  margin: 0px auto 20px auto;
+  border-right: 0px solid #9aa;
+  border-left: 0px solid #9aa;
+}
+#ul_register li:last-child{
+  display: block;
+  margin: 10px auto ;
+  border-right: 0px solid #9aa;
+  border-left: 0px solid #9aa;
+}
+
+#ul_register label{
+  text-align: center;
+  width: 100px;
+}
+
+#submit_register{
+  display: block;
+  margin: auto;
+}
+
+#add{
+  width: 100%;
+}
+
+#add h4{
+  display: inline-block;
+  width: 30%;
+  padding: 0 1%;
+  text-align: center;
 }
