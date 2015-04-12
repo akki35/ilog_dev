@@ -188,4 +188,38 @@ def add_material(request):
         return render(request, 'enterprise/add_material.html', {'form': form})
 
 
+def add_prod(request):
+    form = ProdForm(request.POST)
+    if request.method == 'POST':
+
+        if not form.is_valid():
+            render(request, 'enterprise/add_prod.html', {'form': form})
+        else:
+            name = form.cleaned_data.get('name')
+
+            t, created = Product.objects.get_or_create(name=name)
+
+            t.save()
+            return redirect('/enterprise/add_prod')
+
+    else:
+        return render(request, 'enterprise/add_prod.html', {'form': form})
+
+
+def add_ass(request):
+    form = AssForm(request.POST)
+    if request.method == 'POST':
+
+        if not form.is_valid():
+            render(request, 'enterprise/add_ass.html', {'form': form})
+        else:
+            name = form.cleaned_data.get('name')
+
+            t, created = Asset.objects.get_or_create(name=name)
+
+            t.save()
+            return redirect('/enterprise/add_ass')
+
+    else:
+        return render(request, 'enterprise/add_ass.html', {'form': form})
 # Create your views here.
