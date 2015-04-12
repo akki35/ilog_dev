@@ -15,10 +15,10 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='EnterpriseProfile',
             fields=[
-                ('id', models.AutoField(primary_key=True, auto_created=True, verbose_name='ID', serialize=False)),
-                ('address', models.CharField(max_length=200, blank=True, null=True)),
-                ('contact', models.CharField(max_length=30, blank=True, null=True)),
-                ('website', models.URLField(max_length=255, blank=True, null=True)),
+                ('id', models.AutoField(serialize=False, primary_key=True, auto_created=True, verbose_name='ID')),
+                ('address', models.CharField(null=True, blank=True, max_length=200)),
+                ('contact', models.CharField(null=True, blank=True, max_length=30)),
+                ('website', models.URLField(null=True, blank=True, max_length=255)),
                 ('about', models.TextField(null=True, blank=True)),
                 ('capabilities', models.TextField(null=True, blank=True)),
                 ('people_detail', models.TextField(null=True, blank=True)),

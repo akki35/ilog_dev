@@ -8,20 +8,20 @@ import django.utils.timezone
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('enterprise', '0001_initial'),
+        ('enterprise', '__first__'),
     ]
 
     operations = [
         migrations.CreateModel(
             name='MyUser',
             fields=[
-                ('id', models.AutoField(verbose_name='ID', serialize=False, primary_key=True, auto_created=True)),
+                ('id', models.AutoField(primary_key=True, verbose_name='ID', auto_created=True, serialize=False)),
                 ('password', models.CharField(max_length=128, verbose_name='password')),
-                ('last_login', models.DateTimeField(default=django.utils.timezone.now, verbose_name='last login')),
+                ('last_login', models.DateTimeField(verbose_name='last login', default=django.utils.timezone.now)),
                 ('first_name', models.CharField(max_length=50)),
                 ('last_name', models.CharField(max_length=50)),
                 ('slug', models.SlugField(max_length=255, unique=True)),
-                ('email', models.EmailField(db_index=True, max_length=255, unique=True, verbose_name='email address')),
+                ('email', models.EmailField(max_length=255, unique=True, db_index=True, verbose_name='email address')),
                 ('joined', models.DateTimeField(auto_now_add=True)),
                 ('is_active', models.BooleanField(default=True)),
                 ('is_staff', models.BooleanField(default=False)),

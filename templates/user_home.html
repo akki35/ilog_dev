@@ -46,7 +46,7 @@
 				{% for people in all_users %}
 				<li class="list_object"><a href="{% url 'myuserprofile:profile' people.slug %}">
 					<div class="list_object_name_2">{{ people }}<br>{{ people.enterprise }}</div>
-					<img class="img_thumb_large" src="/images/{{ people.get_image_thumbnail }}"></a>
+					<img class="img_thumb_large" src="/images/{{ people.myuserprofile.get_image_thumbnail }}"></a>
 				</li>
 				{% endfor %}
 			</ul>

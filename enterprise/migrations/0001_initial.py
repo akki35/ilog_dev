@@ -14,7 +14,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Asset',
             fields=[
-                ('id', models.AutoField(serialize=False, verbose_name='ID', auto_created=True, primary_key=True)),
+                ('id', models.AutoField(auto_created=True, verbose_name='ID', serialize=False, primary_key=True)),
                 ('name', models.CharField(max_length=50)),
                 ('slug', models.SlugField(null=True, blank=True)),
                 ('is_active', models.BooleanField(default=True)),
@@ -27,7 +27,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Enterprise',
             fields=[
-                ('id', models.AutoField(serialize=False, verbose_name='ID', auto_created=True, primary_key=True)),
+                ('id', models.AutoField(auto_created=True, verbose_name='ID', serialize=False, primary_key=True)),
                 ('enterprise', models.CharField(max_length=255)),
                 ('slug', models.SlugField(max_length=255, unique=True)),
                 ('is_active', models.BooleanField(default=True)),
@@ -39,7 +39,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='EnterpriseAsset',
             fields=[
-                ('id', models.AutoField(serialize=False, verbose_name='ID', auto_created=True, primary_key=True)),
+                ('id', models.AutoField(auto_created=True, verbose_name='ID', serialize=False, primary_key=True)),
                 ('asset_image', imagekit.models.fields.ProcessedImageField(upload_to='assets/main')),
                 ('asset_image_thumbnail', imagekit.models.fields.ProcessedImageField(upload_to='assets/thumbnails')),
                 ('caption', models.CharField(default='product', max_length=200)),
@@ -55,7 +55,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='EnterpriseProduct',
             fields=[
-                ('id', models.AutoField(serialize=False, verbose_name='ID', auto_created=True, primary_key=True)),
+                ('id', models.AutoField(auto_created=True, verbose_name='ID', serialize=False, primary_key=True)),
                 ('product_image', imagekit.models.fields.ProcessedImageField(upload_to='products/main')),
                 ('product_image_thumbnail', imagekit.models.fields.ProcessedImageField(upload_to='products/thumbnails')),
                 ('caption', models.CharField(default='product', max_length=200)),
@@ -70,7 +70,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Material',
             fields=[
-                ('id', models.AutoField(serialize=False, verbose_name='ID', auto_created=True, primary_key=True)),
+                ('id', models.AutoField(auto_created=True, verbose_name='ID', serialize=False, primary_key=True)),
                 ('name', models.CharField(max_length=50)),
                 ('slug', models.SlugField(null=True, blank=True)),
                 ('is_active', models.BooleanField(default=True)),
@@ -83,7 +83,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Operation',
             fields=[
-                ('id', models.AutoField(serialize=False, verbose_name='ID', auto_created=True, primary_key=True)),
+                ('id', models.AutoField(auto_created=True, verbose_name='ID', serialize=False, primary_key=True)),
                 ('name', models.CharField(max_length=50)),
                 ('slug', models.SlugField(null=True, blank=True)),
                 ('is_active', models.BooleanField(default=True)),
@@ -96,7 +96,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Product',
             fields=[
-                ('id', models.AutoField(serialize=False, verbose_name='ID', auto_created=True, primary_key=True)),
+                ('id', models.AutoField(auto_created=True, verbose_name='ID', serialize=False, primary_key=True)),
                 ('name', models.CharField(max_length=50)),
                 ('slug', models.SlugField(null=True, blank=True)),
                 ('is_active', models.BooleanField(default=True)),
@@ -109,7 +109,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Type',
             fields=[
-                ('id', models.AutoField(serialize=False, verbose_name='ID', auto_created=True, primary_key=True)),
+                ('id', models.AutoField(auto_created=True, verbose_name='ID', serialize=False, primary_key=True)),
                 ('name', models.CharField(max_length=50)),
                 ('slug', models.SlugField(null=True, blank=True)),
                 ('is_active', models.BooleanField(default=True)),
@@ -128,7 +128,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='enterprise',
             name='assets',
-            field=models.ManyToManyField(to='enterprise.Asset', through='enterprise.EnterpriseAsset'),
+            field=models.ManyToManyField(through='enterprise.EnterpriseAsset', to='enterprise.Asset'),
             preserve_default=True,
         ),
         migrations.AddField(
@@ -146,7 +146,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='enterprise',
             name='products',
-            field=models.ManyToManyField(to='enterprise.Product', through='enterprise.EnterpriseProduct'),
+            field=models.ManyToManyField(through='enterprise.EnterpriseProduct', to='enterprise.Product'),
             preserve_default=True,
         ),
         migrations.AddField(
