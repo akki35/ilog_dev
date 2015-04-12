@@ -50,11 +50,11 @@ FEEDS_NUM_PAGES=8
 # @login_required
 def enterprises(request):
     myusers = MyUser.objects.all()
-    enterprises = Enterprise.objects.all().order_by('-date')
+    enterprises = Enterprise.objects.all().order_by('-id')
     return render(request, 'enterprises.html', {'enterprises':enterprises})
 # @login_required
 def people(request):
-    myusers = MyUser.objects.all().order_by('-date')
+    myusers = MyUser.objects.all().order_by('-id')
     enterprises = Enterprise.objects.all()
     return render(request, 'people.html', {'myusers': myusers})
 

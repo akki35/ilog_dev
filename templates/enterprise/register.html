@@ -14,14 +14,14 @@
 			<ul id="ul_register" class="uls_home">
 				{{ form.as_ul }}
 				{% csrf_token %}
-				<li><input id="submit_register" class="submit_main" type="submit" value="ADD"></li>
+				<div id="add">
+					<h4><a href="{% url 'enterprise:add_type' %}">Add Type</a></h4>
+					<h4><a href="{% url 'enterprise:add_material' %}">Add Material</a></h4>
+					<h4><a href="{% url 'enterprise:add_operation' %}">Add Operation</a></h4>
+				</div>
+				<li><input id="submit_register" class="submit_main" type="submit" value="SAVE"></li>
 			</ul>
 		</form>
 
-		<div id="add">
-			<h4><a href="{% url 'enterprise:add_type' %}">Add Type</a></h4>
-			<h4><a href="{% url 'enterprise:add_material' %}">Add Material</a></h4>
-			<h4><a href="{% url 'enterprise:add_operation' %}">Add Operation</a></h4>
-		</div>
 	</section>
 {% endblock %}
