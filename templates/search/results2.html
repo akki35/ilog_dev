@@ -143,7 +143,7 @@
         {% if pquery %}
             <ul class="result_list_b open">
             {% for result in pquery %}
-                <li><a href="{% url 'myuserprofile:profile' result.slug %}">{{ result }}</a></li>
+                <li><a href="{% url 'enterprise:enterprise_profile' result.slug %}">{{ result }}</a></li>
             {% endfor %}
             </ul>
         {% endif %}

@@ -10,12 +10,11 @@
 	<header class="header_form">
 		<h2>Update your enterprise info . . .</h2>
 	</header>
-	<form enctype="multipart/form-data" action="{% url 'enterprise:enterprise_profile_edit' page_enterprise.slug %}" target='_parent' method="POST" role="form" >
+	<form class="" enctype="multipart/form-data" action="{% url 'enterprise:enterprise_profile_edit' page_enterprise.slug %}" target='_parent' method="POST" role="form" >
 		<input type="submit" value="save" class="pop_link_left">
 		<ul class="form_edit">
 			{{ form.as_ul }}
 			{% csrf_token %}
-			{{ form.errors }}{{ form.non_field_errors }}
 		</ul>
 	</form>
 </section>

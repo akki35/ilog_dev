@@ -56,7 +56,7 @@ def enterprise_profile_edit(request, slug):
             'address': enterprise.enterpriseprofile.address,
             'contact': enterprise.enterpriseprofile.contact,
             'website': enterprise.enterpriseprofile.website,
-            'image': enterprise.enterpriseprofile.image,
+            'image': enterprise.enterpriseprofile.get_image,
             'capabilities': enterprise.enterpriseprofile.capabilities,
             'people_detail': enterprise.enterpriseprofile.people_detail,
             'product_intro': enterprise.enterpriseprofile.product_intro,

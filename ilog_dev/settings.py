@@ -70,13 +70,8 @@ WSGI_APPLICATION = 'ilog_dev.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'mysql.connector.django',
-        'NAME': 'ilog_prefinal',
-        'USER': 'root',
-        'PASSWORD': '',
-        'HOST': 'localhost',
-        'PORT': '3306',
-        'autocommit': True,
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'db.sqlite3',
     }
 }
 
@@ -103,6 +98,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 
+LOGIN_URL = '/login'
 LOGIN_REDIRECT_URL = '/'
 
 STATIC_URL = '/static/'

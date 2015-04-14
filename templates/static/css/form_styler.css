@@ -142,3 +142,11 @@ label{
   padding: 0 1%;
   text-align: center;
 }
+
+.pop_link_left{
+  width: 100px;
+}
+
+#form_register select{
+  width: 250px;
+}

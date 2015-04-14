@@ -6,7 +6,9 @@
 	Introduce your products... go to the | About | section and click on | edit | to add one...
 	{% endif %}
 </p>
+{% ifequal user.enterprise page_enterprise %}
 <div id="add" class="link_content aj" data-link="{% url 'enterprise:add_product' %}">Add A Product</div>
+{% endifequal %}
 <ul>
 {% for product in products %}
     <li><img src="{{ MEDIA_URL }}{{ product.get_product_image_thumbnail }}" class="img_thumb_larger"><strong>{{ product }}</strong> : {{ product.description }}</a></li>

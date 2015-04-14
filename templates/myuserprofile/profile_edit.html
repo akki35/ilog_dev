@@ -10,12 +10,11 @@
 	<header class="header_form">
 		<h2>Update yours Profile</h2>
 	</header>
-	<form enctype="multipart/form-data" action="{% url 'myuserprofile:profile_edit' %}" target="_parent" method="POST" role="form" >
+	<form class="" enctype="multipart/form-data" action="{% url 'myuserprofile:profile_edit' %}" target="_parent" method="POST" role="form" >
+		<input class="pop_link_left" type="submit" value="Save">
 		<ul class="form_edit">
-			<input class="pop_link_left aj_f" type="submit" value="Save">
 			{{ form.as_ul }}
 			{% csrf_token %}
-			{{ form.errors }} {{ form.non_field_errors }}
 		</ul>
 	</form>
 </section>

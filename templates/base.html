@@ -72,6 +72,10 @@
             $('.container').css({'min-height':window_height});
         }
 
+        $(function(){
+            $('.uls_home input, .uls_home select').attr({'required':'required'});
+        });
+
         $('.framer').click(function(){
             var target = $(this).attr('target');
             var frame = $("iframe[name="+target+"]");

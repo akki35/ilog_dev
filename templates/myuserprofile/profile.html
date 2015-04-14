@@ -23,7 +23,7 @@
 		<form action="{% if relationship_status == 'F' %}{% url 'myuserprofile:relationships:unfollow' %}{% else %}{% url 'myuserprofile:relationships:follow'  %}{% endif %}" method="POST">
 			{% csrf_token %}
 		<input type="hidden" value="{{ page_user.id }}" name="to_user">
-		<input type="submit" class="{% if relationship_status == 'F' %}btn{% else %}btn-primary{% endif %}" value="{% if relationship_status == 'F' %}Unfollow{% else %}Follow{% endif %}">	
+		<input type="submit" class="follow" value="{% if relationship_status == 'F' %}Unfollow{% else %}Follow{% endif %}">	
 		</form>
 		{% endifnotequal %}
 	</div>

@@ -70,7 +70,7 @@ def profile(request, slug):
     # from_feed = -1
     # if feeds:
     #     from_feed = feeds[0].id
-    feed_nodes = Node.objects.filter(myuser=request.user, category='F')
+    #feed_nodes = Node.objects.filter(myuser=request.user, category='F')
     skillset = page_user_profile.skillset.all()
 
     try:
@@ -86,7 +86,7 @@ def profile(request, slug):
           'user': user,
           'page_user': page_user,
           'page_user_profile': page_user_profile,
-          'nodes': feed_nodes
+        #  'nodes': feed_nodes
     }
     return render_to_response('myuserprofile/profile.html', data, context_instance=context)
 
@@ -190,6 +190,7 @@ def block(request):
 @login_required()
 def unfollow(request):
     if request.method == 'POST':
+        to_use = MyUser.objects.get(id=request.POST['to_user'])
         to_user = MyUser.objects.get(id=request.POST['to_user']).myuserprofile
 
         Relationship.objects.filter(
@@ -201,7 +202,7 @@ def unfollow(request):
         # else:
         #   return HttpResponseRedirect(reverse('said_user:profile', kwargs={'username': to_user.username}))
         print('why')
-        return HttpResponseRedirect('/')
+        return HttpResponseRedirect('/user/'+to_use.slug)
 
     else:
 
